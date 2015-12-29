@@ -1,6 +1,5 @@
 node_modules
-dist
-www
+.idea
 platforms
 release
 .tmp
