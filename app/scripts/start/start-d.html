@@ -1,0 +1,15 @@
+<div class="start">
+    <h3>Is it <a ui-sref="cool">{{cool.cool}}</a> cool?</h3>
+    <div ng-if="!cool.di.state.gameStarted"><h1>Start Game</h1>
+    <button ng-click="cool.di.api.startGame(1)">1 Player</button>
+    <button ng-click="cool.di.api.startGame(2)">2 Players</button>
+    <button ng-click="cool.di.api.startGame(3)">3 Players</button>
+    <button ng-click="cool.di.api.startGame(4)">4 Players</button></div>
+    <ui-view></ui-view>
+
+    <button ng-click="$root.debug =! $root.debug">Debug?</button>
+    <debug><h4>Direct Injections</h4>
+    <p ng-repeat="(key, di) in cool.di">
+        <b>{{key}}: </b>{{di}}
+    </p></debug>
+</div>

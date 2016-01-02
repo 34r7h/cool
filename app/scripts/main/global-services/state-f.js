@@ -6,25 +6,21 @@
  * Factory in the cool.
  */
 angular.module('cool')
-    .factory('State', function ()
-    {
-        'use strict';
+	.factory('State', function () {
+		'use strict';
 
-        // INITIALIZATION
-        console.log('State: Is it cool?');
+		// INITIALIZATION
+		// console.log('State: Is it cool?');
 
-        // ACTUAL DEFINITION
-        var state = {
-            // current state of the game
-            players: {
-                history:[],
-                currentPosition: {}
-            },
-            board: {
-                cards:{},
-                spaces:{}
-            }
-        };
+		// ACTUAL DEFINITION
+		var state = {
+			turn: '',
+			gameStarted: false,
+			// current state of the game
+			players: [],
+			message:''
+		};
 
-        return state;
-    });
+		return state;
+	})
+;

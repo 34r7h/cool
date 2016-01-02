@@ -17,13 +17,13 @@ angular.module('cool')
         $stateProvider
             .state('cool', {
                 url: '/',
-                template:'<h3>Cool: Is it <a href="">{{cool.cool}}</a> cool?</h3><ui-view></ui-view><h4>Direct Injections</h4><p ng-repeat="(key, di) in cool.di"><b>{{key}}: </b>{{di}}</p>',
+                template:'<start></start>',
                 controller: coolCtrl,
                 controllerAs: 'cool'
             })
             .state('cool.board', {
                 url: 'board',
-                template:'Board: Is it cool?<ui-view></ui-view>'
+                template:'<board></board>'
             })
             .state('cool.board.space', {
                 /*// Various space types will
@@ -50,7 +50,7 @@ angular.module('cool')
 var coolCtrl = function (State, Rules, Api, Models) {
     var vm = this;
     vm.di = {state: State, rules:Rules, api:Api, models:Models};
-    console.log(vm.di);
+    // console.log(vm.di);
     vm.cool = 'very';
-    console.log('coolCtrl: Is it '+vm.cool+' cool?');
+    // console.log('coolCtrl: Is it '+vm.cool+' cool?');
 };

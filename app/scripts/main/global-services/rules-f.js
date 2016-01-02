@@ -11,14 +11,15 @@ angular.module('cool')
         'use strict';
 
         // INITIALIZATION
-        console.log('Rules: Is it cool?');
+        // console.log('Rules Service: Is it cool?');
 
 
         // ACTUAL DEFINITION
         var rules = {
             // checks the current State to apply various rules
-            moveLogic: function () {
-                // checks the players board position for legal moves
+            moveLogic: function (player, roll, position) {
+                // checks the players board position and roll for legal moves
+
             },
             cardLogic: function () {
                 // quick check on card-based routing
