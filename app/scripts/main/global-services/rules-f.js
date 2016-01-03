@@ -6,7 +6,7 @@
  * Factory in the cool.
  */
 angular.module('cool')
-    .factory('Rules', function ()
+    .factory('Rules', function (State)
     {
         'use strict';
 

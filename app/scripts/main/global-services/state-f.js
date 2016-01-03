@@ -18,7 +18,9 @@ angular.module('cool')
 			gameStarted: false,
 			// current state of the game
 			players: [],
-			message:''
+			messages:{},
+			dice:[],
+			card:{}
 		};
 
 		return state;

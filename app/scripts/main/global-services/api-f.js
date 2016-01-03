@@ -6,7 +6,7 @@
  * Factory in the cool.
  */
 angular.module('cool')
-	.factory('Api', function ($state, State, $window) {
+	.factory('Api', function ($state, State, $window, Models) {
 		'use strict';
 
 		// INITIALIZATION
@@ -21,24 +21,17 @@ angular.module('cool')
 				var total = 0;
 				var doubles = false;
 				var firstDie = Math.floor(Math.random() * 6) + 1;
+				State.dice[0] = firstDie;
 				// console.log('rolling first die...', firstDie);
 				var secondDie = Math.floor(Math.random() * 6) + 1;
+				State.dice[1] = secondDie;
+
 				// console.log('second die...', secondDie);
 				total = firstDie + secondDie;
 				// console.log('total roll', total);
 				State.currentRoll = total;
-				firstDie == secondDie ? (console.log('Doubles!'), doubles = true) : null;
 				return {total:total, doubles: doubles};
 			},
-			/*routePlayer: function (route, type, key) {
-				// This handles the player movements between different
-				// spaces and cards.
-				var params = {};
-				params[type] = key;
-				var state = 'cool.' + route + '.' + type;
-				$state.go(state, params);
-				State.players.currentPosition = {state, params}
-			},*/
 			startGame: function (players) {
 				// Chooses players and initiates a new game.
 				// console.log('startGame()', players);
@@ -74,7 +67,6 @@ angular.module('cool')
 				var scores = [];
 				var playerOrder = [];
 				angular.forEach(playerRolls, function (score, player) {
-					console.log(score, player);
 					scores.push(score);
 				});
 				scores.sort(function (a,b) {
@@ -84,19 +76,56 @@ angular.module('cool')
 					playerOrder.unshift({currentPosition: 1, playerName:rollPlayers[score]});
 				});
 				console.log('%c',playerOrder, 'color:#00ff00' );
+				var playerColors = ['lightPurple', 'lightOrange', 'lightBlue', 'lightGreen', 'lightYellow', 'lightPink', 'pink'];
+
+				angular.forEach(playerOrder, function (player) {
+					var randomColor = Math.floor(Math.random()*(playerColors.length-1));
+					player.color = playerColors[randomColor];
+					playerColors.splice(randomColor,1);
+				});
 				State.players = playerOrder;
+
 				State.turn = playerOrder[0];
 				console.log('%c Game ready to begin. Player '+playerOrder[0].playerName+' goes first.','font-size:2em');
+				api.message({
+					text: playerOrder[0].playerName+' goes first.',
+					header: 'Game ready to begin.'
+				});
 				$state.go('cool.board');
 				State.gameStarted = true;
 
 			},
 			takeTurn: function (key, player) {
+				State.messages = {};
 				var playerRoll = api.rollDice();
-				player.currentPosition = player.currentPosition + playerRoll.total;
-				console.log('player '+player.playerName+' rolled '+playerRoll.total+' '+(playerRoll.doubles ? 'and got doubles!' : '') );
+				if(player.currentPosition === 'timeout'){
+
+				}
+				var direction = true;
+				if (player.currentPosition - playerRoll.total > 0){
+					direction = $window.confirm(player.playerName + ' rolled '+playerRoll.total+'. Press OK to move forward. CANCEL to move backwards');
+					console.log(direction);
+
+				}
+				player.currentPosition = direction === true ?
+					player.currentPosition + playerRoll.total :
+					player.currentPosition - playerRoll.total;
+
+				Models.spaces[player.currentPosition] === 'cool?' ?
+					api.card() :
+					Models.spaces[player.currentPosition] === 'trap' ?
+						(
+							console.log('Its a trap!!'),
+								api.message({text:'Oh no, '+player.playerName+' sent back to start!', header:'It\'s a trap!!'}),
+								api.goHome(player)
+						) :
+						null;
 				if (playerRoll.doubles === true) {
 					console.log('player '+player.playerName+' goes again.');
+					api.message({
+						text:player.playerName+' goes again.',
+						header: 'Doubles!!'
+					});
 				} else {
 					if(State.players[key + 1]){
 						State.turn = State.players[key + 1];
@@ -104,7 +133,51 @@ angular.module('cool')
 						State.turn = State.players[0];
 					}
 				}
+			},
+			message: function (message) {
+				console.info('messaging', message);
+				var time = Date.now();
+				State.messages[time] = {
+					text: message.text,
+					header: message.header,
+					type: message.type,
+					expires: (time + message.duration)
+				}
+			},
+			card: function(){
+				console.log('%c cards', 'background: cream');
+				var randomCard = Models.cards[Math.floor(Math.random()*Models.cards.length)];
+				State.card = randomCard;
+			},
+			goHome: function (player) {
+				player.currentPosition = 1;
+			},
+			killPlayer: function(player){
+				console.log(player.playerName, 'dead');
+				api.message({text: 'Rough, son. Better luck on the next one', header:player.playerName + 'is dead.'});
+				State.players.splice(State.players.indexOf(player), 1);
+			},
+			goPass: function(player){
+				console.log('getting a pass, ya baby!!');
+				api.message({text:'Getting a pass, finishing fast!!', header: player.playerName + ' is lucky.'})
+			},
+			goJail: function (player) {
+				console.log('going to jail, no baby!!');
+				api.message({text:'Getting sent to jail sucks, too bad now you\'re stuck!!', header: player.playerName + ' is locked-up.'});
+				player.currentPosition = 'jail';
+
+			},
+			goSchool: function (player) {
+				console.log('back to school, learnin lessons baby!!');
+				api.message({text:'Smarten up, level up', header: player.playerName + ' is getting schooled.'});
+				player.currentPosition = 'school';
+			},
+			goWork: function (player) {
+				console.log('gotta work, life ain\'t free!');
+				api.message({text:'An empty wallet will get you nowhere fast', header: player.playerName + ' gone broke!!'});
+				player.currentPosition = 'work';
 			}
+
 		};
 
 		/* Rollin to Start
