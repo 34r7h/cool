@@ -1,5 +1,7 @@
 <div class="card" ng-style="{display:'flex', alignItems:'center', justifyContent: 'center', position: 'fixed', zIndex:9999, top:0, bottom:0, right:0, left:0, background:'rgba(0,0,0,.8)'}" ng-if="cool.di.state.card.topText">
-    <form ng-style="{background:($parent.cool.di.state.card.image ? 'url('+$parent.cool.di.state.card.image+') no-repeat center center fixed' : $parent.cool.di.state.card.background), webkitBackgroundSize: 'cover', width:'250px', height:'400px', display:'flex', flexDirection:'column', justifyContent:'space-around', alignItems:'center'}" ng-submit="$parent.cool.di.api[$parent.cool.di.state.card.action]($parent.cool.di.state.turn); $parent.cool.di.state.card = {};">
+    <form
+            ng-style="{background:($parent.cool.di.state.card.image ? 'url('+$parent.cool.di.state.card.image+') no-repeat center center fixed' : $parent.cool.di.state.card.background), webkitBackgroundSize: 'cover', width:'250px', height:'400px', display:'flex', flexDirection:'column', justifyContent:'space-around', alignItems:'center'}"
+            ng-submit="$parent.cool.di.api[$parent.cool.di.state.card.action]($parent.cool.di.state.turn); $parent.cool.di.state.card = {};">
         <div ng-style="{height:'100px'}"></div>
         <div ng-style="{background:'rgba(253,254,255,.9)', width:'240px', padding:'0 1em'}"><p ng-repeat="text in $parent.cool.di.state.card.topText">{{text}}</p></div>
         <div ng-style="{background:'rgba(253,254,255,.9)', width:'240px', padding:'0 1em'}"><p ng-repeat="text in $parent.cool.di.state.card.bottomText"><b>{{text}}</b></p>

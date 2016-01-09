@@ -90,12 +90,42 @@ angular.module('cool')
 					],
 					action: 'killPlayer',
 					image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/US_Capitol_Building_at_night_Jan_2006.jpg/1018px-US_Capitol_Building_at_night_Jan_2006.jpg'
+				},
+				{
+					topText: [
+						'Locked in the can.'
+					],
+					bottomText: [
+						'jailin'
+					],
+					action: 'goJail',
+					image: 'http://www.liberalamerica.org/wp-content/uploads/2015/03/e15243d5-58a2-4215-8989-0d666bbb07d6.jpg'
+				},
+				{
+					topText: [
+						'Locked in the can.'
+					],
+					bottomText: [
+						'schoolin'
+					],
+					action: 'goSchool',
+					image: 'https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwjX4Ji27pvKAhVK5WMKHdKlCl4QjRwIBw&url=http%3A%2F%2Fwww.englishinbritain.co.uk%2Fschool_detail.cfm%3Fschoolid%3D421&bvm=bv.111396085,d.cGc&psig=AFQjCNGI9S-76H1wjc9C80PgZYGiFSy1oA&ust=1452399090198131'
+				},
+				{
+					topText: [
+						'Locked in the can.'
+					],
+					bottomText: [
+						'workin'
+					],
+					action: 'goWork',
+					image: 'https://pixabay.com/static/uploads/photo/2014/07/05/10/31/work-384745_640.jpg'
 				}
 			],
 			spaces: {
-				school: 'timeout',
-				work: 'timeout',
-				jail: 'timeout',
+				school: 'school',
+				work: 'work',
+				jail: 'jail',
 				1: colors.blue,
 				2: colors.yellow,
 				3: colors.black,
@@ -156,6 +186,7 @@ angular.module('cool')
 				58: 'win'
 			},
 			sections: {
+				timeouts: ['school', 'work', 'jail'],
 				c: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 				o1: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
 				gap1: [24],

@@ -17,9 +17,13 @@ angular.module('cool')
         // ACTUAL DEFINITION
         var rules = {
             // checks the current State to apply various rules
-            moveLogic: function (player, roll, position) {
+            turnLogic: function (player, roll, position) {
                 // checks the players board position and roll for legal moves
-
+                if(State.players[key + 1]){
+                    State.turn = State.players[key + 1];
+                } else {
+                    State.turn = State.players[0];
+                }
             },
             cardLogic: function () {
                 // quick check on card-based routing

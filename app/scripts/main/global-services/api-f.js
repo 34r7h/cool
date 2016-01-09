@@ -15,6 +15,15 @@ angular.module('cool')
 
 		// ACTUAL DEFINITION
 		var api = {
+			nextPlayer: function (key) {
+				if(State.players[key + 1]){
+					api.message({text: 'moving on', header: 'Next Player '+ State.players[key+1].playerName});
+					State.turn = State.players[key + 1];
+				} else {
+					api.message({text: 'moving on', header: 'Next Player '+ State.players[0].playerName});
+					State.turn = State.players[0];
+				}
+			},
 			rollDice: function () {
 				// Random roll of two dice, with up to 4 players.
 				// One set of sie per corner.
@@ -25,11 +34,12 @@ angular.module('cool')
 				// console.log('rolling first die...', firstDie);
 				var secondDie = Math.floor(Math.random() * 6) + 1;
 				State.dice[1] = secondDie;
-
+				firstDie === secondDie ? doubles = true : null;
 				// console.log('second die...', secondDie);
 				total = firstDie + secondDie;
 				// console.log('total roll', total);
 				State.currentRoll = total;
+				api.message({header:State.turn.playerName + ' Rolls ', text:State.dice});
 				return {total:total, doubles: doubles};
 			},
 			startGame: function (players) {
@@ -96,10 +106,14 @@ angular.module('cool')
 
 			},
 			takeTurn: function (key, player) {
+				api.message({header:player.playerName + ' takes a turn.', text:'Rolling...'});
 				State.messages = {};
+				var cool = false;
 				var playerRoll = api.rollDice();
-				if(player.currentPosition === 'timeout'){
-
+				if(typeof player.currentPosition !== 'number'){
+					console.log('not a number');
+					playerRoll.doubles ? player.currentPosition = 1 : api.nextPlayer(key);
+					return;
 				}
 				var direction = true;
 				if (player.currentPosition - playerRoll.total > 0){
@@ -112,7 +126,7 @@ angular.module('cool')
 					player.currentPosition - playerRoll.total;
 
 				Models.spaces[player.currentPosition] === 'cool?' ?
-					api.card() :
+					(api.card(key), cool = true) :
 					Models.spaces[player.currentPosition] === 'trap' ?
 						(
 							console.log('Its a trap!!'),
@@ -127,15 +141,12 @@ angular.module('cool')
 						header: 'Doubles!!'
 					});
 				} else {
-					if(State.players[key + 1]){
-						State.turn = State.players[key + 1];
-					} else {
-						State.turn = State.players[0];
-					}
+					api.message({text:'next player is up.', header: player.playerName + 's turn is over'});
+					!cool? api.nextPlayer(key) : null;
 				}
 			},
 			message: function (message) {
-				console.info('messaging', message);
+				console.info(message.header, message.text);
 				var time = Date.now();
 				State.messages[time] = {
 					text: message.text,
@@ -145,39 +156,44 @@ angular.module('cool')
 				}
 			},
 			card: function(){
-				console.log('%c cards', 'background: cream');
+				api.message({header: 'Getting card', text: 'Is it cool?'});
 				var randomCard = Models.cards[Math.floor(Math.random()*Models.cards.length)];
 				State.card = randomCard;
 			},
 			goHome: function (player) {
+				api.message({header: 'Going home', text: player.playerName + 'Is it cool?'});
 				player.currentPosition = 1;
 			},
 			killPlayer: function(player){
-				console.log(player.playerName, 'dead');
-				api.message({text: 'Rough, son. Better luck on the next one', header:player.playerName + 'is dead.'});
-				State.players.splice(State.players.indexOf(player), 1);
+				var playerIndex = State.players.indexOf(player);
+				api.message({text: 'Rough, son. Better luck on the next one', header:State.players[playerIndex].playerName + 'is dead.'});
+				api.nextPlayer(State.players.indexOf(player));
+				State.players.splice(playerIndex, 1);
+				// State.turn = playerIndex>0?State.players[playerIndex+1]:State.players[0];
 			},
 			goPass: function(player){
 				console.log('getting a pass, ya baby!!');
-				api.message({text:'Getting a pass, finishing fast!!', header: player.playerName + ' is lucky.'})
+				api.message({text:'Getting a pass, finishing fast!!', header: player.playerName + ' is lucky.'});
+				while(Models.spaces[player.currentPosition] !== 'pass'){
+					player.currentPosition = player.currentPosition + 1;
+				}
+				api.nextPlayer(State.players.indexOf(player));
 			},
 			goJail: function (player) {
-				console.log('going to jail, no baby!!');
 				api.message({text:'Getting sent to jail sucks, too bad now you\'re stuck!!', header: player.playerName + ' is locked-up.'});
 				player.currentPosition = 'jail';
-
+				api.nextPlayer(State.players.indexOf(player));
 			},
 			goSchool: function (player) {
-				console.log('back to school, learnin lessons baby!!');
 				api.message({text:'Smarten up, level up', header: player.playerName + ' is getting schooled.'});
 				player.currentPosition = 'school';
+				api.nextPlayer(State.players.indexOf(player));
 			},
 			goWork: function (player) {
-				console.log('gotta work, life ain\'t free!');
 				api.message({text:'An empty wallet will get you nowhere fast', header: player.playerName + ' gone broke!!'});
 				player.currentPosition = 'work';
+				api.nextPlayer(State.players.indexOf(player));
 			}
-
 		};
 
 		/* Rollin to Start
