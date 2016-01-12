@@ -20,7 +20,8 @@ angular.module('cool')
 			players: [],
 			messages:{},
 			dice:[],
-			card:{}
+			card:{},
+			direction: true
 		};
 
 		return state;

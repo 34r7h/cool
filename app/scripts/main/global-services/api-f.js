@@ -27,8 +27,6 @@ angular.module('cool')
 			movePlayer: function (player) {
 				var startingSpace = player.currentPosition;
 				var currentRoll = State.currentRoll;
-				var direction = true;
-				var rollThru = false;
 				function pass() {
 					if (player.currentPosition === 17 || player.currentPosition === 32 || player.currentPosition === 50) {
 						console.log('the pass is real');
@@ -51,168 +49,110 @@ angular.module('cool')
 					return passable;
 				}
 				function chooseDirection() {
-					if (player.currentPosition >= 11 || player.currentPosition >= 24 || player.currentPosition >= 38 && (player.currentPosition - 1 ) - State.currentRoll > 0) {
-						direction = $window.confirm(player.playerName + ' rolled ' + State.currentRoll + '. Press OK to move forward. CANCEL to move backwards');
-					}
-					api.message({
-						header: player.playerName,
-						text: direction ? 'chooses to move forward' : 'chooses to move backwards'
-					});
-					return direction;
+					console.log('choosing direction');
+					State.direction = $window.confirm(player.playerName + ' rolled ' + State.currentRoll + '. Press OK to move forward. CANCEL to move backwards');
 				}
 				function move(direction) {
+					console.warn('moving', direction);
 					direction ? player.currentPosition = player.currentPosition + 1 :
 						player.currentPosition = player.currentPosition - 1;
 				}
 				api.message({header: player.playerName + ' is on ' + startingSpace, text: 'Rolled a ' + currentRoll});
-				var direction = chooseDirection();
-				var passable = pass();
-				api.message({header: 'Direction: ' + direction, text: 'Passable? ' + passable});
+				/*if(player.currentPosition !== 49 || (player.currentPosition > 10 && player.currentPosition < 24 && player.currentPosition !== 17) || (player.currentPosition > 24 && player.currentPosition < 38 && player.currentPosition !== 32)){
+					State.direction = chooseState.direction();
+				}*/
+
 				for (var x = 0; x < State.currentRoll; x++) {
-					// console.log('move ', x + 1);
-					if(startingSpace === 17){player.currentPosition = 24;}
-					else if (startingSpace === 32){ player.currentPosition = 38;}
-					else if (startingSpace === 50){ player.currentPosition = 51;}
-					move(direction);
-					/*else {
-						if (player.currentPosition < 11){
-							console.log(player.playerName, 'current position less than 11');
-							move(direction);
-						}
-						else if(player.currentPosition === 11){
-							console.log(player.playerName, 'current position equals 11');
-							if(!direction){
-								player.currentPosition = 23;
-							}
-							else if(startingSpace <= 11){
-								console.log(player.playerName, 'starting position less than 11');
-								console.log(player.playerName + 'landed on 11. Chooses a direction...');
-								chooseDirection();
-								!direction ? player.currentPosition = 23:
-									move(direction)
-							}
-							else {
-								move(direction);
-							}
-						}
-						else if(player.currentPosition > 11 && player.currentPosition < 24){
-							console.log(player.playerName, 'current position greater than 11 but less than 24');
-							move(direction);
-						}
-						else if(player.currentPosition === 23){
-							console.log(player.playerName, 'current position equals 23');
-							if(direction){
-								player.currentPosition = 11;
-							} else {
-								move(direction);
-							}
-							continue;
-						}
-						else if(player.currentPosition === 24){
-							console.log(player.playerName, 'current position equals 24');
-							player.currentPosition = 25;
-							continue;
-						}
-						else if(player.currentPosition === 25){
-							console.log(player.playerName, 'current position equals 25');
-							if(!direction){
-								player.currentPosition = 37;
-							}
-							else if(startingSpace<24){
-								console.log(player.playerName, 'starting position less than 24');
-								console.log(player.playerName + 'landed on 25. Chooses a direction...');
-								chooseDirection();
-								!direction ? player.currentPosition = 37:
-									move(direction);
-							}
-						}
-						else if(player.currentPosition >= 25 && player.currentPosition < 38){
+					// Check State.direction
 
-						}
-						else if(player.currentPosition > 24 && player.currentPosition < 38  && !rollThru){
-							chooseDirection();
-							player.currentPosition === 25 && !direction ? player.currentPosition = 37: player.currentPosition === 37 && direction ? player.currentPosition = 25: move(direction);
-							rollThru = true;
-						}
-						else if(player.currentPosition > 24 && player.currentPosition < 38  && rollThru){
-							player.currentPosition === 25 && !direction ? player.currentPosition = 37: player.currentPosition === 37 && direction ? player.currentPosition = 25: move(direction);
-						}
-					}*/
+					// Check for pass
+					if(startingSpace === 17 && player.currentPosition === 17){
+						console.warn('startingSpace === 17');
+						player.currentPosition = 24;}
+					else if (startingSpace === 32 && player.currentPosition === 32){
+						console.warn('startingSpace === 32');
+						player.currentPosition = 38;}
+					else if (startingSpace === 50 && player.currentPosition === 50){
+						console.warn('startingSpace === 50');
+						player.currentPosition = 51;}
 
-
-					/*if (player.currentPosition >= 0 && player.currentPosition < 24 && !passable) {
-						if (player.currentPosition !== 11) {
-							move(direction);
-						}
-						else if (player.currentPosition === 11 && !firstRollThru) {
-							var firstRollThru = true;
-							direction = chooseDirection();
-							if (!direction) {
-								player.currentPosition = 23;
-							} else {
-								move(direction);
-							}
-						}
-						else if (player.currentPosition === 11 && !direction && firstRollThru) {
-							player.currentPosition = 23;
-						}
-						else if (player.currentPosition === 23 && direction) {
-							player.currentPosition = 11;
-						}
+					// Check for circles
+					// 11-23
+					else if (player.currentPosition === 11 && startingSpace <= 11){
+						console.warn('player.currentPosition === 11 && startingSpace <= 11');
+						State.direction = chooseDirection();
+						!State.direction ? (player.currentPosition = 23) : move(State.direction);
 					}
-					else if (player.currentPosition < 24 && passable) {
-						player.currentPosition = 24;
+					else if (player.currentPosition === 11 && startingSpace > 11){
+						console.warn('player.currentPosition === 11 && startingSpace > 11');
+						!State.direction ? (player.currentPosition = 23) : move(State.direction);
+					}
+					else if (player.currentPosition === 23){
+						console.warn('player.currentPosition === 23');
+						State.direction ? (player.currentPosition = 11) : move(State.direction);
+					}
+					// 25-37
+					else if (player.currentPosition === 25 && startingSpace <= 25) {
+						console.warn('player.currentPosition === 25 && startingSpace <= 25');
+						State.direction = chooseDirection();
+						!State.direction ? (player.currentPosition = 37) : move(State.direction);
+					}
+					else if (player.currentPosition === 25 && startingSpace > 25) {
+						console.warn('player.currentPosition === 25 && startingSpace > 25');
+						!State.direction ? (player.currentPosition = 37) : move(State.direction);
+					}
+					else if (player.currentPosition === 37) {
+						console.warn('player.currentPosition === 37');
+						State.direction ? (player.currentPosition = 25) : move(State.direction);
 					}
 
-					else if (player.currentPosition >= 24 && player.currentPosition < 38 && !passable) {
-						var secondRollThru = true;
-						console.warn('player.currentPosition > 24 && player.currentPosition < 38');
-						if (player.currentPosition !== 25) {
-							move(direction);
-						}
-						else if (player.currentPosition === 25 && !secondRollThru) {
-							secondRollThru = true;
-							direction = chooseDirection();
-							if (!direction) {
-								player.currentPosition = 37;
-							} else {
-								move(direction);
-							}
-						}
-						else if (player.currentPosition === 25 && !direction && rollThru) {
-							player.currentPosition = 37;
-						}
-						else if (player.currentPosition === 37 && direction) {
-							player.currentPosition = 25;
-						}
+					// Check for gaps
+					// 24
+					else if (player.currentPosition === 24){
+						console.warn('player.currentPosition === 24');
+						State.direction = true;
+						move(State.direction);
+					}
+					// 38-40
+					else if (player.currentPosition >= 38 && player.currentPosition < 41){
+						console.warn('player.currentPosition >= 38 && player.currentPosition < 41');
+						State.direction = true;
+						move(State.direction);
+					}
 
-						/!*player.currentPosition === 11 ?
-						 (direction = chooseDirection(), !direction ?
-						 player.currentPosition = 23 :
-						 move(direction)) :
-						 move(direction);*!/
+					// Check for sunglasses space
+					else if (player.currentPosition > 50 && startingSpace !== 50){
+						player.currentPosition = 49;
+						break;
 					}
-					else if (player.currentPosition < 38 && player.currentPosition >= 25 && passable) {
-						player.currentPosition = 38;
+					else if (startingSpace === 49 && player.currentPosition === 49){
+						var sunglasses = $window.confirm('Confirm to move forward or cancel back to the top of the "L"?');
+						State.direction = true;
+						sunglasses ? move(State.direction) : player.currentPosition = 41;
 					}
+					// default movement
 					else {
-						console.log('no movement possible');
-					}*/
+						console.warn('default movement');
+						move(State.direction);
+					}
+
 				}
 			},
-			rollDice: function () {
+			rollDice: function (first, second) {
+				first || second ? console.log('%s cheats', 'background:red;color:white;'):null;
 				// Random roll of two dice, with up to 4 players.
 				// One set of sie per corner.
 				var total = 0;
 				var doubles = false;
 				var firstDie = Math.floor(Math.random() * 6) + 1;
-				State.dice[0] = firstDie;
+				State.dice[0] = first || firstDie;
 				// console.log('rolling first die...', firstDie);
 				var secondDie = Math.floor(Math.random() * 6) + 1;
-				State.dice[1] = secondDie;
+				State.dice[1] = second || secondDie;
 				firstDie === secondDie ? doubles = true : null;
+				(first === second) && (typeof first==='number') ? doubles = true : null;
 				// console.log('second die...', secondDie);
-				total = firstDie + secondDie;
+				total = (first + second || firstDie + secondDie);
 				// console.log('total roll', total);
 				State.currentRoll = total;
 				api.message({header: State.turn.playerName + ' Rolls ', text: State.dice});
@@ -281,57 +221,18 @@ angular.module('cool')
 				State.gameStarted = true;
 
 			},
-			takeTurn: function (key, player) {
-				api.message({header: player.playerName + ' takes a turn.', text: 'Rolling...'});
+			takeTurn: function (key, player, dice) {
 				State.messages = {};
+				dice ? api.message({header:'Warning', text: player.playerName + ' is a cheat!'}):null;
+				api.message({header: player.playerName + ' takes a turn.', text: 'Rolling...'});
 				var cool = false;
-				var playerRoll = api.rollDice();
+				var playerRoll = dice ? api.rollDice(dice[0],dice[1]): api.rollDice();
 				if (typeof player.currentPosition !== 'number') {
 					console.log('not a number');
 					playerRoll.doubles ? player.currentPosition = 1 : api.nextPlayer(key);
 					return;
 				}
 				api.movePlayer(player, playerRoll.total);
-
-				/*
-				 var direction = true;
-				 */
-				/*if (player.currentPosition - playerRoll.total > 0) {
-				 direction = $window.confirm(player.playerName + ' rolled ' + playerRoll.total + '. Press OK to move forward. CANCEL to move backwards');
-				 }*/
-				/*function pass(){
-				 if (player.currentPosition === 17 || player.currentPosition === 32 || player.currentPosition === 50) {
-				 console.log('the pass is real');
-				 switch (player.currentPosition) {
-				 case 17:
-				 console.log('17!');
-				 break;
-				 case 32:
-				 console.log('32!');
-				 break;
-				 case 50:
-				 console.log('50!');
-				 break;
-				 }
-				 var pass = true;
-				 } else {
-				 console.log('no can pass');
-				 }
-				 }
-				 */
-				/*for (var x = 0; x < playerRoll.total; x++) {
-				 // api.message({text:x, header:player.currentPosition});
-				 if (direction === true) {
-				 player.currentPosition = player.currentPosition + 1;
-
-				 } else {
-				 player.currentPosition = player.currentPosition - 1;
-				 }
-				 }*/
-				/*player.currentPosition = direction === true ?
-				 player.currentPosition + playerRoll.total :
-				 player.currentPosition - playerRoll.total;
-				 */
 				Models.spaces[player.currentPosition] === 'cool?' ?
 					(api.card(key), cool = true) :
 					Models.spaces[player.currentPosition] === 'trap' ?
@@ -350,6 +251,11 @@ angular.module('cool')
 				} else {
 					api.message({text: 'next player is up.', header: player.playerName + 's turn is over'});
 					!cool ? api.nextPlayer(key) : null;
+				}
+
+				if(player.currentPosition === 58) {
+					api.message({header:'Winner!!', text: player.playerName + ' wins the game.'});
+					State.gameStarted = false;
 				}
 			},
 			message: function (message) {
