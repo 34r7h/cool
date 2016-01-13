@@ -13,14 +13,22 @@
         <div ng-style="{display:'flex'}">
             <button ng-if="cool.di.state.dice.length === 2"
                     ng-style="{width:'100%'}"
-                    ng-click="cool.di.api.takeTurn(cool.di.state.players.indexOf(cool.di.state.turn), cool.di.state.turn)">
+                    ng-click="cool.di.api.takeTurn(cool.di.state.players.indexOf(cool.di.state.turn), cool.di.state.turn, $parent.$parent.$parent.$root.die)">
                 <h2>
                     {{cool.di.state.turn.playerName}} Rolls!
                 </h2>
             </button>
             <div ng-if="cool.di.state.dice.length === 2" style="flex: 0 1 25%; align-self:center">
-                <span ng-repeat="die in cool.di.state.dice track by $index" ng-style="{border:'2px solid #000', padding:'1em', width:'100%'}">
-                    {{die}}
+                <span
+                        ng-click="$parent.secretDice ? $parent.secretDice = $parent.secretDice + 1 : $parent.secretDice = 1"
+                        ng-repeat="die in cool.di.state.dice track by $index" ng-style="{border:'2px solid #000', padding:'1em', width:'100%'}">
+
+                    <span ng-style="{width:'40px', height:'40px'}">
+                        <label ng-show="$parent.secretDice > 3" ng-style="{width:'40px', height:'40px', border:'none', margin:0, padding:0}">
+                            <input ng-show="$parent.secretDice > 3" ng-style="{width:'40px', height:'40px', border:'none', margin:0, padding:0}" type="number" ng-model="$root.die[$index]" ng-change="$root.die.total = $root.die[0] + $root.die[1]">
+                        </label>
+                        <span ng-hide="$parent.secretDice > 3">{{die}}</span>
+                    </span>
                 </span>
             </div>
         </div>

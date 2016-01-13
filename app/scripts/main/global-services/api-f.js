@@ -27,6 +27,7 @@ angular.module('cool')
 			movePlayer: function (player) {
 				var startingSpace = player.currentPosition;
 				var currentRoll = State.currentRoll;
+				State.direction = true;
 				function pass() {
 					if (player.currentPosition === 17 || player.currentPosition === 32 || player.currentPosition === 50) {
 						console.log('the pass is real');
@@ -50,11 +51,11 @@ angular.module('cool')
 				}
 				function chooseDirection() {
 					console.log('choosing direction');
-					State.direction = $window.confirm(player.playerName + ' rolled ' + State.currentRoll + '. Press OK to move forward. CANCEL to move backwards');
+					State.direction = (player.currentPosition - State.currentRoll > 0 || player.currentPosition === 11 ) ? $window.confirm(player.playerName + ' rolled ' + State.currentRoll + '. Press OK to move forward. CANCEL to move backwards'): true;
 				}
 				function move(direction) {
 					console.warn('moving', direction);
-					direction ? player.currentPosition = player.currentPosition + 1 :
+					direction === true ? player.currentPosition = player.currentPosition + 1 :
 						player.currentPosition = player.currentPosition - 1;
 				}
 				api.message({header: player.playerName + ' is on ' + startingSpace, text: 'Rolled a ' + currentRoll});
@@ -77,6 +78,7 @@ angular.module('cool')
 						player.currentPosition = 51;}
 
 					// Check for circles
+
 					// 11-23
 					else if (player.currentPosition === 11 && startingSpace <= 11){
 						console.warn('player.currentPosition === 11 && startingSpace <= 11');
@@ -91,11 +93,16 @@ angular.module('cool')
 						console.warn('player.currentPosition === 23');
 						State.direction ? (player.currentPosition = 11) : move(State.direction);
 					}
+					else if (player.currentPosition > 10 && player.currentPosition < 24){
+						!State.chooseDirection ? (State.direction = chooseDirection(), State.chooseDirection = true): State.direction;
+						console.warn('player.currentPosition > 10 && player.currentPosition < 24');
+						move(State.direction);
+					}
 					// 25-37
 					else if (player.currentPosition === 25 && startingSpace <= 25) {
 						console.warn('player.currentPosition === 25 && startingSpace <= 25');
 						State.direction = chooseDirection();
-						!State.direction ? (player.currentPosition = 37) : move(State.direction);
+						State.direction === false ? (player.currentPosition = 37) : move(State.direction);
 					}
 					else if (player.currentPosition === 25 && startingSpace > 25) {
 						console.warn('player.currentPosition === 25 && startingSpace > 25');
@@ -103,16 +110,19 @@ angular.module('cool')
 					}
 					else if (player.currentPosition === 37) {
 						console.warn('player.currentPosition === 37');
-						State.direction ? (player.currentPosition = 25) : move(State.direction);
+						State.direction ? (player.currentPosition = 25) : move();
 					}
 
+
 					// Check for gaps
+
 					// 24
 					else if (player.currentPosition === 24){
 						console.warn('player.currentPosition === 24');
 						State.direction = true;
 						move(State.direction);
 					}
+
 					// 38-40
 					else if (player.currentPosition >= 38 && player.currentPosition < 41){
 						console.warn('player.currentPosition >= 38 && player.currentPosition < 41');
@@ -122,7 +132,7 @@ angular.module('cool')
 
 					// Check for sunglasses space
 					else if (player.currentPosition > 50 && startingSpace !== 50){
-						player.currentPosition = 49;
+						player.currentPosition = 41;
 						break;
 					}
 					else if (startingSpace === 49 && player.currentPosition === 49){
@@ -257,6 +267,7 @@ angular.module('cool')
 					api.message({header:'Winner!!', text: player.playerName + ' wins the game.'});
 					State.gameStarted = false;
 				}
+				State.chooseDirection = false;
 			},
 			message: function (message) {
 				console.info(message.header, message.text);
