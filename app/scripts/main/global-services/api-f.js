@@ -104,6 +104,9 @@ angular.module('cool')
 						State.direction = chooseDirection();
 						State.direction === false ? (player.currentPosition = 37) : move(State.direction);
 					}
+					else if(player.currentPosition === 24){
+						move(true);
+					}
 					else if (player.currentPosition === 25 && startingSpace > 25) {
 						console.warn('player.currentPosition === 25 && startingSpace > 25');
 						!State.direction ? (player.currentPosition = 37) : move(State.direction);
