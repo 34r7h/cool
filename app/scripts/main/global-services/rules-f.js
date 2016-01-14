@@ -9,12 +9,6 @@ angular.module('cool')
     .factory('Rules', function (State)
     {
         'use strict';
-
-        // INITIALIZATION
-        // console.log('Rules Service: Is it cool?');
-
-
-        // ACTUAL DEFINITION
         var rules = {
             // checks the current State to apply various rules
             turnLogic: function (player, roll, position) {

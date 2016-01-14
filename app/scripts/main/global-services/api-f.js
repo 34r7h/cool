@@ -9,11 +9,6 @@ angular.module('cool')
 	.factory('Api', function ($state, State, $window, Models) {
 		'use strict';
 
-		// INITIALIZATION
-		// console.log('Api: Is it cool?');
-
-
-		// ACTUAL DEFINITION
 		var api = {
 			nextPlayer: function (key) {
 				if (State.players[key + 1]) {
@@ -28,40 +23,16 @@ angular.module('cool')
 				var startingSpace = player.currentPosition;
 				var currentRoll = State.currentRoll;
 				State.direction = true;
-				/*function pass() {
-					if (player.currentPosition === 17 || player.currentPosition === 32 || player.currentPosition === 50) {
-						console.log('the pass is real');
-						switch (player.currentPosition) {
-							case 17:
-								console.log('17!');
-								break;
-							case 32:
-								console.log('32!');
-								break;
-							case 50:
-								console.log('50!');
-								break;
-						}
-						var passable = true;
-						api.message({header: player.playerName, text: 'can pass!'})
-					} else {
-						console.log('no can pass');
-					}
-					return passable;
-				}*/
 				function chooseDirection() {
-					console.log('choosing direction');
+					api.message({header:player.playerName, text:'choose direction!'});
 					return State.direction = $window.confirm(player.playerName + ' rolled ' + State.currentRoll + '. Press OK to move forward. CANCEL to move backwards');
 				}
 				function move(direction) {
-					console.warn('moving', direction);
+					api.message('moving', direction ?'up':'down');
 					direction ? player.currentPosition = player.currentPosition + 1 :
 						player.currentPosition = player.currentPosition - 1;
 				}
 				api.message({header: player.playerName + ' is on ' + startingSpace, text: 'Rolled a ' + currentRoll});
-				/*if(player.currentPosition !== 49 || (player.currentPosition > 10 && player.currentPosition < 24 && player.currentPosition !== 17) || (player.currentPosition > 24 && player.currentPosition < 38 && player.currentPosition !== 32)){
-					State.direction = chooseState.direction();
-				}*/
 
 				for (var x = 0; x < State.currentRoll; x++) {
 
@@ -70,26 +41,13 @@ angular.module('cool')
 						(startingSpace === 17 && player.currentPosition === 17) ||
 						(startingSpace === 32 && player.currentPosition === 32) ||
 						(startingSpace === 50 && player.currentPosition === 50)) {
-						console.log(player.playerName, 'passing');
+						api.message({header:player.playerName, text:'passing'});
 						switch(player.currentPosition){
 							case 17: player.currentPosition = 24; break;
 							case 32: player.currentPosition = 38; break;
 							case 50: player.currentPosition = 51; break;
 						}
 					}
-					/*
-					if(startingSpace === 17 && player.currentPosition === 17){
-						console.warn('startingSpace === 17');
-						player.currentPosition = 24;}
-					else if (startingSpace === 32 && player.currentPosition === 32){
-						console.warn('startingSpace === 32');
-						player.currentPosition = 38;}
-					else if (startingSpace === 50 && player.currentPosition === 50){
-						console.warn('startingSpace === 50');
-						player.currentPosition = 51;}
-					else {
-						console.log('No Passing');
-					}*/
 					// Check for circles
 					else if (
 						(player.currentPosition > 10 && player.currentPosition < 24 ) ||
@@ -108,71 +66,58 @@ angular.module('cool')
 							default: move(State.direction);
 						}
 					}
+					// default movement
+					else {
+						move(State.direction);
+					}
 					// Fall back if passing the last pass
-					else if ((player.currentPosition > 50 && startingSpace < 50) || player.currentPosition > 58){
+				if ((player.currentPosition > 50 && startingSpace !== 50) || player.currentPosition > 58){
 						player.currentPosition = 41;
 						break;
 					}
-					// default movement
-					else {
-						console.warn('default movement');
-						move(State.direction);
-					}
-
 				}
+
 			},
 			rollDice: function (first, second) {
-				first || second ? console.log('%s cheats', 'background:red;color:white;'):null;
 				// Random roll of two dice, with up to 4 players.
 				// One set of sie per corner.
 				var total = 0;
 				var doubles = false;
 				var firstDie = Math.floor(Math.random() * 6) + 1;
 				State.dice[0] = first || firstDie;
-				// console.log('rolling first die...', firstDie);
 				var secondDie = Math.floor(Math.random() * 6) + 1;
 				State.dice[1] = second || secondDie;
 				firstDie === secondDie ? doubles = true : null;
 				(first === second) && (first + second > 1) ? doubles = true : null;
-				// console.log('second die...', secondDie);
 				total = (first + second || firstDie + secondDie);
-				// console.log('total roll', total);
 				State.currentRoll = total;
 				api.message({header: State.turn.playerName + ' Rolls ', text: State.dice});
 				return {total: total, doubles: doubles};
 			},
 			startGame: function (players) {
 				// Chooses players and initiates a new game.
-				// console.log('startGame()', players);
 				State.players = [];
 				var playerRolls = {};
 				var rollPlayers = {};
 				for (var x = 0; x < players; x++) {
-					console.log('startGame() - get names', x);
 					var playerName = $window.prompt('What is player ' + (x + 1) + '\'s name?');
 					State.players.push({playerName: playerName, currentPosition: 1});
 				}
 				angular.forEach(State.players, function (player, key) {
-					console.info(key, player);
 					var startingRoll = api.rollDice().total;
-					console.info(rollPlayers[startingRoll]);
 					if (rollPlayers[startingRoll]) {
 						var newRoll = api.rollDice().total;
 						while (rollPlayers[newRoll]) {
-							console.error('Tied! Rolling Again');
-							console.info('player ' + player.playerName + ' has rolled the same and will now re-roll');
 							newRoll = api.rollDice().total;
 						}
 						rollPlayers[newRoll] = player.playerName;
 						playerRolls[player.playerName] = newRoll;
-
 					} else {
-						console.info(player.playerName + ' has rolled ' + startingRoll);
+						api.message({header: player.playerName, text: 'has rolled ' + startingRoll});
 						rollPlayers[startingRoll] = player.playerName;
 						playerRolls[player.playerName] = startingRoll;
 					}
 				});
-				console.log(playerRolls);
 				var scores = [];
 				var playerOrder = [];
 				angular.forEach(playerRolls, function (score, player) {
@@ -184,7 +129,6 @@ angular.module('cool')
 				angular.forEach(scores, function (score) {
 					playerOrder.unshift({currentPosition: 1, playerName: rollPlayers[score]});
 				});
-				console.log('%c', playerOrder, 'color:#00ff00');
 				var playerColors = ['lightPurple', 'lightOrange', 'lightBlue', 'lightGreen', 'lightYellow', 'lightPink', 'pink'];
 
 				angular.forEach(playerOrder, function (player) {
@@ -195,7 +139,6 @@ angular.module('cool')
 				State.players = playerOrder;
 
 				State.turn = playerOrder[0];
-				console.log('%c Game ready to begin. Player ' + playerOrder[0].playerName + ' goes first.', 'font-size:2em');
 				api.message({
 					text: playerOrder[0].playerName + ' goes first.',
 					header: 'Game ready to begin.'
@@ -211,7 +154,6 @@ angular.module('cool')
 				var cool = false;
 				var playerRoll = dice ? api.rollDice(dice[0],dice[1]): api.rollDice();
 				if (typeof player.currentPosition !== 'number') {
-					console.log('not a number');
 					playerRoll.doubles ? player.currentPosition = 1 : api.nextPlayer(key);
 					return;
 				}
@@ -220,17 +162,16 @@ angular.module('cool')
 					(api.card(key), cool = true) :
 					Models.spaces[player.currentPosition] === 'trap' ?
 						(
-							console.log('Its a trap!!'),
 								api.message({text: 'Oh no, ' + player.playerName + ' sent back to start!', header: 'It\'s a trap!!'}),
 								api.goHome(player)
 						) :
 						null;
 				if (playerRoll.doubles === true) {
-					console.log('player ' + player.playerName + ' goes again.');
 					api.message({
 						text: player.playerName + ' goes again.',
 						header: 'Doubles!!'
 					});
+					playerRoll.doubles = false;
 				} else {
 					api.message({text: 'next player is up.', header: player.playerName + 's turn is over'});
 					!cool ? api.nextPlayer(key) : null;
@@ -240,7 +181,6 @@ angular.module('cool')
 					api.message({header:'Winner!!', text: player.playerName + ' wins the game.'});
 					State.gameStarted = false;
 				}
-				// State.chooseDirection = false;
 			},
 			message: function (message) {
 				console.info(message.header, message.text);
@@ -269,10 +209,8 @@ angular.module('cool')
 				});
 				api.nextPlayer(State.players.indexOf(player));
 				State.players.splice(playerIndex, 1);
-				// State.turn = playerIndex>0?State.players[playerIndex+1]:State.players[0];
 			},
 			goPass: function (player) {
-				console.log('getting a pass, ya baby!!');
 				api.message({text: 'Getting a pass, finishing fast!!', header: player.playerName + ' is lucky.'});
 				if(player.currentPosition < 24){player.currentPosition = 17}
 				else if(player.currentPosition >= 24 && player.currentPosition < 38){player.currentPosition = 32}
@@ -298,22 +236,5 @@ angular.module('cool')
 				api.nextPlayer(State.players.indexOf(player));
 			}
 		};
-
-		/* Rollin to Start
-		 var playerRoll = this.rollDice();
-		 alert('player ' + playerName + ' rolled ' + playerRoll + '!');
-		 playerStartRolls[playerRoll] = playerName;
-		 if (x == 0) {
-		 console.log('first player auto starts');
-		 turnOrder = [{[playerName]: playerRoll}];
-		 console.log('player 1', turnOrder);
-		 } else {
-		 if (playerRoll > turnOrder[x-1][Object.keys(turnOrder[x - 1])]) {
-		 turnOrder.insert((x - 1), {[playerName]: playerRoll});
-		 console.log(turnOrder);
-		 } else if(playerRoll == turnOrder[x-1][Object.keys(turnOrder[x - 1])]) {
-		 console.log('tied!');
-		 }
-		 }*/
 		return api;
 	});
