@@ -91,7 +91,7 @@ angular.module('cool')
 				(first === second) && (first + second > 1) ? doubles = true : null;
 				total = (first + second || firstDie + secondDie);
 				State.currentRoll = total;
-				api.message({header: State.turn.playerName + ' Rolls ', text: State.dice});
+				State.turn.playerName ? api.message({header: State.turn.playerName + ' Rolls ', text: State.dice}) : null;
 				return {total: total, doubles: doubles};
 			},
 			startGame: function (players) {
