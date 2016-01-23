@@ -10,6 +10,15 @@ angular.module('cool')
 		'use strict';
 
 		var api = {
+			tForm: function (tForm) {
+				var tFormString = '';
+				angular.forEach(tForm, function (form, key) {
+					console.log(form, key);
+					tFormString += key+'('+form+') ';
+				});
+				console.log(tFormString);
+				return tFormString;
+			},
 			nextPlayer: function (key) {
 				if (State.players[key + 1]) {
 					api.message({text: 'moving on', header: 'Next Player ' + State.players[key + 1].playerName});

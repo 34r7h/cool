@@ -1,7 +1,10 @@
-<messages style="width:100%"></messages>
-<h4>
+<!--<h4>
     <a ui-sref="cool">Is it Cool?</a>
-</h4>
+</h4>-->
+<div class="start" ng-style="{display:'flex', maxHeight:'90vh'}">
+    <ui-view></ui-view>
+</div>
+<div ng-style="{position:'fixed', top:'90vh'}">
 <div ng-style="{display:'flex', width:'100vw'}">
     <div style="flex: 1 1 100%" ng-if="cool.di.state.players.length > 0">
 
@@ -34,9 +37,6 @@
         </div>
     </div>
 </div>
-<div class="start" ng-style="{display:'flex'}">
-    <ui-view></ui-view>
-</div>
 <div>
     <div ng-if="!cool.di.state.gameStarted"><h1>Start Game</h1>
         <button ng-click="cool.di.api.startGame(1)">1 Player</button>
@@ -57,3 +57,4 @@
             <b>{{key}}: </b>{{di}}
         </p></debug>
 </div>
+<messages style="width:100%"></messages></div>
