@@ -107,12 +107,10 @@ angular.module('cool')
 				var total = 0;
 				var doubles = false;
 				var firstDie = Math.floor(Math.random() * 6) + 1;
-				State.dice[0] = first || firstDie;
 				var secondDie = Math.floor(Math.random() * 6) + 1;
-				State.dice[1] = second || secondDie;
-				firstDie === secondDie ? doubles = true : null;
-				(first === second) && (first + second > 1) ? doubles = true : null;
-				total = (first + second || firstDie + secondDie);
+				first || second ? (State.dice[0] = first, State.dice[1] = second) : (State.dice[0] = firstDie, State.dice[1] = secondDie);
+				State.dice[0] === State.dice[1] ? doubles = true : null;
+				total = State.dice[0]+State.dice[1];
 				State.currentRoll = total;
 				State.turn.playerName ? api.message({header: State.turn.playerName + ' Rolls ', text: State.dice}) : null;
 				return {total: total, doubles: doubles};

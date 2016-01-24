@@ -11,10 +11,11 @@
                         <polygon points="{{points || '0,0 0,10 10,10 10,0 0,0'}}" stroke="black" fill="{{bgColor || 'gray'}}"></polygon>
 
                         <circle
+                                style="background: {{cool.di.models.colors[player.color]}}"
                                 cx="{{(cool.di.api.toNumber(points.split(' ')[0].split(',')[0]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[0]))/4}}"
                                 cy="{{(cool.di.api.toNumber(points.split(' ')[0].split(',')[1]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[1]))/4}}"
                                 r="15"
-                                fill="{{player.color}}"
+                                fill="{{cool.di.models.colors[player.color]}}"
                                 ng-repeat="(playerKey, player) in cool.di.state.players"
                                 ng-if="player.currentPosition == space"></circle>
 
