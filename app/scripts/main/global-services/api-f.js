@@ -31,7 +31,6 @@ angular.module('cool')
 						vPx = Math.floor(($window.innerHeight / 100) * y);
 					pointsStr += hPx +','+vPx+' ';
 				}) : null;
-				console.log(pointsStr);
 				return pointsStr.length > 0 ? pointsStr : null;
 			},
 			nextPlayer: function (key) {
