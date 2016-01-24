@@ -47,11 +47,10 @@ angular.module('cool')
 
     });
 
-var coolCtrl = function (State, Rules, Api, Models) {
+var coolCtrl = function (State, Rules, Api, Models, $window, $sce) {
     'use strict';
     var vm = this;
-    vm.di = {state: State, rules:Rules, api:Api, models:Models};
-    // console.log(vm.di);
+    vm.di = {state: State, rules:Rules, api:Api, models:Models, window:$window, sce: $sce};
     vm.cool = 'very';
     // console.log('coolCtrl: Is it '+vm.cool+' cool?');
 };

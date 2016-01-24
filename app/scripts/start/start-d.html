@@ -1,6 +1,18 @@
 <!--<h4>
     <a ui-sref="cool">Is it Cool?</a>
 </h4>-->
+<debug ng-style="{position:'absolute', background: 'rgba(255,255,255,.8)', top:0, left:0}">
+    <h4>View Size</h4>
+    {{cool.di.window.innerWidth}}px * {{cool.di.window.innerHeight}}px
+    <h4>Methods</h4>
+    <button ng-click="cool.di.api.rollDice()">Roll Dice</button>
+    <button ng-click="cool.di.api.message({text:'yo', header:'I\'m new in town :)'})">Message</button>
+    <button ng-click="cool.di.api.routePlayer('board', 'space', 'hello')">Route Player</button>
+    <button ng-click="cool.di.api.startGame(2)"> Start Game</button>
+    <h4>Direct Injections</h4>
+    <p ng-repeat="(key, di) in cool.di">
+        <b>{{key}}: </b>{{di}}
+    </p></debug>
 <div class="start" ng-style="{display:'flex', maxHeight:'90vh'}">
     <ui-view></ui-view>
 </div>
@@ -46,15 +58,5 @@
     </div>
     <card></card>
     <button ng-click="$root.debug =! $root.debug">Debug?</button>
-    <debug>
-        <h4>Methods</h4>
-        <button ng-click="cool.di.api.rollDice()">Roll Dice</button>
-        <button ng-click="cool.di.api.message({text:'yo', header:'I\'m new in town :)'})">Message</button>
-        <button ng-click="cool.di.api.routePlayer('board', 'space', 'hello')">Route Player</button>
-        <button ng-click="cool.di.api.startGame(2)"> Start Game</button>
-        <h4>Direct Injections</h4>
-        <p ng-repeat="(key, di) in cool.di">
-            <b>{{key}}: </b>{{di}}
-        </p></debug>
 </div>
 <messages style="width:100%"></messages></div>

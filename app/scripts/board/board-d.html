@@ -1,26 +1,28 @@
 <div class="board"> <!--ng-if="cool.di.state.gameStarted"-->
-    <div>
-        <!--<span ng-repeat="(key,space) in cool.di.models.spaces" style="padding:1em; background:#000; margin:2px; color:mintcream; background:{{cool.di.models.sections.indexOf()}};float:left">
-            {{key}}
-            <div ng-repeat="(playerKey, player) in cool.di.state.players" ng-if="player.currentPosition == key">{{player.playerName}}</div>
-        </span>-->
-        <div ng-repeat="(sectionKey, section) in cool.di.models.sections" ng-style="{position:'absolute',  width:'100%', height:'90%'}">
-            <span
+        <div ng-repeat="(sectionKey, section) in cool.di.models.sections">
+            <div
                     id="space-{{space}}"
                     ng-repeat="space in section"
-                    ng-init="bgColor = cool.di.models.spaces[space].color === 'trap' ? '#900020' : cool.di.models.spaces[space].color === 'cool?' ? 'rgba(230,232,234, 1)': cool.di.models.spaces[space].color === 'pass' ? 'green' : cool.di.models.spaces[space].color"
-                    ng-style="{padding:'.1em', color:'mintcream', background:bgColor, border:'1px solid rgba(0,0,0,.2)', position:'absolute', top: cool.di.models.spaces[space].origin.top, left: cool.di.models.spaces[space].origin.left, transform: cool.di.api.tForm(cool.di.models.spaces[space].tForm), height:'2em', width:'2em'}">
+                    ng-init="
+                    points = cool.di.api.poly(cool.di.models.spaces[space].poly);
+                    bgColor = cool.di.models.spaces[space].color === 'trap' ? '#900020' : cool.di.models.spaces[space].color === 'cool?' ? 'rgba(230,232,234, 1)': cool.di.models.spaces[space].color === 'pass' ? 'green' : cool.di.models.spaces[space].color === 'win' ? 'white' : cool.di.models.spaces[space].color">
+                <svg ng-style="{position:'absolute', background:'none', overflow: 'visible'}">
+                    <g>
+                        <polygon points="{{points || '0,0 0,10 10,10 10,0 0,0'}}" stroke="black" fill="{{bgColor}}"></polygon>
+                        <circle cx="{{points.split(' ')[0].split(',')[0]}}" cy="{{points.split(' ')[0].split(',')[1]}}" r="15" fill="{{player.color}}" ng-repeat="(playerKey, player) in cool.di.state.players" ng-if="player.currentPosition == space"></circle>
+                        <text
+                                style="text-shadow: white 1px -1px 0"
+                                text-anchor="middle"
+                                ng-if="(cool.di.models.spaces[space].color == 'cool?') || (cool.di.models.spaces[space].color == 'win') || (cool.di.models.spaces[space].color == 'pass') || (cool.di.models.spaces[space].color == 'trap')"
+                                x="{{(cool.di.api.toNumber(points.split(' ')[0].split(',')[0]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[0]))/4}}"
+                                y="{{(cool.di.api.toNumber(points.split(' ')[0].split(',')[1]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[1]))/4}}">
+                            {{$parent.cool.di.models.spaces[space].color}}
+                        </text>
 
-                <b ng-style="{color: cool.di.models.spaces[space].color === 'cool?' ? 'black' : 'initial'}">
-                    {{cool.di.models.spaces[space].color === 'cool?' ? 'Cool?' : cool.di.models.spaces[space].color === 'trap' ? 'Trap' : ''}}
-                </b>
+                    </g>
 
-                <div ng-repeat="(playerKey, player) in cool.di.state.players" ng-if="player.currentPosition == space"
-                     ng-style="{background:cool.di.models.colors[player.color], padding:'.1em', borderRadius:'1em', boxShadow: '1px 1px 1px black', zIndex:10000}">
-                    {{player.playerName}}
-                </div>
-            </span>
+                </svg>
+            </div>
         </div>
-    </div>
     <ui-view></ui-view>
 </div>

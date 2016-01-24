@@ -10,6 +10,7 @@ angular.module('cool')
 		'use strict';
 
 		var api = {
+			toNumber: function(num){return parseInt(num, 10)},
 			tForm: function (tForm) {
 				var tFormString = '';
 				angular.forEach(tForm, function (form, key) {
@@ -18,6 +19,20 @@ angular.module('cool')
 				});
 				console.log(tFormString);
 				return tFormString;
+			},
+			poly: function(points){
+				var pointsStr = '';
+				points ?
+				angular.forEach(points.split(' '), function (point) {
+					var x = point.split(',')[0],
+						y = point.split(',')[1];
+					console.log(x,y);
+					var hPx = Math.floor(($window.innerWidth / 100) * x),
+						vPx = Math.floor(($window.innerHeight / 100) * y);
+					pointsStr += hPx +','+vPx+' ';
+				}) : null;
+				console.log(pointsStr);
+				return pointsStr.length > 0 ? pointsStr : null;
 			},
 			nextPlayer: function (key) {
 				if (State.players[key + 1]) {
