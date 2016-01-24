@@ -181,9 +181,9 @@ angular.module('cool')
 					return;
 				}
 				api.movePlayer(player, playerRoll.total);
-				Models.spaces[player.currentPosition] === 'cool?' ?
+				Models.spaces[player.currentPosition].color === 'cool?' ?
 					(api.card(key), cool = true) :
-					Models.spaces[player.currentPosition] === 'trap' ?
+					Models.spaces[player.currentPosition].color === 'trap' ?
 						(
 								api.message({text: 'Oh no, ' + player.playerName + ' sent back to start!', header: 'It\'s a trap!!'}),
 								api.goHome(player)

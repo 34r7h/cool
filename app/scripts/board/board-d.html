@@ -5,15 +5,24 @@
                     ng-repeat="space in section"
                     ng-init="
                     points = cool.di.api.poly(cool.di.models.spaces[space].poly);
-                    bgColor = cool.di.models.spaces[space].color === 'trap' ? '#900020' : cool.di.models.spaces[space].color === 'cool?' ? 'rgba(230,232,234, 1)': cool.di.models.spaces[space].color === 'pass' ? 'green' : cool.di.models.spaces[space].color === 'win' ? 'white' : cool.di.models.spaces[space].color">
+                    bgColor = cool.di.models.spaces[space].color === 'trap' ? '#900020' : cool.di.models.spaces[space].color === 'cool?' ? 'rgba(230,232,234, 1)': cool.di.models.spaces[space].color === 'pass' ? 'green' : cool.di.models.spaces[space].color === 'win' ? 'white' : (cool.di.models.spaces[space].color === 'work')||(cool.di.models.spaces[space].color === 'school')||(cool.di.models.spaces[space].color === 'jail') ? 'gray' :cool.di.models.spaces[space].color">
                 <svg ng-style="{position:'absolute', background:'none', overflow: 'visible'}">
                     <g>
-                        <polygon points="{{points || '0,0 0,10 10,10 10,0 0,0'}}" stroke="black" fill="{{bgColor}}"></polygon>
-                        <circle cx="{{points.split(' ')[0].split(',')[0]}}" cy="{{points.split(' ')[0].split(',')[1]}}" r="15" fill="{{player.color}}" ng-repeat="(playerKey, player) in cool.di.state.players" ng-if="player.currentPosition == space"></circle>
+                        <polygon points="{{points || '0,0 0,10 10,10 10,0 0,0'}}" stroke="black" fill="{{bgColor || 'gray'}}"></polygon>
+
+                        <circle
+                                cx="{{(cool.di.api.toNumber(points.split(' ')[0].split(',')[0]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[0]))/4}}"
+                                cy="{{(cool.di.api.toNumber(points.split(' ')[0].split(',')[1]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[1]))/4}}"
+                                r="15"
+                                fill="{{player.color}}"
+                                ng-repeat="(playerKey, player) in cool.di.state.players"
+                                ng-if="player.currentPosition == space"></circle>
+
                         <text
-                                style="text-shadow: white 1px -1px 0"
+                                fill="{{cool.di.models.spaces[space].textColor||'black' }}"
+                                style="text-shadow: white 1px -1px 0; z-index:10000; position: fixed;"
                                 text-anchor="middle"
-                                ng-if="(cool.di.models.spaces[space].color == 'cool?') || (cool.di.models.spaces[space].color == 'win') || (cool.di.models.spaces[space].color == 'pass') || (cool.di.models.spaces[space].color == 'trap')"
+                                ng-if="(cool.di.models.spaces[space].color == 'cool?') || (cool.di.models.spaces[space].color == 'win') || (cool.di.models.spaces[space].color == 'pass') || (cool.di.models.spaces[space].color == 'trap')|| (cool.di.models.spaces[space].color == 'school') || (cool.di.models.spaces[space].color == 'work') || (cool.di.models.spaces[space].color == 'jail')"
                                 x="{{(cool.di.api.toNumber(points.split(' ')[0].split(',')[0]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[0]))/4}}"
                                 y="{{(cool.di.api.toNumber(points.split(' ')[0].split(',')[1]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[1]))/4}}">
                             {{$parent.cool.di.models.spaces[space].color}}
