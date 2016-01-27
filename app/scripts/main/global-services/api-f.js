@@ -26,7 +26,6 @@ angular.module('cool')
 				angular.forEach(points.split(' '), function (point) {
 					var x = point.split(',')[0],
 						y = point.split(',')[1];
-					console.log(x,y);
 					var hPx = Math.floor(($window.innerWidth / 100) * x),
 						vPx = Math.floor(($window.innerHeight / 100) * y);
 					pointsStr += hPx +','+vPx+' ';
@@ -34,13 +33,14 @@ angular.module('cool')
 				return pointsStr.length > 0 ? pointsStr : null;
 			},
 			nextPlayer: function (key) {
-				if (State.players[key + 1]) {
-					api.message({text: 'moving on', header: 'Next Player ' + State.players[key + 1].playerName});
-					State.turn = State.players[key + 1];
-				} else {
-					api.message({text: 'moving on', header: 'Next Player ' + State.players[0].playerName});
-					State.turn = State.players[0];
-				}
+					if (State.players[key + 1]) {
+						api.message({text: 'moving on', header: 'Next Player ' + State.players[key + 1].playerName});
+						State.turn = State.players[key + 1];
+					} else {
+						api.message({text: 'moving on', header: 'Next Player ' + State.players[0].playerName});
+						State.turn = State.players[0];
+					}
+
 			},
 			movePlayer: function (player) {
 				var startingSpace = player.currentPosition;
@@ -108,8 +108,8 @@ angular.module('cool')
 				var doubles = false;
 				var firstDie = Math.floor(Math.random() * 6) + 1;
 				var secondDie = Math.floor(Math.random() * 6) + 1;
-				first || second ? (State.dice[0] = first, State.dice[1] = second) : (State.dice[0] = firstDie, State.dice[1] = secondDie);
-				State.dice[0] === State.dice[1] ? doubles = true : null;
+				first || second ? State.dice = [first, second] : State.dice= [firstDie,secondDie];
+				State.dice[0] === State.dice[1] ? doubles = true : doubles = false;
 				total = State.dice[0]+State.dice[1];
 				State.currentRoll = total;
 				State.turn.playerName ? api.message({header: State.turn.playerName + ' Rolls ', text: State.dice}) : null;
@@ -165,6 +165,7 @@ angular.module('cool')
 					header: 'Game ready to begin.'
 				});
 				$state.go('cool.board');
+				State.dice = [0,0];
 				State.gameStarted = true;
 
 			},
@@ -174,6 +175,7 @@ angular.module('cool')
 				api.message({header: player.playerName + ' takes a turn.', text: 'Rolling...'});
 				var cool = false;
 				var playerRoll = dice ? api.rollDice(dice[0],dice[1]): api.rollDice();
+
 				if (typeof player.currentPosition !== 'number') {
 					playerRoll.doubles ? player.currentPosition = 1 : api.nextPlayer(key);
 					return;
