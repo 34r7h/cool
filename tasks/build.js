@@ -61,6 +61,9 @@ gulp.task('copy', function () {
         }))
         .pipe(gulp.dest(config.dist));
 
+    var audio = gulp.src(config.audioF, {base: config.base})
+      .pipe(gulp.dest(config.dist));
+
     var fonts = gulp.src(config.fontsF, {base: config.base})
         .pipe(gulp.dest(config.dist));
 
@@ -72,7 +75,7 @@ gulp.task('copy', function () {
         }))
         .pipe(gulp.dest(config.dist));
 
-    return merge(html, fonts, images);
+    return merge(html, fonts, images, audio);
 });
 
 

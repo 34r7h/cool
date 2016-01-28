@@ -34,15 +34,25 @@
                             stroke="black"
                             style="border:5px solid black"
                     ></image>
+                    <polygon
+                            ng-attr-points="{{cool.di.api.sunglasses(
+                            (cool.di.api.toNumber(points.split(' ')[0].split(',')[0]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[0]))/4, (cool.di.api.toNumber(points.split(' ')[0].split(',')[1]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[1]))/4)}}"
+                            fill="black"
+                            ng-repeat="(playerKey, player) in cool.di.state.players"
+                            ng-if="player.currentPosition == space"
+                            stroke="{{cool.di.models.colors[player.color]}}"
+                            stroke-width="7"
+                    >
+                    </polygon>
 
-                    <circle
+                    <!--<circle
                             style="background: {{cool.di.models.colors[player.color]}}"
                             ng-attr-cx="{{(cool.di.api.toNumber(points.split(' ')[0].split(',')[0]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[0]))/4}}"
                             ng-attr-cy="{{(cool.di.api.toNumber(points.split(' ')[0].split(',')[1]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[1]))/4}}"
                             r="15"
                             fill="{{cool.di.models.colors[player.color]}}"
                             ng-repeat="(playerKey, player) in cool.di.state.players"
-                            ng-if="player.currentPosition == space"></circle>
+                            ng-if="player.currentPosition == space"></circle>-->
 
                     <text
                             fill="{{cool.di.models.spaces[space].textColor || 'black' }}"

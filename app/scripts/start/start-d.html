@@ -18,6 +18,8 @@
 </div>
 <div ng-style="{position:'fixed', top:'55vh', bottom:'95vh'}">
     <div ng-show="cool.di.state.gameStarted" ng-style="{display:'flex', width:'100vw'}">
+        <audio id="game-start" src="audio/lets-go-outsideSolo-short-B.mp3" ></audio>
+        <audio id="turn-start" src="audio/lets-go-outside-20-sec-mix-3-B.mp3" ></audio>
         <div style="flex: 1 1 100%" ng-if="cool.di.state.players.length > 0 ">
             <messages></messages>
             <card></card>
@@ -37,9 +39,15 @@
                     </span>
                     <div ng-if="cool.di.state.gameStarted" ng-style="{display:'flex'}">
                         <span
-                                ng-hide="$parent.secretDice"
+                                ng-show="cool.di.state.liveTurn"
                                 ng-if="player.playerName == cool.di.state.turn.playerName"
                                 ng-click="cool.di.api.takeTurn(cool.di.state.players.indexOf(cool.di.state.turn), cool.di.state.turn)"
+                                ng-repeat="die in cool.di.state.dice track by $index"
+                                ng-style="{border:'2px solid #000', padding:'1em', backgroundColor:'white', background:'url('+cool.di.models.dice[die]+')', backgroundSize:'cover'}">
+                        </span>
+                        <span
+                                ng-hide="$parent.secretDice || cool.di.state.liveTurn"
+                                ng-if="player.playerName == cool.di.state.turn.playerName"
                                 ng-repeat="die in cool.di.state.dice track by $index"
                                 ng-style="{border:'2px solid #000', padding:'1em', backgroundColor:'white', background:'url('+cool.di.models.dice[die]+')', backgroundSize:'cover'}">
                         </span>

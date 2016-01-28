@@ -41,6 +41,8 @@ module.exports = (function () {
         imagesF: base + '/images/**/*.*',
         fonts: base + '/fonts/',
         fontsF: base + '/fonts/**/*.*',
+        audio: base + '/audio/',
+        audioF: base + '/audio/**/*.*',
         tmp: './.tmp',
         dist: 'www',
         wwwDestination: '',
