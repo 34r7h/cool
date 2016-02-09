@@ -10,7 +10,8 @@ angular.module('cool')
 		'use strict';
 
 		var api = {
-			killAudio: function () {
+			killAudio: function (all) {
+				all ? document.getElementById('game-0').currentPosition=0 : all = null;
 				angular.forEach(Models.audio, function ( family, famKey) {
 					angular.forEach(family, function (track, key) {
 						var htmlTrack = document.getElementById(famKey+'-'+key);
