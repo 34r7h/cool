@@ -18,18 +18,16 @@
 </div>
 <div ng-style="{position:'fixed', top:'55vh', bottom:'95vh', width:'100%'}">
     <div ng-show="cool.di.state.gameStarted" ng-style="{display:'flex', width:'100vw'}">
-        <audio id="game-start" src="audio/lets-go-outsideSolo-short-B.mp3" ></audio>
-        <audio id="turn-start" src="audio/lets-go-outside-20-sec-mix-3-B.mp3" ></audio>
         <div style="flex: 1 1 100%" ng-if="cool.di.state.players.length > 0 ">
             <messages></messages>
             <div ng-style="{position:'fixed', bottom:'3em', display:'flex', width:'100%'}">
                 <span ng-repeat="player in cool.di.state.players"
                       ng-style="{
-                      padding:'1em',
-                      margin:'.1em',
+                      padding:'10px',
                       background: cool.di.models.colors[player.color],
                       border: player.playerName === cool.di.state.turn.playerName ? '2px groove black' : 'none',
                       width:'100%',
+                      fontSize:'2em',
                       color: player.playerName === cool.di.state.turn.playerName ? 'white' : 'none',
                       textShadow: player.playerName === cool.di.state.turn.playerName ? '1px 1px 2px black' : 'none',
                       display:'flex', justifyContent:'space-between'}">
@@ -91,4 +89,6 @@
     <button ng-style="{fontWeight:'bolder',fontSize:'2em' }" autofocus ng-click="cool.di.state.gameStarted = false; showReset = !showReset">CONFIRM RESET</button>
 </div>
 <card></card>
-
+<div ng-repeat="(famKey, family) in cool.di.models.audio">
+    <audio id="{{$parent.famKey+'-'+trackKey}}" ng-repeat="(trackKey, track) in family" src="{{track.url + (track.time ? '#t='+track.time : '')}}" loop="{{track.loop}}"></audio>
+</div>

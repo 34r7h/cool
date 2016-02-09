@@ -33,6 +33,22 @@ angular.module('cool')
 		var models = {
 			// Has every possible combination of app renderings
 			// via these elements
+			audio: {
+				game:[
+					{url:'audio/lets-go-outside-Solo-long.mp3', loop:true}
+				],
+				cool:[
+					{url:'audio/lets-go-outside-20-sec-mix-1-A.mp3'},
+					{url:'audio/lets-go-outside-20-sec-mix-1-B.mp3'}
+				],
+				notCool:[
+					{url:'audio/lets-go-outside-20-sec-mix-3-A.mp3'},
+					{url:'audio/lets-go-outside-20-sec-mix-3-B.mp3'}
+				],
+				effects:[
+					{url:'audio/lets-go-outside-Solo-short-A.mp3', time:'0.3,0.5', loop:true}
+				]
+			},
 			player: {
 				name: string,
 				currentPosition: number,
@@ -128,178 +144,6 @@ angular.module('cool')
 					],
 					action: 'goPass',
 					image: '../../../images/pass.jpg'
-				},
-				// Home
-				{
-					topText: [
-						'You\'re always late and',
-						'make people wait'
-					],
-					bottomText: [
-						'That\'s not Cool!',
-						'Too late!',
-						'Go Home!'
-					],
-					action: 'goHome',
-					image: '../../../images/home.jpg'
-				},
-				{
-					topText: [
-						'You got drunk and lost',
-						'your cool, then started',
-						'acting like a fool'
-					],
-					bottomText: [
-						'That\'s not Cool!',
-						'Go Home!'
-					],
-					action: 'goHome',
-					image: '../../../images/home.jpg'
-				},
-				{
-					topText: [
-						'The mirror, mirror on the wall',
-						'said that you didn\'t look',
-						'at it at all!'
-					],
-					bottomText: [
-						'That\'s not Cool!',
-						'Go Back Home!'
-					],
-					action: 'goHome',
-					image: '../../../images/home.jpg'
-				},
-				{
-					topText: [
-						'Mighty mouse lives',
-						'in your house!'
-					],
-					bottomText: [
-						'That\'s not Cool!',
-						'Go Home!',
-						'Clean up your house!'
-					],
-					action: 'goHome',
-					image: '../../../images/home.jpg'
-				},
-				// Death
-				{
-					topText: [
-						'You joined a gang ',
-						'and got shot and died. ',
-						'Then your family cried!'
-					],
-					bottomText: [
-						'That\'s not cool!',
-						'You\'re out of the game!',
-						'Sorry!'
-					],
-					action: 'killPlayer',
-					image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/US_Capitol_Building_at_night_Jan_2006.jpg/1018px-US_Capitol_Building_at_night_Jan_2006.jpg'
-				},
-				// Jail
-				{
-					topText: [
-						'You began abusing drugs',
-						'and started hanging',
-						'out with thugs!'
-					],
-					bottomText: [
-						'That\'s not cool!',
-						'Go to jail!'
-					],
-					action: 'goJail',
-					image: '../../../images/jail.jpg'
-				},
-				{
-					topText: [
-						'You went to the store and stole some rice,',
-						'then got caught and have to pay the price!'
-					],
-					bottomText: [
-						'That\'s not cool!',
-						'Go to jail!'
-					],
-					action: 'goJail',
-					image: '../../../images/jail.jpg'
-				},
-				{
-					topText: [
-						'When you were young, you',
-						'pushed people around and now',
-						'you\'re grown and locked down!'
-					],
-					bottomText: [
-						'That\'s not cool!',
-						'Go to jail!'
-					],
-					action: 'goJail',
-					image: '../../../images/jail.jpg'
-				},
-				{
-					topText: [
-						'You killed someone in a fit',
-						'of rage, and now you\'re',
-						'locked in a cage!'
-					],
-					bottomText: [
-						'That\'s not cool!',
-						'Go to jail!'
-					],
-					action: 'goJail',
-					image: '../../../images/jail.jpg'
-				},
-				// School
-				{
-					topText: [
-						'You quit schooling at',
-						'the age of 2'
-					],
-					bottomText: [
-						'That\'s not Cool!',
-						'Go to School Fool!'
-					],
-					action: 'goSchool',
-					image: '../../../images/school.jpg'
-				},
-				{
-					topText: [
-						'You can\'t even count',
-						'your money, and',
-						'that is not funny'
-					],
-					bottomText: [
-						'That\'s not Cool!',
-						'Go back to School!'
-					],
-					action: 'goSchool',
-					image: '../../../images/school.jpg'
-				},
-				{
-					topText: [
-						'You can\'t read or write!',
-						'But you want to',
-						'party all night!'
-					],
-					bottomText: [
-						'That\'s not Cool!',
-						'Go back to School!'
-					],
-					action: 'goSchool',
-					image: '../../../images/school.jpg'
-				},
-				{
-					topText: [
-						'You have a boss who',
-						'works you like',
-						'a horse!'
-					],
-					bottomText: [
-						'That\'s not Cool!',
-						'Go back to School!'
-					],
-					action: 'goSchool',
-					image: '../../../images/school.jpg'
 				},
 				// Stay
 				{
@@ -475,6 +319,163 @@ angular.module('cool')
 					action: 'null',
 					image: '../../../images/stay.jpg'
 				},
+				// Home
+				{
+					topText: [
+						'You\'re always late and',
+						'make people wait'
+					],
+					bottomText: [
+						'That\'s not Cool!',
+						'Too late!',
+						'Go Home!'
+					],
+					action: 'goHome',
+					image: '../../../images/home.jpg'
+				},
+				{
+					topText: [
+						'You got drunk and lost',
+						'your cool, then started',
+						'acting like a fool'
+					],
+					bottomText: [
+						'That\'s not Cool!',
+						'Go Home!'
+					],
+					action: 'goHome',
+					image: '../../../images/home.jpg'
+				},
+				{
+					topText: [
+						'The mirror, mirror on the wall',
+						'said that you didn\'t look',
+						'at it at all!'
+					],
+					bottomText: [
+						'That\'s not Cool!',
+						'Go Back Home!'
+					],
+					action: 'goHome',
+					image: '../../../images/home.jpg'
+				},
+				{
+					topText: [
+						'Mighty mouse lives',
+						'in your house!'
+					],
+					bottomText: [
+						'That\'s not Cool!',
+						'Go Home!',
+						'Clean up your house!'
+					],
+					action: 'goHome',
+					image: '../../../images/home.jpg'
+				},
+				// Jail
+				{
+					topText: [
+						'You began abusing drugs',
+						'and started hanging',
+						'out with thugs!'
+					],
+					bottomText: [
+						'That\'s not cool!',
+						'Go to jail!'
+					],
+					action: 'goJail',
+					image: '../../../images/jail.jpg'
+				},
+				{
+					topText: [
+						'You went to the store and stole some rice,',
+						'then got caught and have to pay the price!'
+					],
+					bottomText: [
+						'That\'s not cool!',
+						'Go to jail!'
+					],
+					action: 'goJail',
+					image: '../../../images/jail.jpg'
+				},
+				{
+					topText: [
+						'When you were young, you',
+						'pushed people around and now',
+						'you\'re grown and locked down!'
+					],
+					bottomText: [
+						'That\'s not cool!',
+						'Go to jail!'
+					],
+					action: 'goJail',
+					image: '../../../images/jail.jpg'
+				},
+				{
+					topText: [
+						'You killed someone in a fit',
+						'of rage, and now you\'re',
+						'locked in a cage!'
+					],
+					bottomText: [
+						'That\'s not cool!',
+						'Go to jail!'
+					],
+					action: 'goJail',
+					image: '../../../images/jail.jpg'
+				},
+				// School
+				{
+					topText: [
+						'You quit schooling at',
+						'the age of 2'
+					],
+					bottomText: [
+						'That\'s not Cool!',
+						'Go to School Fool!'
+					],
+					action: 'goSchool',
+					image: '../../../images/school.jpg'
+				},
+				{
+					topText: [
+						'You can\'t even count',
+						'your money, and',
+						'that is not funny'
+					],
+					bottomText: [
+						'That\'s not Cool!',
+						'Go back to School!'
+					],
+					action: 'goSchool',
+					image: '../../../images/school.jpg'
+				},
+				{
+					topText: [
+						'You can\'t read or write!',
+						'But you want to',
+						'party all night!'
+					],
+					bottomText: [
+						'That\'s not Cool!',
+						'Go back to School!'
+					],
+					action: 'goSchool',
+					image: '../../../images/school.jpg'
+				},
+				{
+					topText: [
+						'You have a boss who',
+						'works you like',
+						'a horse!'
+					],
+					bottomText: [
+						'That\'s not Cool!',
+						'Go back to School!'
+					],
+					action: 'goSchool',
+					image: '../../../images/school.jpg'
+				},
 				// Work
 				{
 					topText: [
@@ -526,7 +527,22 @@ angular.module('cool')
 					],
 					action: 'goWork',
 					image: '../../../images/work.jpg'
-				}
+				},
+				// Death
+				{
+					topText: [
+						'You joined a gang ',
+						'and got shot and died. ',
+						'Then your family cried!'
+					],
+					bottomText: [
+						'That\'s not cool!',
+						'You\'re out of the game!',
+						'Sorry!'
+					],
+					action: 'killPlayer',
+					image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/US_Capitol_Building_at_night_Jan_2006.jpg/1018px-US_Capitol_Building_at_night_Jan_2006.jpg'
+				},
 			],
 			spaces: {
 				work: {

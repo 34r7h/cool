@@ -10,6 +10,25 @@ angular.module('cool')
 		'use strict';
 
 		var api = {
+			killAudio: function () {
+				angular.forEach(Models.audio, function ( family, famKey) {
+					angular.forEach(family, function (track, key) {
+						var htmlTrack = document.getElementById(famKey+'-'+key);
+						htmlTrack!=='game-0'? (htmlTrack.pause(), htmlTrack.currentPosition = 0) : null;
+					})
+				});
+				document.getElementById('game-0').play();
+			},
+			audio: function (audio, pause) {
+				document.getElementById('game-0').pause();
+				var themeSong = document.getElementById(audio);
+				themeSong.play();
+				$timeout(function () { themeSong.volume = .7; }, 1000);
+				$timeout(function () { themeSong.volume = .4; }, 2000);
+				$timeout(function () { themeSong.volume = .1; }, 3000);
+				pause ? $timeout(function () { themeSong.currentTime = 0; themeSong.pause(); document.getElementById('game-0').play();
+				}, pause) : null;
+			},
 			toNumber: function(num){return parseInt(num,10)},
 /*
 			tForm: function (tForm) {
@@ -38,19 +57,17 @@ angular.module('cool')
 				var pointsStr = '';
 				var sunglasses = '0,0 20,0 24,4 28,4 32,0 56,0 56,32 36,32 28,16 24,16 20,32 0,32 0,0';
 				angular.forEach(sunglasses.split(' '),function (point) {
-					console.log(point);
 					var hPx = api.toNumber(point.split(',')[0]) + x,
 						  vPx = api.toNumber(point.split(',')[1]) + y;
 					pointsStr += hPx +','+vPx+' ';
 
 				});
-				console.log(pointsStr);
 				return pointsStr;
 
 			},
 			nextPlayer: function (key) {
-				document.getElementById('turn-start').pause();
-
+				api.killAudio();
+				api.audio('effects-0', 150);
 				State.liveTurn = false;
 				$timeout(function () {
 					if (State.players[key + 1]) {
@@ -61,8 +78,7 @@ angular.module('cool')
 						State.turn = State.players[0];
 					}
 					State.liveTurn = true;
-				},3000);
-
+				},1500);
 
 			},
 			movePlayer: function (player) {
@@ -139,7 +155,8 @@ angular.module('cool')
 				return {total: total,doubles: doubles};
 			},
 			startGame: function (players) {
-				document.getElementById('game-start').play();
+				document.getElementById('game-0').play();
+				document.getElementById('game-0').volume = .1;
 				// Chooses players and initiates a new game.
 				State.players = [];
 				var playerRolls = {};
@@ -192,11 +209,11 @@ angular.module('cool')
 				State.dice = [0,0];
 				State.gameStarted = true;
 				State.liveTurn = true;
-				document.getElementById('game-start').pause();
+				// document.getElementById('game-0').pause();
 
 			},
 			takeTurn: function (key,player,dice) {
-				document.getElementById('turn-start').play();
+				api.killAudio();
 				State.messages = {};
 				dice ? api.message({header:'Warning',text: player.playerName + ' is a cheat!'}):null;
 				api.message({header: player.playerName + ' takes a turn.',text: 'Rolling...'});
@@ -231,6 +248,10 @@ angular.module('cool')
 					api.message({header:'Winner!!',text: player.playerName + ' wins the game.'});
 					State.gameStarted = false;
 				}
+				$timeout(function () {
+					//document.getElementById('effects-0').pause();
+					//document.getElementById('game-0').play();
+				},3000)
 			},
 			message: function (message) {
 				console.info(message.header,message.text);
@@ -246,6 +267,10 @@ angular.module('cool')
 				api.message({header: 'Getting card',text: 'Is it cool?'});
 				var randomCard = Models.cards[Math.floor(Math.random() * Models.cards.length)];
 				State.card = randomCard;
+
+				(State.card.action === 'goPass') || State.card.action === 'null' ? api.audio('cool-0', 10000) : api.audio('notCool-0', 10000);
+
+				(State.card.action === 'killPlayer') ? api.audio('notCool-1', 10000) : null;
 			},
 			goHome: function (player) {
 				api.message({header: 'Going home',text: player.playerName + 'Is it cool?'});
