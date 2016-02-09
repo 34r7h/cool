@@ -51,20 +51,7 @@ angular.module('cool')
 				image: string
 			},
 			cards: [
-				{
-					topText: [
-						'You went to college',
-						'To be a boss',
-						'Then paid the cost',
-						'To be the boss'
-					],
-					bottomText: [
-						'That\'s cool!',
-						'You can go to pass'
-					],
-					action: 'goPass',
-					background: 'green'
-				},
+				// Pass
 				{
 					topText: [
 						'You applied for a job',
@@ -74,14 +61,133 @@ angular.module('cool')
 					],
 					bottomText: [
 						'That\'s cool!',
-						'Go to pass'
+						'Go 2 Pass'
 					],
 					action: 'goPass',
-					background: 'green'
+					image: '../../../images/pass.jpg'
 				},
 				{
 					topText: [
-						'You joined a gang and got shot and died. Then your family cried!'
+						'You went to college',
+						'To be a boss',
+						'Then paid the cost',
+						'To be the boss'
+					],
+					bottomText: [
+						'That\'s cool!',
+						'Go 2 Pass'
+					],
+					action: 'goPass',
+					image: '../../../images/pass.jpg'
+				},
+				{
+					topText: [
+						'You started choking and',
+						'then quit smoking!'
+					],
+					bottomText: [
+						'That\'s cool!',
+						'Go 2 Pass'
+					],
+					action: 'goPass',
+					image: '../../../images/pass.jpg'
+				},
+				{
+					topText: [
+						'You pushed your car in the past,',
+						'when all you needed was some gas.'
+					],
+					bottomText: [
+						'It\'s cool!',
+						'You get your gas!',
+						'Now go 2 Pass'
+					],
+					action: 'goPass',
+					image: '../../../images/pass.jpg'
+				},
+				{
+					topText: [
+						'You got a job and',
+						'work real hard'
+					],
+					bottomText: [
+						'It\'s cool!',
+						'Go 2 Pass'
+					],
+					action: 'goPass',
+					image: '../../../images/pass.jpg'
+				},
+				{
+					topText: [
+						'You went to college',
+						'and gained some knowledge!'
+					],
+					bottomText: [
+						'It\'s cool!',
+						'Go 2 Pass'
+					],
+					action: 'goPass',
+					image: '../../../images/pass.jpg'
+				},
+				// Home
+				{
+					topText: [
+						'You\'re always late and',
+						'make people wait'
+					],
+					bottomText: [
+						'That\'s not Cool!',
+						'Too late!',
+						'Go Home!'
+					],
+					action: 'goHome',
+					image: '../../../images/home.jpg'
+				},
+				{
+					topText: [
+						'You got drunk and lost',
+						'your cool, then started',
+						'acting like a fool'
+					],
+					bottomText: [
+						'That\'s not Cool!',
+						'Go Home!'
+					],
+					action: 'goHome',
+					image: '../../../images/home.jpg'
+				},
+				{
+					topText: [
+						'The mirror, mirror on the wall',
+						'said that you didn\'t look',
+						'at it at all!'
+					],
+					bottomText: [
+						'That\'s not Cool!',
+						'Go Back Home!'
+					],
+					action: 'goHome',
+					image: '../../../images/home.jpg'
+				},
+				{
+					topText: [
+						'Mighty mouse lives',
+						'in your house!'
+					],
+					bottomText: [
+						'That\'s not Cool!',
+						'Go Home!',
+						'Clean up your house!'
+					],
+					action: 'goHome',
+					image: '../../../images/home.jpg'
+				},
+				// Death
+				{
+					topText: [
+						'You joined a gang ',
+						'and got shot and died. ',
+						'Then your family cried!'
 					],
 					bottomText: [
 						'That\'s not cool!',
@@ -91,35 +197,335 @@ angular.module('cool')
 					action: 'killPlayer',
 					image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/US_Capitol_Building_at_night_Jan_2006.jpg/1018px-US_Capitol_Building_at_night_Jan_2006.jpg'
 				},
+				// Jail
 				{
 					topText: [
-						'Locked in the can.'
+						'You began abusing drugs',
+						'and started hanging',
+						'out with thugs!'
 					],
 					bottomText: [
-						'jailin'
+						'That\'s not cool!',
+						'Go to jail!'
 					],
 					action: 'goJail',
-					image: 'http://www.liberalamerica.org/wp-content/uploads/2015/03/e15243d5-58a2-4215-8989-0d666bbb07d6.jpg'
+					image: '../../../images/jail.jpg'
 				},
 				{
 					topText: [
-						'Locked in the can.'
+						'You went to the store and stole some rice,',
+						'then got caught and have to pay the price!'
 					],
 					bottomText: [
-						'schoolin'
+						'That\'s not cool!',
+						'Go to jail!'
+					],
+					action: 'goJail',
+					image: '../../../images/jail.jpg'
+				},
+				{
+					topText: [
+						'When you were young, you',
+						'pushed people around and now',
+						'you\'re grown and locked down!'
+					],
+					bottomText: [
+						'That\'s not cool!',
+						'Go to jail!'
+					],
+					action: 'goJail',
+					image: '../../../images/jail.jpg'
+				},
+				{
+					topText: [
+						'You killed someone in a fit',
+						'of rage, and now you\'re',
+						'locked in a cage!'
+					],
+					bottomText: [
+						'That\'s not cool!',
+						'Go to jail!'
+					],
+					action: 'goJail',
+					image: '../../../images/jail.jpg'
+				},
+				// School
+				{
+					topText: [
+						'You quit schooling at',
+						'the age of 2'
+					],
+					bottomText: [
+						'That\'s not Cool!',
+						'Go to School Fool!'
 					],
 					action: 'goSchool',
-					image: 'https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwjX4Ji27pvKAhVK5WMKHdKlCl4QjRwIBw&url=http%3A%2F%2Fwww.englishinbritain.co.uk%2Fschool_detail.cfm%3Fschoolid%3D421&bvm=bv.111396085,d.cGc&psig=AFQjCNGI9S-76H1wjc9C80PgZYGiFSy1oA&ust=1452399090198131'
+					image: '../../../images/school.jpg'
 				},
 				{
 					topText: [
-						'Locked in the can.'
+						'You can\'t even count',
+						'your money, and',
+						'that is not funny'
 					],
 					bottomText: [
-						'workin'
+						'That\'s not Cool!',
+						'Go back to School!'
+					],
+					action: 'goSchool',
+					image: '../../../images/school.jpg'
+				},
+				{
+					topText: [
+						'You can\'t read or write!',
+						'But you want to',
+						'party all night!'
+					],
+					bottomText: [
+						'That\'s not Cool!',
+						'Go back to School!'
+					],
+					action: 'goSchool',
+					image: '../../../images/school.jpg'
+				},
+				{
+					topText: [
+						'You have a boss who',
+						'works you like',
+						'a horse!'
+					],
+					bottomText: [
+						'That\'s not Cool!',
+						'Go back to School!'
+					],
+					action: 'goSchool',
+					image: '../../../images/school.jpg'
+				},
+				// Stay
+				{
+					topText: [
+						'You donated to the Homeless in ',
+						'the shelter to help the people',
+						'get out of the weather!'
+					],
+					bottomText: [
+						'That\'s cool!',
+						'You can stay!'
+					],
+					action: 'null',
+					image: '../../../images/stay.jpg'
+				},
+				{
+					topText: [
+						'Yesterday you mopped the floor',
+						'now you\'re happy every time',
+						'you walk through the door!'
+					],
+					bottomText: [
+						'That\'s cool!',
+						'You can stay!'
+					],
+					action: 'null',
+					image: '../../../images/stay.jpg'
+				},
+				{
+					topText: [
+						'You did the favor',
+						'for your neighbor'
+					],
+					bottomText: [
+						'That\'s cool!',
+						'You can stay!'
+					],
+					action: 'null',
+					image: '../../../images/stay.jpg'
+				},
+				{
+					topText: [
+						'You helped an old lady cross',
+						'the street and then you gave',
+						'her something to eat'
+					],
+					bottomText: [
+						'That\'s cool!',
+						'You can stay!'
+					],
+					action: 'null',
+					image: '../../../images/stay.jpg'
+				},
+				{
+					topText: [
+						'You grew up to be 7 feet tall',
+						'and then you played',
+						'NBA Basketball'
+					],
+					bottomText: [
+						'That\'s cool!',
+						'You can stay!'
+					],
+					action: 'null',
+					image: '../../../images/stay.jpg'
+				},
+				{
+					topText: [
+						'You helped your mom out with some money',
+						'and that made your day sunny'
+					],
+					bottomText: [
+						'That\'s cool!',
+						'You can stay!'
+					],
+					action: 'null',
+					image: '../../../images/stay.jpg'
+				},
+				{
+					topText: [
+						'You ran a race and',
+						'took first place!'
+					],
+					bottomText: [
+						'That\'s cool!',
+						'You can stay!'
+					],
+					action: 'null',
+					image: '../../../images/stay.jpg'
+				},
+				{
+					topText: [
+						'You struck gold and don\t',
+						'have to work anymore!'
+					],
+					bottomText: [
+						'That\'s cool!',
+						'You can stay!'
+					],
+					action: 'null',
+					image: '../../../images/stay.jpg'
+				},
+				{
+					topText: [
+						'You\'re a true-blue friend',
+						'until the end!'
+					],
+					bottomText: [
+						'That\'s cool!',
+						'You can stay!'
+					],
+					action: 'null',
+					image: '../../../images/stay.jpg'
+				},
+				{
+					topText: [
+						'You helped your brother',
+						'solve a puzzle!'
+					],
+					bottomText: [
+						'That\'s cool!',
+						'You can stay!'
+					],
+					action: 'null',
+					image: '../../../images/stay.jpg'
+				},
+				{
+					topText: [
+						'You bought a mop and',
+						'you saw your pop!'
+					],
+					bottomText: [
+						'That\'s cool!',
+						'You can stay!'
+					],
+					action: 'null',
+					image: '../../../images/stay.jpg'
+				},
+				{
+					topText: [
+						'You started singing in a',
+						'band and now you have',
+						'twenty-grand $20,000!'
+					],
+					bottomText: [
+						'That\'s cool!',
+						'You can stay!'
+					],
+					action: 'null',
+					image: '../../../images/stay.jpg'
+				},
+				{
+					topText: [
+						'You bought a cat',
+						'and you copt a cap'
+					],
+					bottomText: [
+						'That\'s cool!',
+						'You can stay!'
+					],
+					action: 'null',
+					image: '../../../images/stay.jpg'
+				},
+				{
+					topText: [
+						'You went out West and ',
+						'won a beauty contest!'
+					],
+					bottomText: [
+						'That\'s cool!',
+						'You can stay!'
+					],
+					action: 'null',
+					image: '../../../images/stay.jpg'
+				},
+				// Work
+				{
+					topText: [
+						'You spent your last dime',
+						'on a bottle of wine!'
+					],
+					bottomText: [
+						'That\'s not cool!',
+						'Go to Work!'
 					],
 					action: 'goWork',
-					image: 'https://pixabay.com/static/uploads/photo/2014/07/05/10/31/work-384745_640.jpg'
+					image: '../../../images/work.jpg'
+				},
+				{
+					topText: [
+						'You want to lay in bed all day',
+						'and then wonder why',
+						'you don\'t get paid'
+					],
+					bottomText: [
+						'That\'s not cool!',
+						'Go to Work!'
+					],
+					action: 'goWork',
+					image: '../../../images/work.jpg'
+				},
+				{
+					topText: [
+						'You don\'t even have a dime',
+						'because all you do is',
+						'waste your time!'
+					],
+					bottomText: [
+						'That\'s not cool!',
+						'Go to Work!'
+					],
+					action: 'goWork',
+					image: '../../../images/work.jpg'
+				},
+				{
+					topText: [
+						'You don\'t have a honey',
+						'because you don\'t',
+						'have any money!'
+					],
+					bottomText: [
+						'That\'s not cool!',
+						'Go to Work!'
+					],
+					action: 'goWork',
+					image: '../../../images/work.jpg'
 				}
 			],
 			spaces: {

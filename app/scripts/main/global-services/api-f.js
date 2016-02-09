@@ -11,6 +11,7 @@ angular.module('cool')
 
 		var api = {
 			toNumber: function(num){return parseInt(num,10)},
+/*
 			tForm: function (tForm) {
 				var tFormString = '';
 				angular.forEach(tForm,function (form,key) {
@@ -20,6 +21,7 @@ angular.module('cool')
 				console.log(tFormString);
 				return tFormString;
 			},
+*/
 			poly: function(points){
 				var pointsStr = '';
 				points ?
