@@ -543,6 +543,20 @@ angular.module('cool')
 					action: 'killPlayer',
 					image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/US_Capitol_Building_at_night_Jan_2006.jpg/1018px-US_Capitol_Building_at_night_Jan_2006.jpg'
 				},
+				{
+					topText: [
+						'You got so high',
+						'you couldn\'t come down',
+						'and now you\'re 6 feet',
+						'in the ground.'
+					],
+					bottomText: [
+						'You O\'D',
+						'You\'re out of the game!'
+					],
+					action: 'killPlayer',
+					image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/US_Capitol_Building_at_night_Jan_2006.jpg/1018px-US_Capitol_Building_at_night_Jan_2006.jpg'
+				}
 			],
 			spaces: {
 				work: {
