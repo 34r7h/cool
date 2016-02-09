@@ -80,7 +80,7 @@ angular.module('cool')
 						'Go 2 Pass'
 					],
 					action: 'goPass',
-					image: '../../../images/pass.jpg'
+					image: 'images/pass.jpg'
 				},
 				{
 					topText: [
@@ -94,7 +94,7 @@ angular.module('cool')
 						'Go 2 Pass'
 					],
 					action: 'goPass',
-					image: '../../../images/pass.jpg'
+					image: 'images/pass.jpg'
 				},
 				{
 					topText: [
@@ -106,7 +106,7 @@ angular.module('cool')
 						'Go 2 Pass'
 					],
 					action: 'goPass',
-					image: '../../../images/pass.jpg'
+					image: 'images/pass.jpg'
 				},
 				{
 					topText: [
@@ -119,7 +119,7 @@ angular.module('cool')
 						'Now go 2 Pass'
 					],
 					action: 'goPass',
-					image: '../../../images/pass.jpg'
+					image: 'images/pass.jpg'
 				},
 				{
 					topText: [
@@ -131,7 +131,7 @@ angular.module('cool')
 						'Go 2 Pass'
 					],
 					action: 'goPass',
-					image: '../../../images/pass.jpg'
+					image: 'images/pass.jpg'
 				},
 				{
 					topText: [
@@ -143,7 +143,7 @@ angular.module('cool')
 						'Go 2 Pass'
 					],
 					action: 'goPass',
-					image: '../../../images/pass.jpg'
+					image: 'images/pass.jpg'
 				},
 				// Stay
 				{
@@ -157,7 +157,7 @@ angular.module('cool')
 						'You can stay!'
 					],
 					action: 'null',
-					image: '../../../images/stay.jpg'
+					image: 'images/stay.jpg'
 				},
 				{
 					topText: [
@@ -170,7 +170,7 @@ angular.module('cool')
 						'You can stay!'
 					],
 					action: 'null',
-					image: '../../../images/stay.jpg'
+					image: 'images/stay.jpg'
 				},
 				{
 					topText: [
@@ -182,7 +182,7 @@ angular.module('cool')
 						'You can stay!'
 					],
 					action: 'null',
-					image: '../../../images/stay.jpg'
+					image: 'images/stay.jpg'
 				},
 				{
 					topText: [
@@ -195,7 +195,7 @@ angular.module('cool')
 						'You can stay!'
 					],
 					action: 'null',
-					image: '../../../images/stay.jpg'
+					image: 'images/stay.jpg'
 				},
 				{
 					topText: [
@@ -208,7 +208,7 @@ angular.module('cool')
 						'You can stay!'
 					],
 					action: 'null',
-					image: '../../../images/stay.jpg'
+					image: 'images/stay.jpg'
 				},
 				{
 					topText: [
@@ -220,7 +220,7 @@ angular.module('cool')
 						'You can stay!'
 					],
 					action: 'null',
-					image: '../../../images/stay.jpg'
+					image: 'images/stay.jpg'
 				},
 				{
 					topText: [
@@ -232,7 +232,7 @@ angular.module('cool')
 						'You can stay!'
 					],
 					action: 'null',
-					image: '../../../images/stay.jpg'
+					image: 'images/stay.jpg'
 				},
 				{
 					topText: [
@@ -244,7 +244,7 @@ angular.module('cool')
 						'You can stay!'
 					],
 					action: 'null',
-					image: '../../../images/stay.jpg'
+					image: 'images/stay.jpg'
 				},
 				{
 					topText: [
@@ -256,7 +256,7 @@ angular.module('cool')
 						'You can stay!'
 					],
 					action: 'null',
-					image: '../../../images/stay.jpg'
+					image: 'images/stay.jpg'
 				},
 				{
 					topText: [
@@ -268,7 +268,7 @@ angular.module('cool')
 						'You can stay!'
 					],
 					action: 'null',
-					image: '../../../images/stay.jpg'
+					image: 'images/stay.jpg'
 				},
 				{
 					topText: [
@@ -280,7 +280,7 @@ angular.module('cool')
 						'You can stay!'
 					],
 					action: 'null',
-					image: '../../../images/stay.jpg'
+					image: 'images/stay.jpg'
 				},
 				{
 					topText: [
@@ -293,7 +293,7 @@ angular.module('cool')
 						'You can stay!'
 					],
 					action: 'null',
-					image: '../../../images/stay.jpg'
+					image: 'images/stay.jpg'
 				},
 				{
 					topText: [
@@ -305,7 +305,7 @@ angular.module('cool')
 						'You can stay!'
 					],
 					action: 'null',
-					image: '../../../images/stay.jpg'
+					image: 'images/stay.jpg'
 				},
 				{
 					topText: [
@@ -317,7 +317,7 @@ angular.module('cool')
 						'You can stay!'
 					],
 					action: 'null',
-					image: '../../../images/stay.jpg'
+					image: 'images/stay.jpg'
 				},
 				// Home
 				{
@@ -331,7 +331,7 @@ angular.module('cool')
 						'Go Home!'
 					],
 					action: 'goHome',
-					image: '../../../images/home.jpg'
+					image: 'images/home.jpg'
 				},
 				{
 					topText: [
@@ -344,7 +344,7 @@ angular.module('cool')
 						'Go Home!'
 					],
 					action: 'goHome',
-					image: '../../../images/home.jpg'
+					image: 'images/home.jpg'
 				},
 				{
 					topText: [
@@ -357,7 +357,7 @@ angular.module('cool')
 						'Go Back Home!'
 					],
 					action: 'goHome',
-					image: '../../../images/home.jpg'
+					image: 'images/home.jpg'
 				},
 				{
 					topText: [
@@ -370,7 +370,7 @@ angular.module('cool')
 						'Clean up your house!'
 					],
 					action: 'goHome',
-					image: '../../../images/home.jpg'
+					image: 'images/home.jpg'
 				},
 				// Jail
 				{
@@ -384,7 +384,7 @@ angular.module('cool')
 						'Go to jail!'
 					],
 					action: 'goJail',
-					image: '../../../images/jail.jpg'
+					image: 'images/jail.jpg'
 				},
 				{
 					topText: [
@@ -396,7 +396,7 @@ angular.module('cool')
 						'Go to jail!'
 					],
 					action: 'goJail',
-					image: '../../../images/jail.jpg'
+					image: 'images/jail.jpg'
 				},
 				{
 					topText: [
@@ -409,7 +409,7 @@ angular.module('cool')
 						'Go to jail!'
 					],
 					action: 'goJail',
-					image: '../../../images/jail.jpg'
+					image: 'images/jail.jpg'
 				},
 				{
 					topText: [
@@ -422,7 +422,7 @@ angular.module('cool')
 						'Go to jail!'
 					],
 					action: 'goJail',
-					image: '../../../images/jail.jpg'
+					image: 'images/jail.jpg'
 				},
 				// School
 				{
@@ -435,7 +435,7 @@ angular.module('cool')
 						'Go to School Fool!'
 					],
 					action: 'goSchool',
-					image: '../../../images/school.jpg'
+					image: 'images/school.jpg'
 				},
 				{
 					topText: [
@@ -448,7 +448,7 @@ angular.module('cool')
 						'Go back to School!'
 					],
 					action: 'goSchool',
-					image: '../../../images/school.jpg'
+					image: 'images/school.jpg'
 				},
 				{
 					topText: [
@@ -461,7 +461,7 @@ angular.module('cool')
 						'Go back to School!'
 					],
 					action: 'goSchool',
-					image: '../../../images/school.jpg'
+					image: 'images/school.jpg'
 				},
 				{
 					topText: [
@@ -474,7 +474,7 @@ angular.module('cool')
 						'Go back to School!'
 					],
 					action: 'goSchool',
-					image: '../../../images/school.jpg'
+					image: 'images/school.jpg'
 				},
 				// Work
 				{
@@ -487,7 +487,7 @@ angular.module('cool')
 						'Go to Work!'
 					],
 					action: 'goWork',
-					image: '../../../images/work.jpg'
+					image: 'images/work.jpg'
 				},
 				{
 					topText: [
@@ -500,7 +500,7 @@ angular.module('cool')
 						'Go to Work!'
 					],
 					action: 'goWork',
-					image: '../../../images/work.jpg'
+					image: 'images/work.jpg'
 				},
 				{
 					topText: [
@@ -513,7 +513,7 @@ angular.module('cool')
 						'Go to Work!'
 					],
 					action: 'goWork',
-					image: '../../../images/work.jpg'
+					image: 'images/work.jpg'
 				},
 				{
 					topText: [
@@ -526,7 +526,7 @@ angular.module('cool')
 						'Go to Work!'
 					],
 					action: 'goWork',
-					image: '../../../images/work.jpg'
+					image: 'images/work.jpg'
 				},
 				// Death
 				{
