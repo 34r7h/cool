@@ -4,7 +4,7 @@
                 id="space-{{space}}"
                 ng-repeat="space in section"
                 ng-init="
-                    points = cool.di.api.poly(cool.di.models.spaces[space].poly);
+                    $root.points[space] = cool.di.api.poly(cool.di.models.spaces[space].poly);
                     bgColor =
                     cool.di.models.spaces[space].color === 'trap' ?
                     '#900020' :
@@ -19,24 +19,24 @@
                     (cool.di.models.spaces[space].color === 'jail') ?
                     'url('+cool.di.models.spaces[space].img+')' :
                     cool.di.models.spaces[space].color">
-            <svg ng-style="{position:'absolute', background:'none', overflow: 'visible', clip: 'polygon('+points+')'}">
+            <svg ng-style="{position:'absolute', background:'none', overflow: 'visible', clip: 'polygon('+$root.points[space]+')'}">
                 <g>
                     <polygon ng-if="!cool.di.models.spaces[space].img"
-                             ng-attr-points="{{points || '0,0 0,10 10,10 10,0 0,0'}}" stroke="black"
+                             ng-attr-points="{{$root.points[space] || '0,0 0,10 10,10 10,0 0,0'}}" stroke="black"
                              fill="{{bgColor || 'gray'}}"></polygon>
                     <image
                             ng-if="cool.di.models.spaces[space].img"
                             xlink:href="{{cool.di.models.spaces[space].img}}"
-                            ng-attr-x="{{points.split(' ')[0].split(',')[0]}}"
-                            ng-attr-y="{{points.split(' ')[0].split(',')[1]}}"
-                            ng-attr-height="{{points.split(' ')[2].split(',')[1] - points.split(' ')[0].split(',')[1]}}"
-                            ng-attr-width="{{points.split(' ')[2].split(',')[0] - points.split(' ')[0].split(',')[0]}}"
+                            ng-attr-x="{{$root.points[space].split(' ')[0].split(',')[0]}}"
+                            ng-attr-y="{{$root.points[space].split(' ')[0].split(',')[1]}}"
+                            ng-attr-height="{{$root.points[space].split(' ')[2].split(',')[1] - $root.points[space].split(' ')[0].split(',')[1]}}"
+                            ng-attr-width="{{$root.points[space].split(' ')[2].split(',')[0] - $root.points[space].split(' ')[0].split(',')[0]}}"
                             stroke="black"
                             style="border:5px solid black"
                     ></image>
                     <polygon
                             ng-attr-points="{{cool.di.api.sunglasses(
-                            (cool.di.api.toNumber(points.split(' ')[0].split(',')[0]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[0]))/4, (cool.di.api.toNumber(points.split(' ')[0].split(',')[1]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[1]))/4)}}"
+                            (cool.di.api.toNumber($root.points[space].split(' ')[0].split(',')[0]) + cool.di.api.toNumber($root.points[space].split(' ')[1].split(',')[0])+ cool.di.api.toNumber($root.points[space].split(' ')[2].split(',')[0])+ cool.di.api.toNumber($root.points[space].split(' ')[3].split(',')[0]))/4, (cool.di.api.toNumber($root.points[space].split(' ')[0].split(',')[1]) + cool.di.api.toNumber($root.points[space].split(' ')[1].split(',')[1])+ cool.di.api.toNumber($root.points[space].split(' ')[2].split(',')[1])+ cool.di.api.toNumber($root.points[space].split(' ')[3].split(',')[1]))/4)}}"
                             fill="black"
                             ng-repeat="(playerKey, player) in cool.di.state.players"
                             ng-if="player.currentPosition == space"
@@ -47,8 +47,8 @@
 
                     <!--<circle
                             style="background: {{cool.di.models.colors[player.color]}}"
-                            ng-attr-cx="{{(cool.di.api.toNumber(points.split(' ')[0].split(',')[0]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[0]))/4}}"
-                            ng-attr-cy="{{(cool.di.api.toNumber(points.split(' ')[0].split(',')[1]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[1]))/4}}"
+                            ng-attr-cx="{{(cool.di.api.toNumber($root.points[space].split(' ')[0].split(',')[0]) + cool.di.api.toNumber($root.points[space].split(' ')[1].split(',')[0])+ cool.di.api.toNumber($root.points[space].split(' ')[2].split(',')[0])+ cool.di.api.toNumber($root.points[space].split(' ')[3].split(',')[0]))/4}}"
+                            ng-attr-cy="{{(cool.di.api.toNumber($root.points[space].split(' ')[0].split(',')[1]) + cool.di.api.toNumber($root.points[space].split(' ')[1].split(',')[1])+ cool.di.api.toNumber($root.points[space].split(' ')[2].split(',')[1])+ cool.di.api.toNumber($root.points[space].split(' ')[3].split(',')[1]))/4}}"
                             r="15"
                             fill="{{cool.di.models.colors[player.color]}}"
                             ng-repeat="(playerKey, player) in cool.di.state.players"
@@ -59,8 +59,8 @@
                             style="font-size: {{cool.di.models.spaces[space].img ? 36 : 18}}; text-shadow: {{cool.di.models.spaces[space].img ? '-2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white' : null}}; z-index:10000; position: fixed; background: white"
                             text-anchor="middle"
                             ng-if="(cool.di.models.spaces[space].color == 'cool?') || (cool.di.models.spaces[space].color == 'win') || (cool.di.models.spaces[space].color == 'pass') || (cool.di.models.spaces[space].color == 'trap')|| (cool.di.models.spaces[space].color == 'school') || (cool.di.models.spaces[space].color == 'work') || (cool.di.models.spaces[space].color == 'jail')"
-                            ng-attr-x="{{(cool.di.api.toNumber(points.split(' ')[0].split(',')[0]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[0])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[0]))/4}}"
-                            ng-attr-y="{{(cool.di.api.toNumber(points.split(' ')[0].split(',')[1]) + cool.di.api.toNumber(points.split(' ')[1].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[2].split(',')[1])+ cool.di.api.toNumber(points.split(' ')[3].split(',')[1]))/4}}">
+                            ng-attr-x="{{(cool.di.api.toNumber($root.points[space].split(' ')[0].split(',')[0]) + cool.di.api.toNumber($root.points[space].split(' ')[1].split(',')[0])+ cool.di.api.toNumber($root.points[space].split(' ')[2].split(',')[0])+ cool.di.api.toNumber($root.points[space].split(' ')[3].split(',')[0]))/4}}"
+                            ng-attr-y="{{(cool.di.api.toNumber($root.points[space].split(' ')[0].split(',')[1]) + cool.di.api.toNumber($root.points[space].split(' ')[1].split(',')[1])+ cool.di.api.toNumber($root.points[space].split(' ')[2].split(',')[1])+ cool.di.api.toNumber($root.points[space].split(' ')[3].split(',')[1]))/4}}">
                         {{$parent.cool.di.models.spaces[space].color}}
                     </text>
 

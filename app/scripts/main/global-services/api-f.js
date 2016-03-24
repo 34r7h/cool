@@ -6,7 +6,7 @@
  * Factory in the cool.
  */
 angular.module('cool')
-	.factory('Api',function ($state,State,$window,Models,$timeout) {
+	.factory('Api',function ($state,State,$window,Models,$timeout,$rootScope) {
 		'use strict';
 
 		var api = {
@@ -48,8 +48,8 @@ angular.module('cool')
 				angular.forEach(points.split(' '),function (point) {
 					var x = point.split(',')[0],
 						y = point.split(',')[1];
-					var hPx = Math.floor(($window.innerWidth / 100) * x),
-						vPx = Math.floor(($window.innerHeight / 100) * y);
+					var hPx = Math.floor(($rootScope.screen.width / 100) * x),
+						vPx = Math.floor(($rootScope.screen.height / 100) * y);
 					pointsStr += hPx +','+vPx+' ';
 				}) : null;
 				return pointsStr.length > 0 ? pointsStr : null;
@@ -312,5 +312,18 @@ angular.module('cool')
 				api.nextPlayer(State.players.indexOf(player));
 			}
 		};
+		angular.element($window).bind('resize', function() {
+			console.info('resizing');
+			$rootScope.screen = {
+				width: $window.innerWidth,
+				height: $window.innerHeight
+			};
+			$rootScope.$apply();
+			angular.forEach(Models.sections, function (section, sectionKey) {
+				angular.forEach(section, function (space) {
+					$rootScope.points[space] = api.poly(Models.spaces[space].poly);
+				})
+			})
+		});
 		return api;
 	});
