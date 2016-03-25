@@ -1,0 +1,47 @@
+<div
+        class="fpv"
+        ng-style="{
+        position: 'fixed',
+        zIndex:99999,
+        top:0,
+        bottom:0,
+        left:0,
+        right:0,
+        background:'rgba(255,255,255,.9)'}">
+    This is the fpv directive. <button ng-click="animate = !animate">Click</button>
+    <svg ng-style="{width:'100vw', height:'100vh'}">
+        <g>
+            <polygon
+                    ng-hide="animate"
+                    ng-animate-ref="animate-ref"
+                    class="sunglasses-fpv"
+                    ng-attr-points="{{cool.di.api.toNumber(.38 * $root.screen.width)}},{{cool.di.api.toNumber(.62 * ($root.screen.width >= $root.screen.height ? $root.screen.height:  $root.screen.height /2))}} {{cool.di.api.toNumber(.62 * $root.screen.width)}}, {{cool.di.api.toNumber(.62 * ($root.screen.width >= $root.screen.height ? $root.screen.height:  $root.screen.height /2))}} {{$root.screen.width}},{{$root.screen.width >= $root.screen.height ? $root.screen.height : $root.screen.height / 2}} 0,{{$root.screen.width >= $root.screen.height ? $root.screen.height : $root.screen.height / 2}} "
+                    fill="rgba(0,150,0,.6)"
+                    stroke="white"
+                    stroke-width="7"
+            >
+                <!--<animate id="space-morph" begin="indefinite" dur="2s"  attributeName="points" to="
+                    0,{{cool.di.api.toNumber(1 * ($root.screen.width >= $root.screen.height ? $root.screen.height:  $root.screen.height /2))}} {{cool.di.api.toNumber(1 * $root.screen.width)}},{{cool.di.api.toNumber(1 * ($root.screen.width >= $root.screen.height ? $root.screen.height:  $root.screen.height /2))}} {{$root.screen.width}},{{$root.screen.width >= $root.screen.height ? $root.screen.height : $root.screen.height / 2}} 0,{{$root.screen.width >= $root.screen.height ? $root.screen.height : $root.screen.height / 2}}" ></animate>-->
+
+            </polygon>
+            <polygon
+                    ng-show="animate"
+                    ng-animate-ref="animate-ref"
+                    class="sunglasses-fpv"
+                    ng-attr-points="0,{{cool.di.api.toNumber(.62 * ($root.screen.width >= $root.screen.height ? $root.screen.height:  $root.screen.height /2))}} {{cool.di.api.toNumber(.62 * $root.screen.width)}}, {{cool.di.api.toNumber(.62 * ($root.screen.width >= $root.screen.height ? $root.screen.height:  $root.screen.height /2))}} {{$root.screen.width}},{{$root.screen.width >= $root.screen.height ? $root.screen.height : $root.screen.height / 2}} 0,{{$root.screen.width >= $root.screen.height ? $root.screen.height : $root.screen.height / 2}} "
+                    fill="rgba(150,150,0,.6)"
+                    stroke="blue"
+                    stroke-width="7"
+            ></polygon>
+            <polygon
+                    ng-attr-points="{{cool.di.api.sunglassesFpv(
+                            $root.screen.width, ($root.screen.width >= $root.screen.height ? $root.screen.height : $root.screen.height / 2))}}"
+                    fill="rgba(0,0,0,.6)"
+                    stroke="orange"
+                    stroke-width="7"
+            >
+            </polygon>
+        </g>
+    </svg>
+</div>
+
