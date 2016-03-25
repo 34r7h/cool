@@ -7,6 +7,14 @@
  * Routes module. All app states are defined here.
  */
 
+var coolCtrl = function (State, Rules, Api, Models, $window, $sce) {
+    'use strict';
+    var vm = this;
+    vm.di = {state: State, rules:Rules, api:Api, models:Models, window:$window, sce: $sce};
+    vm.cool = 'very';
+    // console.log('coolCtrl: Is it '+vm.cool+' cool?');
+};
+
 angular.module('cool')
     .config(function ($stateProvider, $urlRouterProvider)
     {
@@ -43,14 +51,14 @@ angular.module('cool')
                 url: '/:card',
                 template: 'Card: Is it cool?'
             })
+            .state('cool.fpv', {
+                /*// Various card types will
+                // have params set as well
+                // to help with styling*/
+                url: 'fpv',
+                template: '<fpv></fpv>'
+            })
             /* STATES-NEEDLE - DO NOT REMOVE THIS */;
 
     });
 
-var coolCtrl = function (State, Rules, Api, Models, $window, $sce) {
-    'use strict';
-    var vm = this;
-    vm.di = {state: State, rules:Rules, api:Api, models:Models, window:$window, sce: $sce};
-    vm.cool = 'very';
-    // console.log('coolCtrl: Is it '+vm.cool+' cool?');
-};

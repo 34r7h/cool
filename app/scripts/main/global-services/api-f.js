@@ -16,7 +16,7 @@ angular.module('cool')
 					angular.forEach(family, function (track, key) {
 						var htmlTrack = document.getElementById(famKey+'-'+key);
 						htmlTrack!=='game-0'? (htmlTrack.pause(), htmlTrack.currentPosition = 0) : null;
-					})
+					});
 				});
 				document.getElementById('game-0').play();
 			},
@@ -24,13 +24,13 @@ angular.module('cool')
 				document.getElementById('game-0').pause();
 				var themeSong = document.getElementById(audio);
 				themeSong.play();
-				$timeout(function () { themeSong.volume = .7; }, 1000);
-				$timeout(function () { themeSong.volume = .4; }, 2000);
-				$timeout(function () { themeSong.volume = .1; }, 3000);
+				$timeout(function () { themeSong.volume = 0.7; }, 1000);
+				$timeout(function () { themeSong.volume = 0.4; }, 2000);
+				$timeout(function () { themeSong.volume = 0.1; }, 3000);
 				pause ? $timeout(function () { themeSong.currentTime = 0; themeSong.pause(); document.getElementById('game-0').play();
 				}, pause) : null;
 			},
-			toNumber: function(num){return parseInt(num,10)},
+			toNumber: function(num){return parseInt(num,10);},
 /*
 			tForm: function (tForm) {
 				var tFormString = '';
@@ -60,6 +60,19 @@ angular.module('cool')
 				angular.forEach(sunglasses.split(' '),function (point) {
 					var hPx = api.toNumber(point.split(',')[0]) + x,
 						  vPx = api.toNumber(point.split(',')[1]) + y;
+					pointsStr += hPx +','+vPx+' ';
+
+				});
+				return pointsStr;
+
+			},
+			sunglassesFpv: function (x,y) {
+				console.log('width:', x, 'height:',y);
+				var pointsStr = '';
+				var sunglasses = Models.sunglasses;
+				angular.forEach(sunglasses.split(' '),function (point) {
+					var hPx = api.toNumber(point.split(',')[0]) * x /100,
+						  vPx = api.toNumber(point.split(',')[1]) * y /100;
 					pointsStr += hPx +','+vPx+' ';
 
 				});
@@ -157,7 +170,7 @@ angular.module('cool')
 			},
 			startGame: function (players) {
 				document.getElementById('game-0').play();
-				document.getElementById('game-0').volume = .1;
+				document.getElementById('game-0').volume = 0.1;
 				// Chooses players and initiates a new game.
 				State.players = [];
 				var playerRolls = {};
@@ -166,7 +179,7 @@ angular.module('cool')
 					var playerName = $window.prompt('What is player ' + (x + 1) + '\'s name?');
 					State.players.push({playerName: playerName,currentPosition: 1});
 				}
-				angular.forEach(State.players,function (player,key) {
+				angular.forEach(State.players,function (player) {
 					var startingRoll = api.rollDice().total;
 					if (rollPlayers[startingRoll]) {
 						var newRoll = api.rollDice().total;
@@ -183,7 +196,7 @@ angular.module('cool')
 				});
 				var scores = [];
 				var playerOrder = [];
-				angular.forEach(playerRolls,function (score,player) {
+				angular.forEach(playerRolls,function (score) {
 					scores.push(score);
 				});
 				scores.sort(function (a,b) {
@@ -252,7 +265,7 @@ angular.module('cool')
 				$timeout(function () {
 					//document.getElementById('effects-0').pause();
 					//document.getElementById('game-0').play();
-				},3000)
+				},3000);
 			},
 			message: function (message) {
 				console.info(message.header,message.text);
@@ -262,7 +275,7 @@ angular.module('cool')
 					header: message.header,
 					type: message.type,
 					expires: (time + message.duration)
-				}
+				};
 			},
 			card: function () {
 				api.message({header: 'Getting card',text: 'Is it cool?'});
@@ -288,9 +301,9 @@ angular.module('cool')
 			},
 			goPass: function (player) {
 				api.message({text: 'Getting a pass,finishing fast!!',header: player.playerName + ' is lucky.'});
-				if(player.currentPosition < 24){player.currentPosition = 17}
-				else if(player.currentPosition >= 24 && player.currentPosition < 38){player.currentPosition = 32}
-				if(player.currentPosition >= 38 && player.currentPosition < 50){player.currentPosition = 50}
+				if(player.currentPosition < 24){player.currentPosition = 17;}
+				else if(player.currentPosition >= 24 && player.currentPosition < 38){player.currentPosition = 32;}
+				if(player.currentPosition >= 38 && player.currentPosition < 50){player.currentPosition = 50;}
 				api.nextPlayer(State.players.indexOf(player));
 			},
 			goJail: function (player) {
@@ -314,16 +327,17 @@ angular.module('cool')
 		};
 		angular.element($window).bind('resize', function() {
 			console.info('resizing');
+			console.info($window.orientation);
 			$rootScope.screen = {
 				width: $window.innerWidth,
 				height: $window.innerHeight
 			};
 			$rootScope.$apply();
-			angular.forEach(Models.sections, function (section, sectionKey) {
+			angular.forEach(Models.sections, function (section) {
 				angular.forEach(section, function (space) {
 					$rootScope.points[space] = api.poly(Models.spaces[space].poly);
-				})
-			})
+				});
+			});
 		});
 		return api;
 	});
