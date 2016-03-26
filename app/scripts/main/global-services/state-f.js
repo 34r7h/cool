@@ -6,7 +6,7 @@
  * Factory in the cool.
  */
 angular.module('cool')
-	.factory('State', function ($rootScope, $window, $document) {
+	.factory('State', function ($rootScope, $window) {
 		'use strict';
 		
 		// INITIALIZATION
@@ -18,6 +18,7 @@ angular.module('cool')
 		};
 		// ACTUAL DEFINITION
 		var state = {
+			show:{fpv:0},
 			turn: '',
 			gameStarted: false,
 			// current state of the game
@@ -25,8 +26,7 @@ angular.module('cool')
 			messages: {},
 			dice: [],
 			card: {},
-			direction: true,
-			spaceMorph : $document.find('space-morph')
+			direction: true
 		};
 		
 		return state;
