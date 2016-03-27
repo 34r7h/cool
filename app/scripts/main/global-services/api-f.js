@@ -148,7 +148,15 @@ angular.module('cool')
 						console.log('tripOrder', key, coords);
 						State.tripOrder.push(key);
 					})
+				});
+				angular.forEach(State.tripOrder, function (thisTrip, thisTripKey) {
+
+					console.log(State.tripOrder.indexOf(thisTrip) < thisTripKey ? ('repeat from: ' + State.tripOrder[State.tripOrder.indexOf(thisTrip)]): ('original: ' + thisTrip));
+					if((thisTripKey +1)%5===0){
+						console.log('break');
+					}
 				})
+
 			},
 			sunglassesFpv: function (x, y) {
 				console.log('width:', x, 'height:', y);
