@@ -94,19 +94,38 @@ angular.module('cool')
 				return pointsStr;
 
 			},
-			spaceFpv: function (points) {
+			spaceFpv: function (points, indexKey) {
+				!State.tripLine[indexKey] ? State.tripLine[indexKey] = {} : null;
+
 				var pointsString = '';
 				var pointsSplit = points.split(' ');
+				
+				
+				State.ordertrips[indexKey] = {};
+				angular.forEach(pointsSplit, function (xy) {
+					State.ordertrips[indexKey][xy] = xy;
+				});
+
 				var lastX = 0;
 				var lastY = 0;
 				var x = [];
 				var y = [];
 				var highestNumber = {x:0,y:0};
+				console.log('pointsSplit', pointsSplit);
 				angular.forEach(pointsSplit, function(xy, key){
+					
+					!State.tripLine[indexKey][xy] ? State.tripLine[indexKey][xy] = {}: null;
+					
 					var newX = api.toNumber(xy.split(',')[0]);
 					var newY = api.toNumber(xy.split(',')[1]);
 					key !== 0 ? x.push((newX - lastX)/10): null;
 					key !== 0 ? y.push((newY - lastY)/10): null;
+
+					State.tripLine[indexKey][xy][key] = {
+						x: (newX),
+						y: (newY)
+					};
+
 					highestNumber = {
 						x:(Math.abs((newX-lastX)/10)>highestNumber.x) && newX-lastX < 0 ? Math.floor(Math.abs((newX-lastX)/10)*($rootScope.screen.width)):highestNumber.x,
 						y:(Math.abs((newY-lastY)/10)>highestNumber.y) && newY-lastY < 0 ? Math.floor(Math.abs((newY-lastY)/10)*($rootScope.screen.height)):highestNumber.y
@@ -115,11 +134,21 @@ angular.module('cool')
 					lastY = newY;
 				});
 				angular.forEach(x, function (val, key) {
+					
 					pointsString = pointsString + Math.floor(val * ($rootScope.screen.width) + highestNumber.x) + ',' + Math.floor(y[key] * ($rootScope.screen.height) + highestNumber.y) + ' ';
 				});
 				pointsString =  pointsString + Math.floor(x[0]*($rootScope.screen.width) + highestNumber.x)+','+Math.floor(y[0]*($rootScope.screen.height) + highestNumber.y);
 				console.log('highNumber', highestNumber, 'pointsString', pointsString);
 				return pointsString;
+			},
+			orderTrips: function () {
+				State.tripOrder = [];
+				angular.forEach(State.ordertrips, function (trip) {
+					angular.forEach(trip, function (coords, key) {
+						console.log('tripOrder', key, coords);
+						State.tripOrder.push(key);
+					})
+				})
 			},
 			sunglassesFpv: function (x, y) {
 				console.log('width:', x, 'height:', y);

@@ -19,6 +19,8 @@ angular.module('cool')
 		// ACTUAL DEFINITION
 		var state = {
 			show:{fpv:0},
+			tripLine:[],
+			ordertrips: [],
 			turn: '',
 			gameStarted: false,
 			// current state of the game

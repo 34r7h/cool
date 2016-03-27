@@ -15,6 +15,7 @@
     <button ng-click="cool.di.api.tweenMax('#sunglasses-fpv', 3, {scale:1, y:'0%', x:'0%',textAlign:'center'})">Start</button>
     <button ng-click="cool.di.api.tweenMax('#sunglasses-fpv', 5, {scale:2, y:'100%', x:'-50%', textAlign:'center'})">Forward</button>
     <button ng-click="cool.di.api.fpvQueue(cool.di.state.trip)">Trip</button>
+    <button ng-click="cool.di.api.orderTrips()">Order Trips</button>
     <svg ng-style="{width:'100vw', height:'100vh'}">
         <g>
             <polygon
@@ -28,7 +29,7 @@
             >
             </polygon>
             <polygon
-                    ng-init="points = cool.di.api.spaceFpv(trip.poly)"
+                    ng-init="points = cool.di.api.spaceFpv(trip.poly, $index)"
                     ng-repeat="trip in cool.di.state.trip | reverse"
                     ng-show="cool.di.state.show.fpv === $index"
                     ng-animate-ref="animate-ref"
