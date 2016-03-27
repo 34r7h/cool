@@ -12,7 +12,7 @@ angular.module('cool')
 
 		var api = {
 			tweenMax: function (target, duration, vars) {
-				console.log('tweenMax', arguments);
+				// console.log('tweenMax', arguments);
 				tMax.to(target, duration, vars);
 			},
 			killAudio: function (all) {
@@ -47,16 +47,16 @@ angular.module('cool')
 			toNumber: function (num) {
 				return parseInt(num, 10);
 			},
-			fpvQueue:function (spaces) {
-				console.log('fpvQueue', arguments);
+			fpvQueue: function (spaces) {
+				// console.log('fpvQueue', arguments);
 				angular.forEach(spaces, function (space, key) {
 					$timeout(function () {
 						State.show.fpv = key;
-						api.tweenMax('#sunglasses-fpv'+key, .0001, {scale:0, x:'50%'});
-						console.log('fpvQueue', key, space);
-						api.tweenMax('#sunglasses-fpv'+key, 2, {scale:2, y:'100%', x:'-50%'});
-						console.log('fpvQueue', key, space);
-					}, 1000+(key*1000));
+						api.tweenMax('#sunglasses-fpv' + key, .0001, {scale: 0, x: '50%'});
+						// console.log('fpvQueue', key, space);
+						api.tweenMax('#sunglasses-fpv' + key, 2, {scale: 2, y: '100%', x: '-50%'});
+						// console.log('fpvQueue', key, space);
+					}, 1000 + (key * 1000));
 				})
 			},
 			/*
@@ -110,16 +110,16 @@ angular.module('cool')
 				var lastY = 0;
 				var x = [];
 				var y = [];
-				var highestNumber = {x:0,y:0};
-				console.log('pointsSplit', pointsSplit);
-				angular.forEach(pointsSplit, function(xy, key){
+				var highestNumber = {x: 0, y: 0};
+				// console.log('pointsSplit', pointsSplit);
+				angular.forEach(pointsSplit, function (xy, key) {
 					
-					!State.tripLine[indexKey][xy] ? State.tripLine[indexKey][xy] = {}: null;
+					!State.tripLine[indexKey][xy] ? State.tripLine[indexKey][xy] = {} : null;
 					
 					var newX = api.toNumber(xy.split(',')[0]);
 					var newY = api.toNumber(xy.split(',')[1]);
-					key !== 0 ? x.push((newX - lastX)/10): null;
-					key !== 0 ? y.push((newY - lastY)/10): null;
+					key !== 0 ? x.push((newX - lastX) / 10) : null;
+					key !== 0 ? y.push((newY - lastY) / 10) : null;
 
 					State.tripLine[indexKey][xy][key] = {
 						x: (newX),
@@ -127,8 +127,8 @@ angular.module('cool')
 					};
 
 					highestNumber = {
-						x:(Math.abs((newX-lastX)/10)>highestNumber.x) && newX-lastX < 0 ? Math.floor(Math.abs((newX-lastX)/10)*($rootScope.screen.width)):highestNumber.x,
-						y:(Math.abs((newY-lastY)/10)>highestNumber.y) && newY-lastY < 0 ? Math.floor(Math.abs((newY-lastY)/10)*($rootScope.screen.height)):highestNumber.y
+						x: (Math.abs((newX - lastX) / 10) > highestNumber.x) && newX - lastX < 0 ? Math.floor(Math.abs((newX - lastX) / 10) * ($rootScope.screen.width)) : highestNumber.x,
+						y: (Math.abs((newY - lastY) / 10) > highestNumber.y) && newY - lastY < 0 ? Math.floor(Math.abs((newY - lastY) / 10) * ($rootScope.screen.height)) : highestNumber.y
 					};
 					lastX = newX;
 					lastY = newY;
@@ -137,23 +137,48 @@ angular.module('cool')
 					
 					pointsString = pointsString + Math.floor(val * ($rootScope.screen.width) + highestNumber.x) + ',' + Math.floor(y[key] * ($rootScope.screen.height) + highestNumber.y) + ' ';
 				});
-				pointsString =  pointsString + Math.floor(x[0]*($rootScope.screen.width) + highestNumber.x)+','+Math.floor(y[0]*($rootScope.screen.height) + highestNumber.y);
-				console.log('highNumber', highestNumber, 'pointsString', pointsString);
+				pointsString = pointsString + Math.floor(x[0] * ($rootScope.screen.width) + highestNumber.x) + ',' + Math.floor(y[0] * ($rootScope.screen.height) + highestNumber.y);
+				// console.log('highNumber', highestNumber, 'pointsString', pointsString);
 				return pointsString;
 			},
 			orderTrips: function () {
+				var tripObject = {};
+				var x = 0;
+				angular.forEach(State.trip, function (trip) {
+
+					tripObject[x] = {};
+					var points = trip.poly.split(' ');
+					var y = 0;
+					angular.forEach(points, function (point) {
+						tripObject[x][y] = {
+							x: api.toNumber(point.split(',')[0]),
+							y: api.toNumber(point.split(',')[1])
+						};
+						y++;
+					});
+					x++;
+				});
+				console.log('tripObject',tripObject);
+				angular.forEach(tripObject, function (trip, tripKey) {
+					angular.forEach(trip, function (points, pointsKey) {
+						angular.forEach(points, function (point, pointKey) {
+							console.log(tripKey, pointsKey, pointKey, point);
+						})
+					})
+				});
+
 				State.tripOrder = [];
 				angular.forEach(State.ordertrips, function (trip) {
 					angular.forEach(trip, function (coords, key) {
-						console.log('tripOrder', key, coords);
+						// console.log('tripOrder', key, coords);
 						State.tripOrder.push(key);
 					})
 				});
 				angular.forEach(State.tripOrder, function (thisTrip, thisTripKey) {
 
-					console.log(State.tripOrder.indexOf(thisTrip) < thisTripKey ? ('repeat from: ' + State.tripOrder[State.tripOrder.indexOf(thisTrip)]): ('original: ' + thisTrip));
-					if((thisTripKey +1)%5===0){
-						console.log('break');
+					// console.log(State.tripOrder.indexOf(thisTrip) < thisTripKey ? ('repeat from: ' + State.tripOrder[State.tripOrder.indexOf(thisTrip)]) : ('original: ' + thisTrip));
+					if ((thisTripKey + 1) % 5 === 0) {
+						// console.log('break');
 					}
 				})
 
