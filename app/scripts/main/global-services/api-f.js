@@ -142,30 +142,79 @@ angular.module('cool')
 				return pointsString;
 			},
 			orderTrips: function () {
-				var tripObject = {};
+				State.tripObject = {};
 				var x = 0;
+
+				function getSideLength(points) {
+					console.log(arguments);
+					var aLength = Math.abs(points[0].x - points[1].x);9
+					var bLength = Math.abs(points[0].y - points[1].y);
+					var cLength = Math.sqrt((aLength * aLength) + (bLength * bLength));
+					console.log(cLength);
+					return cLength;
+				}
+
 				angular.forEach(State.trip, function (trip) {
 
-					tripObject[x] = {};
+					State.tripObject[x] = {};
 					var points = trip.poly.split(' ');
 					var y = 0;
-					angular.forEach(points, function (point) {
-						tripObject[x][y] = {
-							x: api.toNumber(point.split(',')[0]),
-							y: api.toNumber(point.split(',')[1])
+					for (var w = 0; w < 4; w++) {
+						State.tripObject[x][y] = {
+							x: api.toNumber(points[w].split(',')[0]),
+							y: api.toNumber(points[w].split(',')[1])
 						};
 						y++;
-					});
+					}
+					/*while (y < 4) {
+					 angular.forEach(points, function (point) {
+					 State.tripObject[x][y] = {
+					 x: api.toNumber(point.split(',')[0]),
+					 y: api.toNumber(point.split(',')[1])
+					 };
+					 y++;
+					 });
+					 }*/
 					x++;
 				});
-				console.log('tripObject',tripObject);
-				angular.forEach(tripObject, function (trip, tripKey) {
-					angular.forEach(trip, function (points, pointsKey) {
-						angular.forEach(points, function (point, pointKey) {
-							console.log(tripKey, pointsKey, pointKey, point);
-						})
-					})
+				// console.log('tripObject',State.tripObject);
+				angular.forEach(State.tripObject, function (trip, tripKey) {
+					State.tripObject[tripKey].positions = (function (positionPoints) {
+						var positions = {};
+						var maxPositions = {
+							top: 0,
+							bottom: 1000,
+							left: 1000,
+							right: 0
+						};
+						angular.forEach(positionPoints, function (positionPoint, positionPointsKey) {
+							// console.log(positionPointsKey, positionPoint);
+							positionPoint.y > maxPositions.top ? (maxPositions.top = {y:positionPoint.y, x:positionPoint.x}
+							) : null;
+							positionPoint.y < maxPositions.bottom ? (maxPositions.bottom = {y:positionPoint.y, x:positionPoint.x}
+							) : null;
+							positionPoint.x > maxPositions.right ? (maxPositions.right = {y:positionPoint.y, x:positionPoint.x}
+							) : null;
+							positionPoint.x < maxPositions.left ? (maxPositions.left = {y:positionPoint.y, x:positionPoint.x}
+							) : null;
+						});
+						positions = maxPositions;
+						var sidePoints = {
+							topRight: [positions.top, positions.right],
+							rightBottom: [positions.right, positions.bottom],
+							bottomLeft: [positions.bottom, positions.left],
+							leftTop: [positions.left, positions.top]
+						};
+						var sideLengths = {};
+						angular.forEach(sidePoints, function (sidePoint, sidePointKey) {
+							sideLengths[sidePointKey] = getSideLength(sidePoint);
+						});
+						positions.sideLengths = sideLengths;
+						return positions;
+					})(State.tripObject[tripKey]);
+
 				});
+
 
 				State.tripOrder = [];
 				angular.forEach(State.ordertrips, function (trip) {

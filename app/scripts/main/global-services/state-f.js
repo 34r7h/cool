@@ -20,6 +20,7 @@ angular.module('cool')
 		var state = {
 			show:{fpv:0},
 			tripLine:[],
+			tripObject:{},
 			ordertrips: [],
 			turn: '',
 			gameStarted: false,
