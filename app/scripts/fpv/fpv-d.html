@@ -1,5 +1,5 @@
+<!--ng-if="cool.di.state.trip"-->
 <div
-        ng-if="cool.di.state.trip"
         class="fpv"
         ng-style="{
         position: 'fixed',
@@ -16,6 +16,8 @@
     <button ng-click="cool.di.api.tweenMax('#sunglasses-fpv', 5, {scale:2, y:'100%', x:'-50%', textAlign:'center'})">Forward</button>
     <button ng-click="cool.di.api.fpvQueue(cool.di.state.trip)">Trip</button>
     <button ng-click="cool.di.api.orderTrips()">Order Trips</button>
+    <button ng-click="cool.di.api.yaTripsFunction(cool.di.state.trip)">Yet Another Trip Function</button>
+    <button ng-click="cool.di.api.triangulation('0,0 1,10, 10,11 9,2 0,0')">Triangulate</button>
     <svg ng-style="{width:'100vw', height:'100vh'}">
         <g>
             <polygon

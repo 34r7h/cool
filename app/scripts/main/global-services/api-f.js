@@ -11,6 +11,93 @@ angular.module('cool')
 		'use strict';
 
 		var api = {
+			triangulation: (pString)=>{
+				// pString = '2,5 5,5 3,8 1,4 2,5'
+				var pStringArray = pString.split(' ');
+				// pStringArray = ['2,5', '5,5', '3,8', '1,4', '2,5']
+				var pArray = [];
+				for(var pointsIndex = 0; pointsIndex < pStringArray.length; pointsIndex++){
+					var points = [];
+					points[0] = api.toNumber(pStringArray[pointsIndex].split(',')[0]);
+					points[1] = api.toNumber(pStringArray[pointsIndex].split(',')[1]);
+					// points = [2,5]
+					pArray.push(points);
+				}
+				// pArray = [[2,5], [5,5], [3,8], [1,4], [2,5]]
+				var lengths = [];
+				var angles = [];
+				var triangles = [];
+				var limits = {low:1000, high:0, near:1000, far:0};
+
+				for(var pArrayIndex=0; pArrayIndex < 4; pArrayIndex++){
+					(function compare(first, second, lengths, limits){
+						var height = 0, width = 0;
+						first[0] == second[0] ?
+							(
+								// Check if x or y matches on the 2 sets of coords
+								console.log(first, second, 'sameness on X, subtract Y'),
+								lengths[pArrayIndex] = Math.abs(first[1]-second[1])
+								// [[9,1], [9,5]] -> true; y = 1-5 = -4 = 4
+							) :
+						first[1] == second[1] ?
+							(
+								console.log(first, second, 'sameness on Y, subtract X'),
+								lengths[pArrayIndex] = Math.abs(first[0]-second[0])
+								// [[2,5], [9,5]] -> true; x = 9-2 = 7
+							) : (
+									console.log(first, second, 'triangulate them!'),
+									height = Math.abs(first[0]-second[0]),
+									width = Math.abs(first[1]-second[1]),
+									lengths[pArrayIndex] = Math.sqrt(Math.pow(height, 2) + Math.pow(width, 2)),
+									triangles[pArrayIndex] = [[(Math.acos((Math.pow(width, 2)+Math.pow(lengths[pArrayIndex], 2)-Math.pow(height, 2))/(2*width*lengths[pArrayIndex])))*(180/Math.PI),90, (Math.acos((Math.pow(height, 2)+Math.pow(lengths[pArrayIndex], 2)-Math.pow(width, 2))/(2*height*lengths[pArrayIndex])))*(180/Math.PI)],[90]]
+							// Find length of face by the difference of heights and widths: [[4,5], [7,2]] -> x = 3^ + 4^ = 25 = 5
+
+						);
+
+						// With known sides, we want limits that bisect the polygon to get the angles of
+						limits.low = first[1] < limits.low ? first[1] : limits.low;
+						limits.high = first[1] > limits.high ? first[1] : limits.high;
+						limits.near = first[0] < limits.near ? first[0] : limits.near;
+						limits.far = first[0] > limits.far ? first[0] : limits.far;
+						return lengths;
+					})(pArray[pArrayIndex], pArray[pArrayIndex == 3 ? 0: pArrayIndex+1], lengths, limits);
+				}
+
+				console.log(triangles);
+
+				/*for(pArrayIndex=0; pArrayIndex < 4; pArrayIndex++){
+					(function compare(pArray, lengths, limits, triangles){
+						console.log('pArray', pArray, 'lengths', lengths, 'limits', limits, 'triangles', triangles);
+
+						// To find the angles at each point, create 2 right triangles that share a point on the edge, and inside the polygon where the right angles are formed. (Shared points and lengths start each triangle)
+						triangles[pArrayIndex] = [{
+							sides: [],
+							points: [pArray[pArrayIndex], /!* , solve for right angle point,  *!/ pArray[pArrayIndex + 1]],
+							angles: [/!* solve for point angle ,*!/90 /!* , solve for far point*!/]
+						},{
+							sides: [],
+							points: [pArray[pArrayIndex], /!* , solve for right angle point,  *!/ pArray[pArrayIndex - 1] || pArray[3]],
+							angles: [/!* solve for point angle ,*!/90 /!* , solve for far point*!/]
+						}];
+
+
+						return triangles;
+					})(pArray, lengths, limits, triangles);
+				}*/
+
+				/*for(pArrayIndex=0; pArrayIndex < 4; pArrayIndex++){
+					(function (points, lengths, pointTriangles) {
+						pointTriangles = [
+							[points[pArrayIndex], ],
+							[points[pArrayIndex], ]
+						];
+						triangles[pArrayIndex] = pointTriangles;
+						return triangles;
+					})(pArray, lengths, triangles);
+				}*/
+				console.log(lengths, limits);
+
+			},
 			tweenMax: function (target, duration, vars) {
 				// console.log('tweenMax', arguments);
 				tMax.to(target, duration, vars);
@@ -94,6 +181,55 @@ angular.module('cool')
 				return pointsStr;
 
 			},
+			yaTripsFunction: function (trips) {
+				var sides = [];
+				console.log(trips);
+				var tripArray = [], tripObject = [], bisect = [], length = [];
+				for(var spaceNumber = 0; spaceNumber < trips.length; spaceNumber++){
+					tripObject[spaceNumber]=[];
+					bisect[spaceNumber]=[];
+					length[spaceNumber] = [];
+					tripArray[spaceNumber] = trips[spaceNumber].poly.split(' ');
+					tripArray[spaceNumber].indexOf('') ? tripArray[spaceNumber].slice(tripArray[spaceNumber].indexOf(''), 1) : null;
+					for(var tripNumber = 0; tripNumber < 5; tripNumber++){
+						tripArray[spaceNumber][tripNumber] = tripArray[spaceNumber][tripNumber].split(',');
+						bisect[spaceNumber][tripNumber] = {};
+						console.log(tripArray[spaceNumber][tripNumber]);
+						bisect[spaceNumber][tripNumber].yy = api.toNumber(tripArray[spaceNumber][tripNumber][0][1]);
+						bisect[spaceNumber][tripNumber].yx = api.toNumber(tripArray[spaceNumber][tripNumber][1][1]);
+						bisect[spaceNumber][tripNumber].xx = api.toNumber(tripArray[spaceNumber][tripNumber][0][0]);
+						bisect[spaceNumber][tripNumber].xy = api.toNumber(tripArray[spaceNumber][tripNumber][1][0]);
+					}
+
+
+				}
+
+				console.log('tripArray',tripArray, 'bisect', bisect);
+
+				for(var sideNumber = 0; sideNumber < tripArray.length; sideNumber++){
+
+
+				}
+				State.tripArray = tripArray;
+
+
+
+				/*	//console.log(arguments);
+				var points = [];
+				var bisect = [];
+				for(var spaceNumber = 0; spaceNumber < tripString.length; spaceNumber++){
+					bisect[spaceNumber] = {};
+					points[spaceNumber] = tripString[spaceNumber].poly.split(' ');
+					for(var x=0; x<4; x++){
+						bisect[spaceNumber].y = points[spaceNumber][x].split(',')[1];
+						bisect[spaceNumber].x = points[spaceNumber][x].split(',')[0];
+						console.log(points, bisect);
+						var length = {};
+							length.y = bisect[spaceNumber].y - points[spaceNumber][y].split(',')[1];
+					}
+				}*/
+
+			},
 			spaceFpv: function (points, indexKey) {
 				!State.tripLine[indexKey] ? State.tripLine[indexKey] = {} : null;
 
@@ -147,7 +283,7 @@ angular.module('cool')
 
 				function getSideLength(points) {
 					console.log(arguments);
-					var aLength = Math.abs(points[0].x - points[1].x);9
+					var aLength = Math.abs(points[0].x - points[1].x);
 					var bLength = Math.abs(points[0].y - points[1].y);
 					var cLength = Math.sqrt((aLength * aLength) + (bLength * bLength));
 					console.log(cLength);
