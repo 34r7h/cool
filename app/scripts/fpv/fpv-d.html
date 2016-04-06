@@ -11,14 +11,18 @@
         background:'rgba(255,255,255,.9)'}">
     This is the fpv directive.
     <button ng-click="animate = !animate">Click</button>
-    <button ng-click="cool.di.api.tweenMax('#sunglasses-fpv', 2, {scale: 0, x:'50%',textAlign:'center'})">Reverse</button>
-    <button ng-click="cool.di.api.tweenMax('#sunglasses-fpv', 3, {scale:1, y:'0%', x:'0%',textAlign:'center'})">Start</button>
-    <button ng-click="cool.di.api.tweenMax('#sunglasses-fpv', 5, {scale:2, y:'100%', x:'-50%', textAlign:'center'})">Forward</button>
+    <button ng-click="cool.di.api.tweenMax('#sunglasses-fpv', 2, {scale: 0, x:'50%',textAlign:'center'})">Reverse
+    </button>
+    <button ng-click="cool.di.api.tweenMax('#sunglasses-fpv', 3, {scale:1, y:'0%', x:'0%',textAlign:'center'})">Start
+    </button>
+    <button ng-click="cool.di.api.tweenMax('#sunglasses-fpv', 5, {scale:2, y:'100%', x:'-50%', textAlign:'center'})">
+        Forward
+    </button>
     <button ng-click="cool.di.api.fpvQueue(cool.di.state.trip)">Trip</button>
     <button ng-click="cool.di.api.orderTrips()">Order Trips</button>
     <button ng-click="cool.di.api.yaTripsFunction(cool.di.state.trip)">Yet Another Trip Function</button>
     <button ng-click="cool.di.api.triangulation('0,0 1,10, 10,11 9,2 0,0')">Triangulate</button>
-    <button ng-click="cool.di.api.findAngles('0,0 1,10, 10,11 9,2 0,0')">findAngles</button>
+    <button ng-click="cool.di.api.findAngles(cool.di.state.trip)">findAngles</button>
     <svg ng-style="{width:'100vw', height:'100vh'}">
         <g>
             <polygon
@@ -31,6 +35,19 @@
                     stroke-width="7"
             >
             </polygon>
+
+            <polygon
+                     ng-repeat="space in cool.di.state.tripShapes"
+                    id="sunglasses-fpv"
+                    ng-hide="animate"
+                    ng-animate-ref="animate-ref"
+                    ng-attr-points="{{space.points[0][0]+','+space.points[0][1] + ' ' + space.points[1][0]+','+space.points[1][1] + ' ' + space.points[2][0]+','+space.points[2][1] + ' ' + space.points[3][0]+','+space.points[3][1] + ' ' + space.points[0][0]+','+space.points[0][1]}}"
+                    fill="rgba(0,150,0,1)"
+                    stroke="white"
+                    stroke-width="7"
+            >
+            </polygon>
+
             <polygon
                     ng-init="points = cool.di.api.spaceFpv(trip.poly, $index)"
                     ng-repeat="trip in cool.di.state.trip | reverse"

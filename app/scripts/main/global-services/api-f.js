@@ -367,40 +367,104 @@ angular.module('cool')
 				player.currentPosition = 'work';
 				api.nextPlayer(State.players.indexOf(player));
 			},
-			findAngles: (pointsGroup)=>{
-				var shape = {points:[], sides:[], angles:[]};
+			findAngles: (shapesGroup)=> {
+				var maxLength = 0;
+				var tripShapes = [];
+				for (var y = 0; y < shapesGroup.length; y++) {
+					var shape = {points: [], sides: [], angles: [], orientation:0, normalPoints:[] /* which index of sides faces down */ };
+					var pointsGroup = shapesGroup[y].poly;
+					var pointsArray = [];
+					var points = pointsGroup.split(' ');
+					for (var z = 0; z < 4; z++) {
+						pointsArray[z] = points[z].split(',');
+						shape.points.push([api.toNumber(pointsArray[z][0]), api.toNumber(pointsArray[z][1])])
+					}
+					
+					for (var x = 0; x < 4; x++) {
+						var d1 = Math.sqrt(
+							(
+								Math.pow(
+								shape.points[x > 0 ? x - 1 : 3][0] - shape.points[x][0], 2)) + (
+								Math.pow(shape.points[x > 0 ? x - 1 : 3][1] - shape.points[x][1], 2)
+							)
+						);
+						var d2 = Math.sqrt(
+							(
+								Math.pow(
+									shape.points[x][0] - shape.points[x < 3 ? x + 1 : 0][0], 2)) + (
+								Math.pow(
+									shape.points[x][1] - shape.points[x < 3 ? x + 1 : 0][1], 2)
+							)
+						);
+						var d3 = Math.sqrt(
+							(
+								Math.pow(
+									shape.points[x > 0 ? x - 1 : 3][0] - shape.points[x < 3 ? x + 1 : 0][0], 2)
+							) + (
+								Math.pow(
+									shape.points[x > 0 ? x - 1 : 3][1] - shape.points[x < 3 ? x + 1 : 0][1], 2)
+							)
+						);
+						var angle = Math.acos(
+								(Math.pow(d1, 2) + Math.pow(d2, 2) - Math.pow(d3, 2)) / (2 * d1 * d2)
+							) * (180 / Math.PI);
+						
+						shape.angles.push(angle);
+						shape.sides.push(d2);
+						maxLength = maxLength < d2 ? d2 : maxLength;
+					}
 
-				var pointsArray = [];
-				var points = pointsGroup.split(' ');
-				angular.forEach(points, (point, index)=>{
-					pointsArray[index] = point.split(',');
-					shape.points.push([api.toNumber(pointsArray[index][0]), api.toNumber(pointsArray[index][1])])
-				});
-
-				var sidesArray = [];
-				for(var x = 0; x < 4; x++){
-					var d1 = Math.sqrt((Math.pow(shape.points[x>0?x-1:3][0]-shape.points[x][0], 2)) + (Math.pow(shape.points[x>0?x-1:4][1]-shape.points[x][1], 2)));
-					var d2 = Math.sqrt((Math.pow(shape.points[x][0]-shape.points[x<3?x+1:0][0], 2)) + (Math.pow(shape.points[x][1]-shape.points[x<3?x+1:0][1], 2)));
-
-					var d3 = Math.sqrt(
-						(
-							Math.pow(
-								shape.points[x>0?x-1:3][0]-shape.points[x<3?x+1:0][0], 2)
-						) + (
-							Math.pow(
-								shape.points[x>0?x-1:3][1]-shape.points[x<3?x+1:0][1], 2)
-						)
-					);
-					var angle = Math.acos(
-							(Math.pow(d1,2) + Math.pow(d2,2) - Math.pow(d3,2))/(2*d1*d2)
-						)*(180/Math.PI);
-
-					shape.angles.push(angle);
-					shape.sides.push(d2);
-					console.log(d1,d2, d3);
+					tripShapes.push(shape);
 				}
+				var normalizePoints = (tripShapes)=>{
+					angular.forEach(tripShapes, (shape)=>{
+						var normalPoint = [];
+						angular.forEach(shape.points, (point, pointIndex)=>{
+							normalPoint[pointIndex] = [];
+							for(var a = 0; a < 2; a++){
+								normalPoint[pointIndex][a] = point[a] * 100
+							}
+						})
+					})
+					console.log(normalPoint)
 
-				console.log(shape);
+				} ;
+				console.log(tripShapes, maxLength);
+
+				/*angular.forEach(tripShapes, (shape, index)=>{
+					for(var w = 0; w<4; w++){
+						console.log(shape.points[w], tripShapes[index > 4 ? 0 : index+1].points);
+						tripShapes[index > 4 ? 0 : index+1].points.indexOf(shape.points[w]) ? console.log('we match!') : console.log('we dont match');
+					}
+				});*/
+
+
+
+				var funGen = function*(){
+					while(true){
+						var points = yield console.log('match');
+						yield console.log('match', points);
+					}
+
+				};
+				var funGenGo = funGen();
+
+				var orientate = (groups)=>{
+					// find next space to compare
+					console.log(groups, groups[1].points[1][1], groups[0].points[1][1]);
+					funGenGo.next();
+					for(var a = 0; a < 4; a++){
+						for(var b = 0; b < 2; b++){
+							(groups[1].points[a][b % 2] === groups[0].points[a][b % 2]) && (groups[1].points[a][b] === groups[0].points[a][b]) ? (funGenGo.next([groups[1].points[a][b % 2], groups[0].points[a][b % 2], a, b]), funGenGo.next(), console.log(a, b)) : console.log('no match', a, b)
+						}
+					}
+				};
+				console.log(tripShapes[0], tripShapes[1]);
+				orientate([tripShapes[0], tripShapes[1]]);
+				State.tripShapes = tripShapes;
+
+
+
 
 			}
 			/*triangulation: (pString)=>{
