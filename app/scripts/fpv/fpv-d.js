@@ -11,7 +11,7 @@ angular.module('cool')
     {
         return {
             templateUrl: 'scripts/fpv/fpv-d.html',
-            
+
             restrict: 'EA',
             link: function (scope, el, attrs)
             {
@@ -19,7 +19,7 @@ angular.module('cool')
             },
             controller: function ($scope)
             {
-
+                
             }
         };
     });

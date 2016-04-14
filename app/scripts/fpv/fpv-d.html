@@ -7,10 +7,8 @@
         top:0,
         bottom:0,
         left:0,
-        right:0,
-        background:'rgba(255,255,255,.9)'}">
-    This is the fpv directive.
-    <button ng-click="animate = !animate">Click</button>
+        right:0}">
+    <!--<button ng-click="animate = !animate">Click</button>
     <button ng-click="cool.di.api.tweenMax('#sunglasses-fpv', 2, {scale: 0, x:'50%',textAlign:'center'})">Reverse
     </button>
     <button ng-click="cool.di.api.tweenMax('#sunglasses-fpv', 3, {scale:1, y:'0%', x:'0%',textAlign:'center'})">Start
@@ -22,7 +20,8 @@
     <button ng-click="cool.di.api.orderTrips()">Order Trips</button>
     <button ng-click="cool.di.api.yaTripsFunction(cool.di.state.trip)">Yet Another Trip Function</button>
     <button ng-click="cool.di.api.triangulation('0,0 1,10, 10,11 9,2 0,0')">Triangulate</button>
-    <button ng-click="cool.di.api.findAngles(cool.di.state.trip)">findAngles</button>
+    <button ng-click="cool.di.api.findAngles(cool.di.state.trip)">findAngles</button>-->
+
     <svg ng-style="{width:'100vw', height:'100vh'}">
         <g>
             <polygon
@@ -69,5 +68,16 @@
             </polygon>
         </g>
     </svg>
+    <!-- <svg ng-style="{height:'100vh', width:'100vw'}">
+
+        <!-- element.style {
+    transform: scale(7) translateY(10vh) translateX(6vw) rotateX(102deg) rotateZ(110deg);
+    transform-origin: center;
+}
+        <g>
+            <polygon ng-repeat="shape in cool.di.state.tripShapes" ng-attr-points="{{shape.points[0][0]*10}},{{shape.points[0][1]*10}} {{shape.points[1][0]*10}},{{shape.points[1][1]*10}} {{shape.points[2][0]*10}},{{shape.points[2][1]*10}} {{shape.points[3][0]*10}},{{shape.points[3][1]*10}} {{shape.points[0][0]*10}},{{shape.points[0][1]*10}}"></polygon>
+        </g>
+    </svg>
+    -->
 </div>
 

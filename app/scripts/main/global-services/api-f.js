@@ -12,10 +12,10 @@ angular.module('cool')
 
 		var api = {
 
-			tweenMax: function (target, duration, vars) {
+			/*tweenMax: function (target, duration, vars) {
 				// console.log('tweenMax', arguments);
 				tMax.to(target, duration, vars);
-			},
+			},*/
 			killAudio: function (all) {
 				all ? document.getElementById('game-0').currentPosition = 0 : all = null;
 				angular.forEach(Models.audio, function (family, famKey) {
@@ -48,7 +48,7 @@ angular.module('cool')
 			toNumber: function (num) {
 				return parseInt(num, 10);
 			},
-			fpvQueue: function (spaces) {
+			/*fpvQueue: function (spaces) {
 				// console.log('fpvQueue', arguments);
 				angular.forEach(spaces, function (space, key) {
 					$timeout(function () {
@@ -59,7 +59,7 @@ angular.module('cool')
 						// console.log('fpvQueue', key, space);
 					}, 1000 + (key * 1000));
 				})
-			},
+			},*/
 			poly: function (points) {
 				var pointsStr = '';
 				points ?
@@ -366,12 +366,12 @@ angular.module('cool')
 				api.message({text: 'An empty wallet will get you nowhere fast', header: player.playerName + ' gone broke!!'});
 				player.currentPosition = 'work';
 				api.nextPlayer(State.players.indexOf(player));
-			},
-			findAngles: (shapesGroup)=> {
+			}
+			/*findAngles: (shapesGroup)=> {
 				var maxLength = 0;
 				var tripShapes = [];
 				for (var y = 0; y < shapesGroup.length; y++) {
-					var shape = {points: [], sides: [], angles: [], orientation:0, normalPoints:[] /* which index of sides faces down */ };
+					var shape = {points: [], sides: [], angles: [], orientation:0, normalPoints:[] /!* which index of sides faces down *!/ };
 					var pointsGroup = shapesGroup[y].poly;
 					var pointsArray = [];
 					var points = pointsGroup.split(' ');
@@ -425,18 +425,18 @@ angular.module('cool')
 								normalPoint[pointIndex][a] = point[a] * 100
 							}
 						})
-					})
+					});
 					console.log(normalPoint)
 
 				} ;
 				console.log(tripShapes, maxLength);
 
-				/*angular.forEach(tripShapes, (shape, index)=>{
+				/!*angular.forEach(tripShapes, (shape, index)=>{
 					for(var w = 0; w<4; w++){
 						console.log(shape.points[w], tripShapes[index > 4 ? 0 : index+1].points);
 						tripShapes[index > 4 ? 0 : index+1].points.indexOf(shape.points[w]) ? console.log('we match!') : console.log('we dont match');
 					}
-				});*/
+				});*!/
 
 
 
@@ -466,7 +466,7 @@ angular.module('cool')
 
 
 
-			}
+			}*/
 			/*triangulation: (pString)=>{
 			 // pString = '2,5 5,5 3,8 1,4 2,5'
 			 var pStringArray = pString.split(' ');
