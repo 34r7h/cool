@@ -19,8 +19,7 @@ module.exports = function (config)
             'app/bower_components/angular-animate/angular-animate.js',
             'app/bower_components/angular-resource/angular-resource.js',
             'app/bower_components/angular-ui-router/release/angular-ui-router.js',
-            'app/bower_components/gsap/src/uncompressed/TweenMax.js',
-            'app/bower_components/three.js/build/three.js',
+            'app/bower_components/svg.js/dist/svg.js',
             'app/bower_components/angular-mocks/angular-mocks.js',
             // endbower
 

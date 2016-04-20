@@ -69,6 +69,7 @@ angular.module('cool')
 			cards: [
 				// Pass
 				{
+					type: 'pass',
 					topText: [
 						'You applied for a job',
 						'And got hired',
@@ -83,6 +84,7 @@ angular.module('cool')
 					image: 'images/pass.jpg'
 				},
 				{
+					type: 'pass',
 					topText: [
 						'You went to college',
 						'To be a boss',
@@ -97,6 +99,7 @@ angular.module('cool')
 					image: 'images/pass.jpg'
 				},
 				{
+					type: 'pass',
 					topText: [
 						'You started choking and',
 						'then quit smoking!'
@@ -109,6 +112,7 @@ angular.module('cool')
 					image: 'images/pass.jpg'
 				},
 				{
+					type: 'pass',
 					topText: [
 						'You pushed your car in the past,',
 						'when all you needed was some gas.'
@@ -122,6 +126,7 @@ angular.module('cool')
 					image: 'images/pass.jpg'
 				},
 				{
+					type: 'pass',
 					topText: [
 						'You got a job and',
 						'work real hard'
@@ -134,6 +139,21 @@ angular.module('cool')
 					image: 'images/pass.jpg'
 				},
 				{
+					type: 'pass',
+					topText: [
+						'You struck gold',
+						'and don\'t have',
+						'to work anymore'
+					],
+					bottomText: [
+						'It\'s cool!',
+						'Go 2 Pass'
+					],
+					action: 'goPass',
+					image: 'images/pass.jpg'
+				},
+				{
+					type: 'pass',
 					topText: [
 						'You went to college',
 						'and gained some knowledge!'
@@ -147,6 +167,7 @@ angular.module('cool')
 				},
 				// Stay
 				{
+					type: 'stay',
 					topText: [
 						'You donated to the Homeless in ',
 						'the shelter to help the people',
@@ -160,6 +181,7 @@ angular.module('cool')
 					image: 'images/stay.jpg'
 				},
 				{
+					type: 'stay',
 					topText: [
 						'Yesterday you mopped the floor',
 						'now you\'re happy every time',
@@ -173,6 +195,7 @@ angular.module('cool')
 					image: 'images/stay.jpg'
 				},
 				{
+					type: 'stay',
 					topText: [
 						'You did the favor',
 						'for your neighbor'
@@ -185,6 +208,7 @@ angular.module('cool')
 					image: 'images/stay.jpg'
 				},
 				{
+					type: 'stay',
 					topText: [
 						'You helped an old lady cross',
 						'the street and then you gave',
@@ -198,6 +222,7 @@ angular.module('cool')
 					image: 'images/stay.jpg'
 				},
 				{
+					type: 'stay',
 					topText: [
 						'You grew up to be 7 feet tall',
 						'and then you played',
@@ -211,6 +236,7 @@ angular.module('cool')
 					image: 'images/stay.jpg'
 				},
 				{
+					type: 'stay',
 					topText: [
 						'You helped your mom out with some money',
 						'and that made your day sunny'
@@ -223,6 +249,7 @@ angular.module('cool')
 					image: 'images/stay.jpg'
 				},
 				{
+					type: 'stay',
 					topText: [
 						'You ran a race and',
 						'took first place!'
@@ -235,6 +262,7 @@ angular.module('cool')
 					image: 'images/stay.jpg'
 				},
 				{
+					type: 'stay',
 					topText: [
 						'You struck gold and don\t',
 						'have to work anymore!'
@@ -247,6 +275,7 @@ angular.module('cool')
 					image: 'images/stay.jpg'
 				},
 				{
+					type: 'stay',
 					topText: [
 						'You\'re a true-blue friend',
 						'until the end!'
@@ -259,6 +288,7 @@ angular.module('cool')
 					image: 'images/stay.jpg'
 				},
 				{
+					type: 'stay',
 					topText: [
 						'You helped your brother',
 						'solve a puzzle!'
@@ -271,6 +301,7 @@ angular.module('cool')
 					image: 'images/stay.jpg'
 				},
 				{
+					type: 'stay',
 					topText: [
 						'You bought a mop and',
 						'you saw your pop!'
@@ -283,6 +314,7 @@ angular.module('cool')
 					image: 'images/stay.jpg'
 				},
 				{
+					type: 'stay',
 					topText: [
 						'You started singing in a',
 						'band and now you have',
@@ -296,6 +328,20 @@ angular.module('cool')
 					image: 'images/stay.jpg'
 				},
 				{
+					type: 'stay',
+					topText: [
+						'You did a favor',
+						'for your neighbor.',
+					],
+					bottomText: [
+						'That\'s cool!',
+						'You can stay!'
+					],
+					action: 'null',
+					image: 'images/stay.jpg'
+				},
+				{
+					type: 'stay',
 					topText: [
 						'You bought a cat',
 						'and you copt a cap'
@@ -308,6 +354,7 @@ angular.module('cool')
 					image: 'images/stay.jpg'
 				},
 				{
+					type: 'stay',
 					topText: [
 						'You went out West and ',
 						'won a beauty contest!'
@@ -321,6 +368,7 @@ angular.module('cool')
 				},
 				// Home
 				{
+					type: 'home',
 					topText: [
 						'You\'re always late and',
 						'make people wait'
@@ -334,6 +382,7 @@ angular.module('cool')
 					image: 'images/home.jpg'
 				},
 				{
+					type: 'home',
 					topText: [
 						'You got drunk and lost',
 						'your cool, then started',
@@ -347,6 +396,7 @@ angular.module('cool')
 					image: 'images/home.jpg'
 				},
 				{
+					type: 'home',
 					topText: [
 						'The mirror, mirror on the wall',
 						'said that you didn\'t look',
@@ -360,6 +410,7 @@ angular.module('cool')
 					image: 'images/home.jpg'
 				},
 				{
+					type: 'home',
 					topText: [
 						'Mighty mouse lives',
 						'in your house!'
@@ -374,6 +425,7 @@ angular.module('cool')
 				},
 				// Jail
 				{
+					type: 'jail',
 					topText: [
 						'You began abusing drugs',
 						'and started hanging',
@@ -387,6 +439,7 @@ angular.module('cool')
 					image: 'images/jail.jpg'
 				},
 				{
+					type: 'jail',
 					topText: [
 						'You went to the store and stole some rice,',
 						'then got caught and have to pay the price!'
@@ -399,6 +452,7 @@ angular.module('cool')
 					image: 'images/jail.jpg'
 				},
 				{
+					type: 'jail',
 					topText: [
 						'When you were young, you',
 						'pushed people around and now',
@@ -412,6 +466,20 @@ angular.module('cool')
 					image: 'images/jail.jpg'
 				},
 				{
+					type: 'jail',
+					topText: [
+						'You killed someone in a fit of rage',
+						'and now you\'re locked up in a cage.',
+					],
+					bottomText: [
+						'That\'s not cool!',
+						'Go to jail!'
+					],
+					action: 'goJail',
+					image: 'images/jail.jpg'
+				},
+				{
+					type: 'jail',
 					topText: [
 						'You killed someone in a fit',
 						'of rage, and now you\'re',
@@ -426,6 +494,7 @@ angular.module('cool')
 				},
 				// School
 				{
+					type: 'school',
 					topText: [
 						'You quit schooling at',
 						'the age of 2'
@@ -438,6 +507,7 @@ angular.module('cool')
 					image: 'images/school.jpg'
 				},
 				{
+					type: 'school',
 					topText: [
 						'You can\'t even count',
 						'your money, and',
@@ -451,6 +521,7 @@ angular.module('cool')
 					image: 'images/school.jpg'
 				},
 				{
+					type: 'school',
 					topText: [
 						'You can\'t read or write!',
 						'But you want to',
@@ -464,6 +535,7 @@ angular.module('cool')
 					image: 'images/school.jpg'
 				},
 				{
+					type: 'school',
 					topText: [
 						'You have a boss who',
 						'works you like',
@@ -478,6 +550,7 @@ angular.module('cool')
 				},
 				// Work
 				{
+					type: 'work',
 					topText: [
 						'You spent your last dime',
 						'on a bottle of wine!'
@@ -490,6 +563,7 @@ angular.module('cool')
 					image: 'images/work.jpg'
 				},
 				{
+					type: 'work',
 					topText: [
 						'You want to lay in bed all day',
 						'and then wonder why',
@@ -503,6 +577,7 @@ angular.module('cool')
 					image: 'images/work.jpg'
 				},
 				{
+					type: 'work',
 					topText: [
 						'You don\'t even have a dime',
 						'because all you do is',
@@ -516,6 +591,7 @@ angular.module('cool')
 					image: 'images/work.jpg'
 				},
 				{
+					type: 'work',
 					topText: [
 						'You don\'t have a honey',
 						'because you don\'t',
@@ -530,6 +606,7 @@ angular.module('cool')
 				},
 				// Death
 				{
+					type: 'dead',
 					topText: [
 						'You joined a gang ',
 						'and got shot and died. ',
@@ -544,6 +621,7 @@ angular.module('cool')
 					image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/US_Capitol_Building_at_night_Jan_2006.jpg/1018px-US_Capitol_Building_at_night_Jan_2006.jpg'
 				},
 				{
+					type: 'dead',
 					topText: [
 						'You got so high',
 						'you couldn\'t come down',
@@ -566,8 +644,16 @@ angular.module('cool')
 					textColor: 'black',
 					bgColor: '#999'
 				},
-				school: {color: 'school', poly: '27,35 52,40 52,50 27,50 27,35', img: 'images/school.png', textColor: 'black'},
-				jail: {color: 'jail', poly: '54,37.5 54,50 79,50 79,40 54,37.5 ', img: 'images/jail.png', textColor: 'black'},
+				school: {
+					color: 'school',
+					poly: '27,35 52,40 52,50 27,50 27,35',
+					img: 'images/school.png',
+					textColor: 'black'},
+				jail: {
+					color: 'jail',
+					poly: '54,37.5 54,50 79,50 79,40 54,37.5 ',
+					img: 'images/jail.png',
+					textColor: 'black'},
 				1: {color: colors.blue, poly: '13,5 8,5 10,11 12,11 13,5'},
 				2: {color: colors.yellow, poly: '8,5 4,8 7,13 10,11 8,5'},
 				3: {color: colors.black, poly: '4,8 2,13 6,16 7,13 4,8'},
@@ -627,7 +713,7 @@ angular.module('cool')
 				55: {color: colors.blue, poly: '93,12 90,16 94,19 96,16 93,12'},
 				56: {color: colors.yellow, poly: '90,16 90,21 94,21 94,19 90,16'},
 				57: {color: 'trap', poly: '90,21 91,27 95,27 94,21 90,21'},
-				58: {color: 'win', poly: '90,30 91,40 98,40 97,30 90,30'}
+				58: {color: 'winner!!', poly: '90,30 85,40 98,40 97,30 90,30'}
 			},
 			sections: {
 				timeouts: ['school', 'work', 'jail'],

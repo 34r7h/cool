@@ -8,76 +8,17 @@
         bottom:0,
         left:0,
         right:0}">
-    <!--<button ng-click="animate = !animate">Click</button>
-    <button ng-click="cool.di.api.tweenMax('#sunglasses-fpv', 2, {scale: 0, x:'50%',textAlign:'center'})">Reverse
-    </button>
-    <button ng-click="cool.di.api.tweenMax('#sunglasses-fpv', 3, {scale:1, y:'0%', x:'0%',textAlign:'center'})">Start
-    </button>
-    <button ng-click="cool.di.api.tweenMax('#sunglasses-fpv', 5, {scale:2, y:'100%', x:'-50%', textAlign:'center'})">
-        Forward
-    </button>
-    <button ng-click="cool.di.api.fpvQueue(cool.di.state.trip)">Trip</button>
-    <button ng-click="cool.di.api.orderTrips()">Order Trips</button>
-    <button ng-click="cool.di.api.yaTripsFunction(cool.di.state.trip)">Yet Another Trip Function</button>
-    <button ng-click="cool.di.api.triangulation('0,0 1,10, 10,11 9,2 0,0')">Triangulate</button>
-    <button ng-click="cool.di.api.findAngles(cool.di.state.trip)">findAngles</button>-->
-
     <svg ng-style="{width:'100vw', height:'100vh'}">
         <g>
             <polygon
-                    id="sunglasses-fpv"
-                    ng-hide="animate"
-                    ng-animate-ref="animate-ref"
-                    ng-attr-points="{{cool.di.api.toNumber(.38 * $root.screen.width)}},{{cool.di.api.toNumber(.62 * ($root.screen.width >= $root.screen.height ? $root.screen.height:  $root.screen.height /2))}} {{cool.di.api.toNumber(.62 * $root.screen.width)}}, {{cool.di.api.toNumber(.62 * ($root.screen.width >= $root.screen.height ? $root.screen.height:  $root.screen.height /2))}} {{$root.screen.width}},{{$root.screen.width >= $root.screen.height ? $root.screen.height : $root.screen.height / 2}} 0,{{$root.screen.width >= $root.screen.height ? $root.screen.height : $root.screen.height / 2}} "
-                    fill="rgba(0,150,0,.6)"
-                    stroke="white"
-                    stroke-width="7"
-            >
-            </polygon>
-
-            <polygon
-                     ng-repeat="space in cool.di.state.tripShapes"
-                    id="sunglasses-fpv"
-                    ng-hide="animate"
-                    ng-animate-ref="animate-ref"
-                    ng-attr-points="{{space.points[0][0]+','+space.points[0][1] + ' ' + space.points[1][0]+','+space.points[1][1] + ' ' + space.points[2][0]+','+space.points[2][1] + ' ' + space.points[3][0]+','+space.points[3][1] + ' ' + space.points[0][0]+','+space.points[0][1]}}"
-                    fill="rgba(0,150,0,1)"
-                    stroke="white"
-                    stroke-width="7"
-            >
-            </polygon>
-
-            <polygon
-                    ng-init="points = cool.di.api.spaceFpv(trip.poly, $index)"
-                    ng-repeat="trip in cool.di.state.trip | reverse"
-                    ng-show="cool.di.state.show.fpv === $index"
-                    ng-animate-ref="animate-ref"
-                    id="sunglasses-fpv{{$index}}"
-                    ng-attr-points="{{points}}"
-                    fill="{{trip.color}}"
-                    stroke="rgba(0,0,0,.4)"
-                    stroke-width="7"
-            ></polygon>
-            <polygon
                     ng-attr-points="{{cool.di.api.sunglassesFpv(
-                            $root.screen.width, ($root.screen.width >= $root.screen.height ? $root.screen.height : $root.screen.height / 2))}}"
-                    fill="rgba(0,0,0,.6)"
-                    stroke="orange"
-                    stroke-width="7"
+                            $root.screen.width, ($root.screen.height / 2))}}"
+                    fill="rgba(0,0,0,.31)"
+                    stroke="{{cool.di.state.turn.color}}"
+                    stroke-width="17"
             >
             </polygon>
         </g>
     </svg>
-    <!-- <svg ng-style="{height:'100vh', width:'100vw'}">
-
-        <!-- element.style {
-    transform: scale(7) translateY(10vh) translateX(6vw) rotateX(102deg) rotateZ(110deg);
-    transform-origin: center;
-}
-        <g>
-            <polygon ng-repeat="shape in cool.di.state.tripShapes" ng-attr-points="{{shape.points[0][0]*10}},{{shape.points[0][1]*10}} {{shape.points[1][0]*10}},{{shape.points[1][1]*10}} {{shape.points[2][0]*10}},{{shape.points[2][1]*10}} {{shape.points[3][0]*10}},{{shape.points[3][1]*10}} {{shape.points[0][0]*10}},{{shape.points[0][1]*10}}"></polygon>
-        </g>
-    </svg>
-    -->
 </div>
 

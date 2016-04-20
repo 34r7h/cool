@@ -29,3 +29,55 @@
   //transform: translateY(990px);
   opacity: 0;
 }
+
+.sample-show-hide {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.sample-show-hide.ng-hide {
+  opacity:0;
+}
+
+.animate.ng-enter,
+.animate.ng-leave
+{
+  -webkit-transition: 150ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -moz-transition: 150ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -ms-transition: 150ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -o-transition: 150ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  transition: 150ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space:nowrap;
+}
+
+.animate.ng-leave.animate.ng-leave-active,
+.animate.ng-enter {
+  opacity: 0;
+  width: 0px;
+  height: 0px;
+}
+.animate-glasses.ng-enter,
+.animate-glasses.ng-leave
+{
+  -webkit-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -moz-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -ms-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -o-transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  transition: 500ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space:nowrap;
+}
+
+.animate-glasses.ng-leave.animate-glasses.ng-leave-active,
+.animate-glasses.ng-enter {
+  opacity: 0;
+  width: 0px;
+  height: 0px;
+}

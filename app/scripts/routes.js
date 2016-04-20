@@ -51,11 +51,11 @@ angular.module('cool')
                 url: '/:card',
                 template: 'Card: Is it cool?'
             })
-            .state('cool.fpv', {
+            .state('cool.board.fpv', {
                 /*// Various card types will
                 // have params set as well
                 // to help with styling*/
-                url: 'fpv',
+                url: '/fpv',
                 template: '<fpv></fpv>'
             })
             /* STATES-NEEDLE - DO NOT REMOVE THIS */;
