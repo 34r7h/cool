@@ -42,8 +42,7 @@
                             ng-if="player.currentPosition == space"
                             stroke="{{cool.di.models.colors[player.color]}}"
                             stroke-width="7"
-                            class="animate-glasses"
-                    >
+                            class="animate-glasses">
                     </polygon>
                 </g>
             </g>
@@ -74,7 +73,7 @@
                         stroke-width="3px"
                         style="background: white; font-size: {{$root.screen.width < 600 ? 12 : $root.screen.width < 1000 ? 18 : 22}}px; z-index:10000; position: fixed;"
                         text-anchor="middle"
-                        ng-if="(cool.di.models.spaces[space].color == 'cool?') || (cool.di.models.spaces[space].color == 'winner!!') || (cool.di.models.spaces[space].color == 'pass') || (cool.di.models.spaces[space].color == 'trap')|| (cool.di.models.spaces[space].color == 'school') || (cool.di.models.spaces[space].color == 'work') || (cool.di.models.spaces[space].color == 'jail')"
+                        ng-if="(cool.di.models.spaces[space].color == 'home' || cool.di.models.spaces[space].color == 'cool?') || (cool.di.models.spaces[space].color == 'winner!!') || (cool.di.models.spaces[space].color == 'pass') || (cool.di.models.spaces[space].color == 'trap')|| (cool.di.models.spaces[space].color == 'school') || (cool.di.models.spaces[space].color == 'work') || (cool.di.models.spaces[space].color == 'jail')"
                         ng-attr-x="{{(cool.di.api.toNumber($root.points[space].split(' ')[0].split(',')[0]) + cool.di.api.toNumber($root.points[space].split(' ')[1].split(',')[0])+ cool.di.api.toNumber($root.points[space].split(' ')[2].split(',')[0])+ cool.di.api.toNumber($root.points[space].split(' ')[3].split(',')[0]))/4}}"
                         ng-attr-y="{{(cool.di.api.toNumber($root.points[space].split(' ')[0].split(',')[1]) + cool.di.api.toNumber($root.points[space].split(' ')[1].split(',')[1])+ cool.di.api.toNumber($root.points[space].split(' ')[2].split(',')[1])+ cool.di.api.toNumber($root.points[space].split(' ')[3].split(',')[1]))/4}}">
                     {{$parent.cool.di.models.spaces[space].color | uppercase}}
@@ -83,7 +82,7 @@
                         fill="black"
                         style="font-size: {{$root.screen.width < 600 ? 12 : $root.screen.width < 1000 ? 18 : 22}}px; z-index:10000; position: fixed; background: white"
                         text-anchor="middle"
-                        ng-if="(cool.di.models.spaces[space].color == 'cool?') || (cool.di.models.spaces[space].color == 'winner!!') || (cool.di.models.spaces[space].color == 'pass') || (cool.di.models.spaces[space].color == 'trap')|| (cool.di.models.spaces[space].color == 'school') || (cool.di.models.spaces[space].color == 'work') || (cool.di.models.spaces[space].color == 'jail')"
+                        ng-if="(cool.di.models.spaces[space].color == 'home' || cool.di.models.spaces[space].color == 'cool?') || (cool.di.models.spaces[space].color == 'winner!!') || (cool.di.models.spaces[space].color == 'pass') || (cool.di.models.spaces[space].color == 'trap')|| (cool.di.models.spaces[space].color == 'school') || (cool.di.models.spaces[space].color == 'work') || (cool.di.models.spaces[space].color == 'jail')"
                         ng-attr-x="{{(cool.di.api.toNumber($root.points[space].split(' ')[0].split(',')[0]) + cool.di.api.toNumber($root.points[space].split(' ')[1].split(',')[0])+ cool.di.api.toNumber($root.points[space].split(' ')[2].split(',')[0])+ cool.di.api.toNumber($root.points[space].split(' ')[3].split(',')[0]))/4}}"
                         ng-attr-y="{{(cool.di.api.toNumber($root.points[space].split(' ')[0].split(',')[1]) + cool.di.api.toNumber($root.points[space].split(' ')[1].split(',')[1])+ cool.di.api.toNumber($root.points[space].split(' ')[2].split(',')[1])+ cool.di.api.toNumber($root.points[space].split(' ')[3].split(',')[1]))/4}}">
                     {{$parent.cool.di.models.spaces[space].color | uppercase}}

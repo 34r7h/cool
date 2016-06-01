@@ -12,7 +12,6 @@ angular.module('cool')
 		var api = {
 			hide: function () {
 				$timeout(function () {
-					console.log('removing space from array');
 					var time = 0;
 					for (var x = 0; x < State.trip.length; x++) {
 						$timeout(function () {
@@ -21,34 +20,19 @@ angular.module('cool')
 					}
 				}, 1000)
 			},
-			killAudio: function (all) {
-				all ? document.getElementById('game-0').currentPosition = 0 : all = null;
-				angular.forEach(Models.audio, function (family, famKey) {
-					angular.forEach(family, function (track, key) {
-						var htmlTrack = document.getElementById(famKey + '-' + key);
-						htmlTrack !== 'game-0' ? (htmlTrack.pause(), htmlTrack.currentPosition = 0) : null;
-					});
-				});
-				document.getElementById('game-0').play();
-			},
-			audio: function (audio, pause) {
+			killAudio: function () {
+				document.getElementById('game-0').currentTime = 0;
 				document.getElementById('game-0').pause();
+			},
+			audio: function (audio) {
 				var themeSong = document.getElementById(audio);
 				themeSong.play();
+
 				$timeout(function () {
-					themeSong.volume = 0.7;
-				}, 1000);
-				$timeout(function () {
-					themeSong.volume = 0.4;
-				}, 2000);
-				$timeout(function () {
-					themeSong.volume = 0.1;
-				}, 3000);
-				pause ? $timeout(function () {
 					themeSong.currentTime = 0;
 					themeSong.pause();
-					document.getElementById('game-0').play();
-				}, pause) : null;
+					State.gameStarted ? document.getElementById('game-0').play() : null;
+				}, 2000)
 			},
 			toNumber: function (num) {
 				return parseInt(num, 10);
@@ -90,19 +74,21 @@ angular.module('cool')
 
 			},
 			nextPlayer: function (key) {
-				api.killAudio();
-				api.audio('effects-0', 150);
-				State.liveTurn = false;
+				
+				api.audio('walking-0');
 
 				$timeout(function () {
 					if (State.players[key + 1]) {
 						api.message({text: '', header: 'Next Player ' + State.players[key + 1].playerName});
 						State.turn = State.players[key + 1];
+						State.liveTurn = true;
+
 					} else {
 						api.message({text: '', header: 'Next Player ' + State.players[0].playerName});
 						State.turn = State.players[0];
+						State.liveTurn = true;
+
 					}
-					State.liveTurn = true;
 				}, (State.trip.length * 500) + 500);
 
 			},
@@ -118,8 +104,8 @@ angular.module('cool')
 				}
 
 				function move(direction) {
-					direction ? (console.log('moving forward to', player.currentPosition), player.currentPosition = player.currentPosition + 1) :
-						(console.log('moving back from', player.currentPosition), player.currentPosition = player.currentPosition - 1);
+					direction ? (player.currentPosition = player.currentPosition + 1) :
+						(player.currentPosition = player.currentPosition - 1);
 					State.trip.push(Models.spaces[player.currentPosition]);
 					return State.trip;
 
@@ -131,7 +117,7 @@ angular.module('cool')
 					if (
 						(startingSpace === 17 && player.currentPosition === 17) ||
 						(startingSpace === 32 && player.currentPosition === 32) ||
-						(startingSpace === 50 && player.currentPosition === 50)) {
+						(startingSpace === 49 && player.currentPosition === 49)) {
 						api.message({header: player.playerName, text: 'passing'});
 						switch (player.currentPosition) {
 							case 17:
@@ -142,8 +128,8 @@ angular.module('cool')
 								player.currentPosition = 38;
 								State.trip.push(Models.spaces[player.currentPosition]);
 								break;
-							case 50:
-								player.currentPosition = 51;
+							case 49:
+								player.currentPosition = 50;
 								State.trip.push(Models.spaces[player.currentPosition]);
 								break;
 						}
@@ -180,24 +166,22 @@ angular.module('cool')
 						move(State.direction);
 					}
 					// Fall back if passing the last pass
-					if ((player.currentPosition > 50 && startingSpace !== 50) || player.currentPosition > 58) {
+					if ((player.currentPosition > 49 && startingSpace !== 49) || player.currentPosition > 57) {
 						player.currentPosition = 41;
 						State.trip.push(Models.spaces[player.currentPosition]);
 					}
 				}
-				/*var front = SVG('player-glasses');
-				 front.front()*/
-				// return State.tripLine = State.trip;
 			},
 			rollDice: function (first, second) {
 				// Random roll of two dice,with up to 4 players.
 				// One set of sie per corner.
+				api.audio('dice-0');
 				var total = 0;
 				var doubles = false;
 				var firstDie = Math.floor(Math.random() * 6) + 1;
 				var secondDie = Math.floor(Math.random() * 6) + 1;
 				first || second ? State.dice = [first, second] : State.dice = [firstDie, secondDie];
-				State.dice[0] === State.dice[1] ? doubles = true : doubles = false;
+				State.dice[0] === State.dice[1] ? (State.liveTurn = true, doubles = true) : doubles = false;
 				total = State.dice[0] + State.dice[1];
 				State.currentRoll = total;
 				State.turn.playerName ? api.message({header: State.turn.playerName + ' Rolls ', text: State.dice}) : null;
@@ -240,7 +224,7 @@ angular.module('cool')
 				angular.forEach(scores, function (score) {
 					playerOrder.unshift({currentPosition: 1, playerName: rollPlayers[score]});
 				});
-				var playerColors = ['lightPurple', 'lightOrange', 'lightBlue', 'lightGreen', 'lightYellow', 'lightPink', 'pink'];
+				var playerColors = ['lightBlue', 'lightGreen', 'lightYellow', 'pink'];
 
 				angular.forEach(playerOrder, function (player) {
 					var randomColor = Math.floor(Math.random() * (playerColors.length - 1));
@@ -258,13 +242,10 @@ angular.module('cool')
 				State.dice = [0, 0];
 				State.gameStarted = true;
 				State.liveTurn = true;
-				// document.getElementById('game-0').pause();
 
 			},
 			takeTurn: function (key, player, dice) {
-				// $state.go('cool.board.fpv');
 
-				api.killAudio();
 				State.messages = {};
 				State.trip = [];
 				dice ? api.message({header: 'Warning', text: player.playerName + ' is a cheat!'}) : null;
@@ -281,8 +262,9 @@ angular.module('cool')
 					(api.card(key), cool = true) :
 					Models.spaces[player.currentPosition].color === 'trap' ?
 						(
+							api.audio('trap-0'),
 							api.message({text: '' + player.playerName + ' sent back to start!', header: 'It\'s a trap!!'}),
-								api.goHome(player)
+								$timeout(function(){api.goHome(player)},1000)
 						) :
 						null;
 				if (playerRoll.doubles === true) {
@@ -291,23 +273,25 @@ angular.module('cool')
 						header: 'Doubles!!'
 					});
 					playerRoll.doubles = false;
+					State.liveTurn = true;
 				} else {
 					api.message({text: '', header: player.playerName + 's turn is over'});
 					!cool ? api.nextPlayer(key) : null;
 				}
 
-				if (player.currentPosition === 58 || State.players.length < 1) {
+				if (player.currentPosition === 57 || State.players.length < 1) {
+					api.audio('win-0');
+					api.killAudio();
 					api.message({header: 'Winner!!', text: player.playerName + ' wins the game.'});
+
 					State.gameStarted = false;
 				}
 
 				if (State.players.length < 1) {
 					api.message({header: 'Lost!!', text: 'No one wins.'});
 					State.gameStarted = false;
+					api.killAudio();
 				}
-				/*$timeout(function () {
-				 $state.go('cool.board');
-				 }, 3000);*/
 			},
 			message: function (message) {
 				var time = Date.now();
@@ -325,50 +309,53 @@ angular.module('cool')
 				$timeout(function () {
 					var randomCard = Models.cards[Math.floor(Math.random() * Models.cards.length)];
 					State.card = randomCard;
-
-					(State.card.action === 'goPass') || State.card.action === 'null' ? api.audio('cool-0', 10000) : api.audio('notCool-0', 10000);
-
-					(State.card.action === 'killPlayer') ? api.audio('notCool-1', 10000) : null;
 				}, (State.trip.length * 500) + 500);
 			},
 			goHome: function (player) {
 				player.currentPosition = 1;
+				api.nextPlayer(State.players.indexOf(player));
 			},
 			killPlayer: function (player) {
+				api.audio('gun-0');
 				var playerIndex = State.players.indexOf(player);
 				api.nextPlayer(State.players.indexOf(player));
 				State.players.splice(playerIndex, 1);
 			},
+			goStay: function (player) {
+				api.audio('cool-0');
+				api.nextPlayer(State.players.indexOf(player));
+			},
 			goPass: function (player) {
+				api.audio('yay-0');
 				if (player.currentPosition < 24) {
 					player.currentPosition = 17;
 				}
 				else if (player.currentPosition >= 24 && player.currentPosition < 38) {
 					player.currentPosition = 32;
 				}
-				if (player.currentPosition >= 38 && player.currentPosition < 50) {
-					player.currentPosition = 50;
+				if (player.currentPosition >= 38 && player.currentPosition < 49) {
+					player.currentPosition = 49;
 				}
 				api.nextPlayer(State.players.indexOf(player));
 			},
 			goJail: function (player) {
+				api.audio('siren-0');
 				player.currentPosition = 'jail';
 				api.nextPlayer(State.players.indexOf(player));
 			},
 			goSchool: function (player) {
-
+				api.audio('school-0');
 				player.currentPosition = 'school';
 				api.nextPlayer(State.players.indexOf(player));
 			},
 			goWork: function (player) {
+				api.audio('work-0');
 				player.currentPosition = 'work';
 				api.nextPlayer(State.players.indexOf(player));
 			}
 
 		};
 		angular.element($window).bind('resize', function () {
-			console.info('resizing');
-			console.info($window.orientation);
 			$rootScope.screen = {
 				width: $window.innerWidth,
 				height: $window.innerHeight

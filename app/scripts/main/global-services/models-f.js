@@ -41,12 +41,36 @@ angular.module('cool')
 					{url:'audio/lets-go-outside-20-sec-mix-1-A.mp3'},
 					{url:'audio/lets-go-outside-20-sec-mix-1-B.mp3'}
 				],
+				trap:[
+					{url:'audio/trap.mp3'}
+				],
+				win:[
+					{url:'audio/applause.mp3'}
+				],
 				notCool:[
 					{url:'audio/lets-go-outside-20-sec-mix-3-A.mp3'},
 					{url:'audio/lets-go-outside-20-sec-mix-3-B.mp3'}
 				],
-				effects:[
-					{url:'audio/lets-go-outside-Solo-short-A.mp3', time:'0.3,0.5', loop:true}
+				yay:[
+					{url:'audio/yay.mp3'}
+				],
+				school:[
+					{url:'audio/school.mp3'}
+				],
+				work:[
+					{url:'audio/work.mp3'}
+				],
+				gun:[
+					{url:'audio/gun.mp3'}
+				],
+				walking:[
+					{url:'audio/walking.mp3'}
+				],
+				siren:[
+					{url:'audio/siren.mp3'}
+				],
+				dice:[
+					{url:'audio/dice.mp3'}
 				]
 			},
 			player: {
@@ -75,6 +99,19 @@ angular.module('cool')
 						'And got hired',
 						'They said you can work there',
 						'Until you retire!'
+					],
+					bottomText: [
+						'That\'s cool!',
+						'Go 2 Pass'
+					],
+					action: 'goPass',
+					image: 'images/pass.jpg'
+				},
+				{
+					type: 'pass',
+					topText: [
+						'You\'re always asking what is this',
+						'and then you became a scientist'
 					],
 					bottomText: [
 						'That\'s cool!',
@@ -177,7 +214,7 @@ angular.module('cool')
 						'That\'s cool!',
 						'You can stay!'
 					],
-					action: 'null',
+					action: 'goStay',
 					image: 'images/stay.jpg'
 				},
 				{
@@ -191,7 +228,7 @@ angular.module('cool')
 						'That\'s cool!',
 						'You can stay!'
 					],
-					action: 'null',
+					action: 'goStay',
 					image: 'images/stay.jpg'
 				},
 				{
@@ -204,7 +241,7 @@ angular.module('cool')
 						'That\'s cool!',
 						'You can stay!'
 					],
-					action: 'null',
+					action: 'goStay',
 					image: 'images/stay.jpg'
 				},
 				{
@@ -218,7 +255,7 @@ angular.module('cool')
 						'That\'s cool!',
 						'You can stay!'
 					],
-					action: 'null',
+					action: 'goStay',
 					image: 'images/stay.jpg'
 				},
 				{
@@ -232,7 +269,7 @@ angular.module('cool')
 						'That\'s cool!',
 						'You can stay!'
 					],
-					action: 'null',
+					action: 'goStay',
 					image: 'images/stay.jpg'
 				},
 				{
@@ -245,7 +282,7 @@ angular.module('cool')
 						'That\'s cool!',
 						'You can stay!'
 					],
-					action: 'null',
+					action: 'goStay',
 					image: 'images/stay.jpg'
 				},
 				{
@@ -258,7 +295,7 @@ angular.module('cool')
 						'That\'s cool!',
 						'You can stay!'
 					],
-					action: 'null',
+					action: 'goStay',
 					image: 'images/stay.jpg'
 				},
 				{
@@ -271,7 +308,7 @@ angular.module('cool')
 						'That\'s cool!',
 						'You can stay!'
 					],
-					action: 'null',
+					action: 'goStay',
 					image: 'images/stay.jpg'
 				},
 				{
@@ -284,7 +321,7 @@ angular.module('cool')
 						'That\'s cool!',
 						'You can stay!'
 					],
-					action: 'null',
+					action: 'goStay',
 					image: 'images/stay.jpg'
 				},
 				{
@@ -297,7 +334,7 @@ angular.module('cool')
 						'That\'s cool!',
 						'You can stay!'
 					],
-					action: 'null',
+					action: 'goStay',
 					image: 'images/stay.jpg'
 				},
 				{
@@ -310,7 +347,7 @@ angular.module('cool')
 						'That\'s cool!',
 						'You can stay!'
 					],
-					action: 'null',
+					action: 'goStay',
 					image: 'images/stay.jpg'
 				},
 				{
@@ -324,7 +361,7 @@ angular.module('cool')
 						'That\'s cool!',
 						'You can stay!'
 					],
-					action: 'null',
+					action: 'goStay',
 					image: 'images/stay.jpg'
 				},
 				{
@@ -337,7 +374,7 @@ angular.module('cool')
 						'That\'s cool!',
 						'You can stay!'
 					],
-					action: 'null',
+					action: 'goStay',
 					image: 'images/stay.jpg'
 				},
 				{
@@ -350,7 +387,7 @@ angular.module('cool')
 						'That\'s cool!',
 						'You can stay!'
 					],
-					action: 'null',
+					action: 'goStay',
 					image: 'images/stay.jpg'
 				},
 				{
@@ -363,7 +400,7 @@ angular.module('cool')
 						'That\'s cool!',
 						'You can stay!'
 					],
-					action: 'null',
+					action: 'goStay',
 					image: 'images/stay.jpg'
 				},
 				// Home
@@ -637,24 +674,34 @@ angular.module('cool')
 				}
 			],
 			spaces: {
+				home: {
+					color: 'home',
+					poly: '1,0 20,0 20,15 1,15 1,0',
+					img: 'images/city.png',
+					textColor: 'black',
+					bgColor: '#999'
+				},
 				work: {
 					color: 'work',
-					poly: '1,40 25,35 25,50 1,50 1,40',
+					poly: '1,35 25,35 25,55 1,55 1,35',
 					img: 'images/work.png',
 					textColor: 'black',
 					bgColor: '#999'
 				},
 				school: {
 					color: 'school',
-					poly: '27,35 52,40 52,50 27,50 27,35',
+					poly: '20,35 45,35 45,55 20,55 20,35',
 					img: 'images/school.png',
 					textColor: 'black'},
 				jail: {
 					color: 'jail',
-					poly: '54,37.5 54,50 79,50 79,40 54,37.5 ',
+					poly: '40,35 65,35 65,55 40,55 40,35',
 					img: 'images/jail.png',
 					textColor: 'black'},
-				1: {color: colors.blue, poly: '13,5 8,5 10,11 12,11 13,5'},
+				1: {
+					color: 'rgba(255,255,255,.6)',
+					poly: '13,5 8,5 10,11 12,11 13,5'
+				},
 				2: {color: colors.yellow, poly: '8,5 4,8 7,13 10,11 8,5'},
 				3: {color: colors.black, poly: '4,8 2,13 6,16 7,13 4,8'},
 				4: {color: colors.red, poly: '2,13 0,19 5,19 6,16 2,13'},
@@ -702,32 +749,26 @@ angular.module('cool')
 				46: {color: 'cool?', poly: '74,25 75,29 79,28 79,22 74,25'},
 				47: {color: colors.black, poly: '79,28 83,28 82,22 79,22 79,28'},
 				48: {color: 'trap', poly: '83,28 86,28 86,22 82,22 83,28'},
-				/*
-				 49: {color: 'sunglasses', poly:''},
-				 */
-				50: {color: 'pass', poly: '84,11 88,11 89,8 85,5 84,10'},
-				51: {color: colors.yellow, poly: '89,8 90,7 90,2 85,5 89,8'},
-				52: {color: colors.black, poly: '90,7 92,8 94,4 90,2 90,7'},
-				53: {color: colors.red, poly: '92,8 93,10 98,10 94,4 92,8'},
-				54: {color: 'cool?', poly: '93,10 93,12 96,16 98,10 93,10'},
-				55: {color: colors.blue, poly: '93,12 90,16 94,19 96,16 93,12'},
-				56: {color: colors.yellow, poly: '90,16 90,21 94,21 94,19 90,16'},
-				57: {color: 'trap', poly: '90,21 91,27 95,27 94,21 90,21'},
-				58: {color: 'winner!!', poly: '90,30 85,40 98,40 97,30 90,30'}
+				49: {color: 'pass', poly: '84,11 88,11 89,8 85,5 84,10'},
+				50: {color: colors.yellow, poly: '89,8 90,7 90,2 85,5 89,8'},
+				51: {color: colors.black, poly: '90,7 92,8 94,4 90,2 90,7'},
+				52: {color: colors.red, poly: '92,8 93,10 98,10 94,4 92,8'},
+				53: {color: 'cool?', poly: '93,10 93,12 96,16 98,10 93,10'},
+				54: {color: colors.blue, poly: '93,12 90,16 94,19 96,16 93,12'},
+				55: {color: colors.yellow, poly: '90,16 90,21 94,21 94,19 90,16'},
+				56: {color: 'trap', poly: '90,21 91,27 95,27 94,21 90,21'},
+				57: {color: 'winner!!', poly: '90,30 85,40 98,40 97,30 90,30'}
 			},
 			sections: {
-				timeouts: ['school', 'work', 'jail'],
+				timeouts: ['school', 'work', 'jail', 'home'],
 				c: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 				o1: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
 				gap1: [24],
 				o2: [25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37],
 				gap2: [38, 39, 40],
 				l: [41, 42, 43, 44, 45, 46, 47, 48],
-				/*
-				 sunglasses:[49],
-				 */
-				question: [50, 51, 52, 53, 54, 55, 56, 57],
-				win: [58]
+				question: [49, 50, 51, 52, 53, 54, 55, 56],
+				win: [57]
 			},
 			start: {
 				players: number,
