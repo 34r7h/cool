@@ -7,7 +7,7 @@
  * Main module of the application.
  */
 'use strict';
-
+screen.lockOrientation ? screen.lockOrientation('landscape'): null;
 angular.module('cool', [
     'ngAnimate',
     'ngResource',
