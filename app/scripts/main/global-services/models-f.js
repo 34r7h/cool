@@ -683,19 +683,19 @@ angular.module('cool')
 				},
 				work: {
 					color: 'work',
-					poly: '1,35 25,35 25,55 1,55 1,35',
+					poly: '19,35 43,35 43,55 19,55 19,35',
 					img: 'images/work.png',
 					textColor: 'black',
 					bgColor: '#999'
 				},
 				school: {
 					color: 'school',
-					poly: '20,35 45,35 45,55 20,55 20,35',
+					poly: '39,35 64,35 64,55 39,55 39,35',
 					img: 'images/school.png',
 					textColor: 'black'},
 				jail: {
 					color: 'jail',
-					poly: '40,35 65,35 65,55 40,55 40,35',
+					poly: '60,35 85,35 85,55 60,55 60,35',
 					img: 'images/jail.png',
 					textColor: 'black'},
 				1: {

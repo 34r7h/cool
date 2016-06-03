@@ -1,23 +1,8 @@
-<!--<h4>
-    <a ui-sref="cool">Is it Cool?</a>
-</h4>-->
-<debug ng-style="{position:'absolute', background: 'rgba(255,255,255,.8)', top:0, left:0}">
-    <h4>View Size</h4>
-    {{cool.di.window.innerWidth}}px * {{cool.di.window.innerHeight}}px
-    <h4>Methods</h4>
-    <button ng-click="cool.di.api.rollDice()">Roll Dice</button>
-    <button ng-click="cool.di.api.message({text:'yo', header:'I\'m new in town :)'})">Message</button>
-    <button ng-click="cool.di.api.routePlayer('board', 'space', 'hello')">Route Player</button>
-    <button ng-click="cool.di.api.startGame(2)"> Start Game</button>
-    <h4>Direct Injections</h4>
-    <p ng-repeat="(key, di) in cool.di">
-        <b>{{key}}: </b>{{di}}
-    </p></debug>
 <div class="start" ng-style="{display:'flex', maxHeight:'90vh'}">
     <img ng-style="{position:'absolute', zIndex:0, width:'100%', height:'100%'}" src="images/backdrop.jpg" alt="">
     <ui-view></ui-view>
 </div>
-<div ng-style="{position:'fixed', top:'55vh', bottom:'95vh', width:'100%'}">
+<div ng-style="{position:'fixed', top:'65vh', width:'100%'}">
     <div ng-show="cool.di.state.gameStarted" ng-style="{display:'flex', width:'100vw'}">
         <div style="flex: 1 1 100%" ng-if="cool.di.state.players.length > 0 ">
             <div ng-style="{display:'flex', width:'100%'}">
@@ -31,7 +16,8 @@
                     <span ng-click="secretDice = !secretDice">
                         {{player.playerName}}
                     </span>
-                    <button ng-click="cool.di.state.liveTurn = false; cool.di.api.takeTurn(cool.di.state.players.indexOf(cool.di.state.turn), cool.di.state.turn)" ng-show="cool.di.state.liveTurn && player.playerName == cool.di.state.turn.playerName">Roll Dice</button>
+                    <button ng-click="cool.di.state.liveTurn = false; cool.di.api.takeTurn(cool.di.state.players.indexOf(cool.di.state.turn), cool.di.state.turn)"
+                            ng-show="cool.di.state.liveTurn && player.playerName == cool.di.state.turn.playerName">Roll</button>
                     <div ng-if="cool.di.state.gameStarted" ng-style="{display:'flex', height:'1em'}">
                         <span
                                 ng-show="cool.di.state.liveTurn"
@@ -67,16 +53,16 @@
     <div ng-show="!cool.di.state.gameStarted" ng-style="{background:'rgba(252,255,255,.7)', padding:'1em 3em'}">
         <div ng-if="!cool.di.state.gameStarted" ng-style="{textAlign:'center'}">
             <div ng-style="{display:'flex', width:'100%'}">
-                <button ng-style="{fontSize:$root.screen.width < 700 ? '1em' : '2em',flex:'1'}"
+                <button ng-style="{fontSize:$root.screen.width < 700 ? '0.8em' : '1em', flex:'1'}"
                         ng-click="cool.di.api.startGame(1)">1 Player
                 </button>
-                <button ng-style="{fontSize:$root.screen.width < 700 ? '1em' : '2em',flex:'1'}"
+                <button ng-style="{fontSize:$root.screen.width < 700 ? '0.8em' : '1em', flex:'1'}"
                         ng-click="cool.di.api.startGame(2)">2 Players
                 </button>
-                <button ng-style="{fontSize:$root.screen.width < 700 ? '1em' : '2em',flex:'1'}"
+                <button ng-style="{fontSize:$root.screen.width < 700 ? '0.8em' : '1em', flex:'1'}"
                         ng-click="cool.di.api.startGame(3)">3 Players
                 </button>
-                <button ng-style="{fontSize:$root.screen.width < 700 ? '1em' : '2em',flex:'1'}"
+                <button ng-style="{fontSize:$root.screen.width < 700 ? '0.8em' : '1em', flex:'1'}"
                         ng-click="cool.di.api.startGame(4)">4 Players
                 </button>
             </div>
@@ -86,7 +72,7 @@
         -->
     </div>
 </div>
-<div ng-style="{bottom:'10%' ,position:'absolute',zIndex:9999, background:'rgba(255,255,255,.8)', padding:'1em'}">
+<div ng-show="cool.di.state.messages.length > 0" ng-style="{bottom:'10%', position:'absolute', zIndex:9999, background:'rgba(255,255,255,.8)', padding:'1em'}">
     <div ng-style="{flex:'1 1 auto'}">
         <messages></messages>
     </div>
@@ -111,3 +97,4 @@
     <audio id="{{$parent.famKey+'-'+trackKey}}" ng-repeat="(trackKey, track) in family"
            src="{{track.url + (track.time ? '#t='+track.time : '')}}" loop="{{track.loop}}"></audio>
 </div>
+<img ng-style="{position:'absolute', bottom:0, left:0, zIndex:0, width:'10vw', height:'auto'}" src="images/isitcool-logo.png" alt="">

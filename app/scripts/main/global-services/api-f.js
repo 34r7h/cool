@@ -246,7 +246,7 @@ angular.module('cool')
 			},
 			takeTurn: function (key, player, dice) {
 
-				State.messages = {};
+				// State.messages = [];
 				State.trip = [];
 				dice ? api.message({header: 'Warning', text: player.playerName + ' is a cheat!'}) : null;
 				api.message({header: player.playerName + ' takes a turn.', text: 'Rolling...'});
@@ -294,16 +294,14 @@ angular.module('cool')
 				}
 			},
 			message: function (message) {
-				var time = Date.now();
-				State.messages[time] = {
+				State.messages.push({
 					text: message.text,
 					header: message.header,
-					type: message.type,
-					expires: (time + message.duration)
-				};
+					type: message.type
+				});
 				$timeout(function () {
-					State.messages[time] = null;
-				},3500)
+					State.messages = [];
+				},3500);
 			},
 			card: function () {
 				$timeout(function () {

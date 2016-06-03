@@ -23,7 +23,7 @@ angular.module('cool')
 			gameStarted: false,
 			// current state of the game
 			players: [],
-			messages: {},
+			messages: [],
 			dice: [],
 			card: {},
 			direction: true
