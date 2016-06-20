@@ -6,7 +6,9 @@ This app is built with *AngularJS*. An AngularJS developer should understand how
 
 It's important that the CNAME file is placed in the www folder after building for pushing to the gh-pages branch. The gh-pages branch is responsible for the live webapp at http://isitcoolapp.com.
 
-The ionic folder contains the iOS App. That folder contains the xcode project files for pushing to the App Store.
+The ionic folder contains the iOS App. That folder contains the xcode project files for pushing to the App Store. After building the app to the www folder, copy the www folder into ionic/cool folder and run `ionic build ios`* from the command line to update the iOS app.
+ 
+ * ionic must be installed to run that command.
 
 ## Apple App Store Info
 
