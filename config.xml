@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="org.cool" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="org.isitcool" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Is It Cool?</name>
   <description>
         A game to teach kids life lessons.
@@ -30,6 +30,7 @@
     <icon src="resources/ios/icon/icon-small@2x.png" width="58" height="58"/>
     <icon src="resources/ios/icon/icon-small@3x.png" width="87" height="87"/>
     <splash src="resources/ios/splash/Default-Landscape-736h.png" width="2208" height="1242"/>
+    <splash src="resources/ios/splash/Default-Landscape-568h.png" width="568" height="320"/>
     <splash src="resources/ios/splash/Default-Landscape@2x~ipad.png" width="2048" height="1536"/>
     <splash src="resources/ios/splash/Default-Landscape~ipad.png" width="1024" height="768"/>
   </platform>

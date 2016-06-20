@@ -1,5 +1,24 @@
 # cool
 
+The complete source code is in this repository. Any work to the app should be done to files in the app folder and then built using the commands below. 
+
+This app is built with *AngularJS*. An AngularJS developer should understand how the services located in main/global-services folder drive the views for the start, board, card, etc.
+
+It's important that the CNAME file is placed in the www folder after building for pushing to the gh-pages branch. The gh-pages branch is responsible for the live webapp at http://isitcoolapp.com.
+
+The ionic folder contains the iOS App. That folder contains the xcode project files for pushing to the App Store.
+
+## Apple App Store Info
+
+Bundle ID 
+org.isitcool
+
+SKU
+org.isitcool
+
+Apple ID
+1120481095
+
 This project was generated with [yo angular modular generator](https://github.com/johannesjo/generator-modular-angular)
 version 1.0.38.
 
