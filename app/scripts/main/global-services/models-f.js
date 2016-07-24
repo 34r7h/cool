@@ -63,6 +63,9 @@ angular.module('cool')
 				gun:[
 					{url:'audio/gun.mp3'}
 				],
+				raven:[
+					{url:'audio/raven.mp3'}
+				],
 				walking:[
 					{url:'audio/walking.mp3'}
 				],
@@ -301,7 +304,7 @@ angular.module('cool')
 				{
 					type: 'stay',
 					topText: [
-						'You struck gold and don\t',
+						'You struck gold and don\'t',
 						'have to work anymore!'
 					],
 					bottomText: [
@@ -647,7 +650,7 @@ angular.module('cool')
 					topText: [
 						'You joined a gang ',
 						'and got shot and died. ',
-						'Then your family cried!'
+						'Then your friends and family cried!'
 					],
 					bottomText: [
 						'That\'s not cool!',

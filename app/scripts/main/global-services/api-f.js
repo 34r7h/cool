@@ -11,14 +11,12 @@ angular.module('cool')
 		'use strict';
 		var api = {
 			hide: function () {
-				$timeout(function () {
 					var time = 0;
 					for (var x = 0; x < State.trip.length; x++) {
 						$timeout(function () {
 							State.trip.splice(0, 1);
-						}, (x * 250) + 50);
+						}, (x * 500) + 500);
 					}
-				}, 1000)
 			},
 			killAudio: function () {
 				document.getElementById('game-0').currentTime = 0;
@@ -27,7 +25,7 @@ angular.module('cool')
 			audio: function (audio) {
 				var themeSong = document.getElementById(audio);
 				themeSong.play();
-
+				
 				$timeout(function () {
 					themeSong.currentTime = 0;
 					themeSong.pause();
@@ -56,10 +54,10 @@ angular.module('cool')
 					var hPx = api.toNumber(point.split(',')[0]) + x,
 						vPx = api.toNumber(point.split(',')[1]) + y;
 					pointsStr += hPx + ',' + vPx + ' ';
-
+					
 				});
 				return pointsStr;
-
+				
 			},
 			sunglassesFpv: function (x, y) {
 				var pointsStr = '';
@@ -68,29 +66,43 @@ angular.module('cool')
 					var hPx = api.toNumber(point.split(',')[0]) * x / 100,
 						vPx = api.toNumber(point.split(',')[1]) * y / 100;
 					pointsStr += hPx + ',' + vPx + ' ';
-
+					
 				});
 				return pointsStr;
-
+				
 			},
 			nextPlayer: function (key) {
 				
+				State.liveTurn = false;
+				
 				api.audio('walking-0');
-
+				
 				$timeout(function () {
-					if (State.players[key + 1]) {
+					if (State.turn.currentPosition == 57) {
+						api.audio('win-0');
+						api.killAudio();
+						api.message({header: 'Winner!!', text: player.playerName + ' wins the game.'});
+						State.gameStarted = false;
+					}
+					else if (State.players.length < 1) {
+						api.message({header: 'Lost!!', text: 'No one wins.'});
+						State.gameStarted = false;
+						api.killAudio();
+					}
+					else if (State.players[key + 1]) {
 						api.message({text: '', header: 'Next Player ' + State.players[key + 1].playerName});
 						State.turn = State.players[key + 1];
 						State.liveTurn = true;
-
+						
 					} else {
 						api.message({text: '', header: 'Next Player ' + State.players[0].playerName});
 						State.turn = State.players[0];
 						State.liveTurn = true;
-
 					}
+					State.trip = [];
+					
 				}, (State.trip.length * 500) + 500);
-
+				
 			},
 			movePlayer: function (player) {
 				var startingSpace = player.currentPosition;
@@ -102,17 +114,17 @@ angular.module('cool')
 					State.direction = $window.confirm(player.playerName + ' rolled ' + State.currentRoll + '. Press OK to move forward. CANCEL to move backwards');
 					return State.direction;
 				}
-
+				
 				function move(direction) {
 					direction ? (player.currentPosition = player.currentPosition + 1) :
 						(player.currentPosition = player.currentPosition - 1);
 					State.trip.push(Models.spaces[player.currentPosition]);
 					return State.trip;
-
+					
 				}
-
+				
 				for (var x = 0; x < State.currentRoll; x++) {
-
+					
 					// Check for pass
 					if (
 						(startingSpace === 17 && player.currentPosition === 17) ||
@@ -142,24 +154,14 @@ angular.module('cool')
 							(State.currentRoll - x === State.currentRoll) ||
 							(player.currentPosition === 11 && startingSpace <= 11) ||
 							(player.currentPosition === 25 && startingSpace <= 25)) {
-							State.direction = chooseDirection();
+							State.show.confirm = true;
 						}
-						switch (player.currentPosition) {
-							case 11:
-								!State.direction ? (player.currentPosition = 23, State.trip.push(Models.spaces[player.currentPosition])) : move(State.direction);
-								break;
-							case 23:
-								State.direction ? (player.currentPosition = 11, State.trip.push(Models.spaces[player.currentPosition])) : move(State.direction);
-								break;
-							case 25:
-								!State.direction ? (player.currentPosition = 37, State.trip.push(Models.spaces[player.currentPosition])) : move(State.direction);
-								break;
-							case 37:
-								State.direction ? (player.currentPosition = 25, State.trip.push(Models.spaces[player.currentPosition])) : move(State.direction);
-								break;
-							default:
-								move(State.direction);
-						}
+						State.splitMove = true;
+						State.splitNum = State.currentRoll - x;
+						State.splitPlayer = player;
+						break;
+						
+						
 					}
 					// default movement
 					else {
@@ -225,14 +227,14 @@ angular.module('cool')
 					playerOrder.unshift({currentPosition: 1, playerName: rollPlayers[score]});
 				});
 				var playerColors = ['lightBlue', 'lightGreen', 'lightYellow', 'pink'];
-
+				
 				angular.forEach(playerOrder, function (player) {
 					var randomColor = Math.floor(Math.random() * (playerColors.length - 1));
 					player.color = playerColors[randomColor];
 					playerColors.splice(randomColor, 1);
 				});
 				State.players = playerOrder;
-
+				
 				State.turn = playerOrder[0];
 				api.message({
 					text: playerOrder[0].playerName + ' goes first.',
@@ -242,56 +244,133 @@ angular.module('cool')
 				State.dice = [0, 0];
 				State.gameStarted = true;
 				State.liveTurn = true;
-
+				
+			},
+			
+			splitTurn: function (x, direction, player) {
+				var key = State.key;
+				var cool = false;
+				function move(direction) {
+					direction ? (player.currentPosition = player.currentPosition + 1) :
+						(player.currentPosition = player.currentPosition - 1);
+					State.trip.push(Models.spaces[player.currentPosition]);
+					return State.trip;
+					
+				}
+				for(var y = 0; y < x; y++){
+					if (
+						(player.currentPosition > 10 && player.currentPosition < 24 ) ||
+						(player.currentPosition >= 25 && player.currentPosition < 38 )) {
+						switch (player.currentPosition) {
+							case 11:
+								!State.direction ? (player.currentPosition = 23, State.trip.push(Models.spaces[player.currentPosition])) : move(State.direction);
+								break;
+							case 23:
+								State.direction ? (player.currentPosition = 11, State.trip.push(Models.spaces[player.currentPosition])) : move(State.direction);
+								break;
+							case 25:
+								!State.direction ? (player.currentPosition = 37, State.trip.push(Models.spaces[player.currentPosition])) : move(State.direction);
+								break;
+							case 37:
+								State.direction ? (player.currentPosition = 25, State.trip.push(Models.spaces[player.currentPosition])) : move(State.direction);
+								break;
+							default:
+								move(State.direction);
+						}
+					}
+				}
+				
+				Models.spaces[player.currentPosition].color === 'cool?' ?
+					(api.card(key), cool = true) :
+					Models.spaces[player.currentPosition].color === 'trap' ?
+						(
+							api.audio('trap-0'),
+								api.message({text: '' + player.playerName + ' sent back to start!', header: 'It\'s a trap!!'}),
+								$timeout(function(){api.goHome(player)},1000)
+						) :
+						null;
+				if (State.playerRoll.doubles === true) {
+					api.message({
+						text: player.playerName + ' goes again.',
+						header: 'Doubles!!'
+					});
+					State.playerRoll.doubles = false;
+					State.liveTurn = true;
+				} else {
+					api.message({text: '', header: player.playerName + 's turn is over'});
+					api.nextPlayer(key);
+				}
+				
+				if (player.currentPosition === 57 || State.trip.length < 1) {
+					api.audio('win-0');
+					api.killAudio();
+					api.message({header: 'Winner!!', text: player.playerName + ' wins the game.'});
+					
+					State.gameStarted = false;
+				}
+				
+				
+				
+				if (State.players.length < 1) {
+					api.message({header: 'Lost!!', text: 'No one wins.'});
+					State.gameStarted = false;
+					api.killAudio();
+				} else {
+					api.nextPlayer(State.players.indexOf(player));
+				}
 			},
 			takeTurn: function (key, player, dice) {
-
+				State.key = key;
+				State.splitNum = null;
 				// State.messages = [];
 				State.trip = [];
 				dice ? api.message({header: 'Warning', text: player.playerName + ' is a cheat!'}) : null;
 				api.message({header: player.playerName + ' takes a turn.', text: 'Rolling...'});
 				var cool = false;
 				var playerRoll = dice ? api.rollDice(dice[0], dice[1]) : api.rollDice();
-
+				State.playerRoll = playerRoll;
 				if (typeof player.currentPosition !== 'number') {
 					playerRoll.doubles ? player.currentPosition = 1 : api.nextPlayer(key);
 					return;
 				}
 				api.movePlayer(player, playerRoll.total);
-				Models.spaces[player.currentPosition].color === 'cool?' ?
-					(api.card(key), cool = true) :
-					Models.spaces[player.currentPosition].color === 'trap' ?
-						(
-							api.audio('trap-0'),
-							api.message({text: '' + player.playerName + ' sent back to start!', header: 'It\'s a trap!!'}),
-								$timeout(function(){api.goHome(player)},1000)
-						) :
-						null;
-				if (playerRoll.doubles === true) {
-					api.message({
-						text: player.playerName + ' goes again.',
-						header: 'Doubles!!'
-					});
-					playerRoll.doubles = false;
-					State.liveTurn = true;
-				} else {
-					api.message({text: '', header: player.playerName + 's turn is over'});
-					!cool ? api.nextPlayer(key) : null;
+				if(!State.splitMove){
+					Models.spaces[player.currentPosition].color === 'cool?' ?
+						(api.card(key), cool = true) :
+						Models.spaces[player.currentPosition].color === 'trap' ?
+							(
+								api.audio('trap-0'),
+									api.message({text: '' + player.playerName + ' sent back to start!', header: 'It\'s a trap!!'}),
+									$timeout(function(){api.goHome(player)},1000)
+							) :
+							null;
+					if (playerRoll.doubles === true) {
+						api.message({
+							text: player.playerName + ' goes again.',
+							header: 'Doubles!!'
+						});
+						playerRoll.doubles = false;
+						State.liveTurn = true;
+					} else {
+						api.message({text: '', header: player.playerName + 's turn is over'});
+						!cool ? api.nextPlayer(key) : null;
+					}
+					
+					if (State.turn.currentPosition === 57 && State.trip.length < 1) {
+						api.audio('win-0');
+						api.killAudio();
+						api.message({header: 'Winner!!', text: player.playerName + ' wins the game.'});
+						
+						State.gameStarted = false;
+					}
+					
+					if (State.players.length < 1) {
+						api.message({header: 'Lost!!', text: 'No one wins.'});
+						State.gameStarted = false;
+						api.killAudio();
+					}
 				}
-
-				if (player.currentPosition === 57 || State.players.length < 1) {
-					api.audio('win-0');
-					api.killAudio();
-					api.message({header: 'Winner!!', text: player.playerName + ' wins the game.'});
-
-					State.gameStarted = false;
-				}
-
-				if (State.players.length < 1) {
-					api.message({header: 'Lost!!', text: 'No one wins.'});
-					State.gameStarted = false;
-					api.killAudio();
-				}
+				
 			},
 			message: function (message) {
 				State.messages.push({
@@ -301,13 +380,13 @@ angular.module('cool')
 				});
 				$timeout(function () {
 					State.messages = [];
-				},3500);
+				},5000);
 			},
 			card: function () {
 				$timeout(function () {
 					var randomCard = Models.cards[Math.floor(Math.random() * Models.cards.length)];
 					State.card = randomCard;
-				}, (State.trip.length * 500) + 500);
+				}, (State.trip.length * 500) + 1000);
 			},
 			goHome: function (player) {
 				player.currentPosition = 1;
@@ -351,7 +430,6 @@ angular.module('cool')
 				player.currentPosition = 'work';
 				api.nextPlayer(State.players.indexOf(player));
 			}
-
 		};
 		angular.element($window).bind('resize', function () {
 			$rootScope.screen = {

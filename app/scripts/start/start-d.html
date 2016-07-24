@@ -72,7 +72,8 @@
         -->
     </div>
 </div>
-<div ng-show="cool.di.state.messages.length > 0" ng-style="{bottom:'10%', position:'absolute', zIndex:9999, background:'rgba(255,255,255,.8)', padding:'1em'}">
+<div ng-show="cool.di.state.messages.length > 0"
+     ng-style="{bottom:'10%', position:'absolute', zIndex:9999, background:'rgba(255,255,255,.8)', padding:'1em'}">
     <div ng-style="{flex:'1 1 auto'}">
         <messages></messages>
     </div>
@@ -83,6 +84,27 @@
         <a style="color:white" href ng-click="showRules = !showRules">Rules</a>
     </h2>
 </div>
+<div ng-if="cool.di.state.show.confirm"
+     ng-style="{height:'50vh', width:'100vw', display:'flex', flexDirection:'column', zIndex:999999, position:'fixed', bottom:0, background:'rgba(255,255,255,.9)', textAlign:'center'}">
+    <div ng-style="{display:'flex', justifyContent:'space-around', width:'100vw', height:'50vh', alignItems:'center'}">
+
+        <div>
+            <p>COUNTER</p><button
+                ng-click="cool.di.state.direction = true; cool.di.state.directionChosen = true; cool.di.api.splitTurn(cool.di.state.splitNum, cool.di.state.direction, cool.di.state.splitPlayer);cool.di.state.show.confirm = false;"
+                ng-style="{width:'20vw', height:'20vh', background:'rgba(200,200,200,.8)', backgroundImage:'url(images/counter.png)', backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat'}"
+        ></button></div>
+        <b>
+            <p>Choose direction</p>
+            <p>MOVES: {{cool.di.state.splitNum || cool.di.state.currentRoll}}</p>
+        </b>
+        <div><p>CLOCKWISE</p><button
+                ng-click="cool.di.state.direction = false;  cool.di.state.directionChosen = true; cool.di.api.splitTurn(cool.di.state.splitNum, cool.di.state.direction, cool.di.state.splitPlayer); cool.di.state.show.confirm = false;"
+                ng-style="{width:'20vw', height:'20vh', background:'rgba(200,200,200,.8)', backgroundImage:'url(images/clockwise.png)', backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat'}"
+        >
+        </button></div>
+    </div>
+
+</div>
 <rules ng-show="showRules"></rules>
 <div ng-show="showReset"
      ng-style="{display:'flex',flexDirection:'column', justifyContent:'center',position:'absolute', width:'100%', height:'100%', background:'rgba(255,255,255,.89)', textAlign:'center'}">
@@ -92,9 +114,17 @@
     </button>
     <a href ng-click="showReset = false">Cancel Reset</a>
 </div>
+<div ng-show="cool.di.state.gameStarted == true && cool.di.state.turn.currentPosition == 57 && cool.di.state.trip.length == 0"
+     ng-style="{display:'flex',flexDirection:'column', justifyContent:'center',position:'absolute', width:'100%', height:'100%', background:'rgba(255,255,255,.89)', textAlign:'center'}">
+    <h1>{{cool.di.state.turn.playerName}} Wins!!</h1>
+    <button ng-style="{fontWeight:'bolder',fontSize:'1.2em' }" autofocus
+            ng-click="cool.di.state.gameStarted = false; cool.di.api.killAudio();">PLAY AGAIN
+    </button>
+</div>
 <card></card>
 <div ng-repeat="(famKey, family) in cool.di.models.audio">
     <audio id="{{$parent.famKey+'-'+trackKey}}" ng-repeat="(trackKey, track) in family"
            src="{{track.url + (track.time ? '#t='+track.time : '')}}" loop="{{track.loop}}"></audio>
 </div>
-<img ng-style="{position:'absolute', bottom:0, left:0, zIndex:0, width:'10vw', height:'auto'}" src="images/isitcool-logo.png" alt="">
+<img ng-style="{position:'absolute', bottom:0, left:0, zIndex:0, width:'10vw', height:'auto'}"
+     src="images/isitcool-logo.png" alt="">
