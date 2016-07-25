@@ -86,12 +86,12 @@
 </div>
 <div ng-if="cool.di.state.show.confirm"
      ng-style="{height:'50vh', width:'100vw', display:'flex', flexDirection:'column', zIndex:999999, position:'fixed', bottom:0, background:'rgba(255,255,255,.9)', textAlign:'center'}">
-    <div ng-style="{display:'flex', justifyContent:'space-around', width:'100vw', height:'50vh', alignItems:'center'}">
+    <div ng-style="{display:'flex', justifyContent:'space-around', width:'100vw', height:'50vh', alignItems:'center', background:'rgba(0,0,0,.25)'}">
 
         <div>
             <p>COUNTER</p><button
                 ng-click="cool.di.state.direction = true; cool.di.state.directionChosen = true; cool.di.api.splitTurn(cool.di.state.splitNum, cool.di.state.direction, cool.di.state.splitPlayer);cool.di.state.show.confirm = false;"
-                ng-style="{width:'20vw', height:'20vh', background:'rgba(200,200,200,.8)', backgroundImage:'url(images/counter.png)', backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat'}"
+                ng-style="{width:'33vw', height:'33vh', background:'rgba(0,0,0,.6)', backgroundImage:'url(images/counter.png)', backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat'}"
         ></button></div>
         <b>
             <p>Choose direction</p>
@@ -99,7 +99,7 @@
         </b>
         <div><p>CLOCKWISE</p><button
                 ng-click="cool.di.state.direction = false;  cool.di.state.directionChosen = true; cool.di.api.splitTurn(cool.di.state.splitNum, cool.di.state.direction, cool.di.state.splitPlayer); cool.di.state.show.confirm = false;"
-                ng-style="{width:'20vw', height:'20vh', background:'rgba(200,200,200,.8)', backgroundImage:'url(images/clockwise.png)', backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat'}"
+                ng-style="{width:'33vw', height:'33vh', background:'rgba(200,200,200,.8)', backgroundImage:'url(images/clockwise.png)', backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat'}"
         >
         </button></div>
     </div>
