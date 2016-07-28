@@ -11,12 +11,12 @@ angular.module('cool')
 		'use strict';
 		var api = {
 			hide: function () {
-					var time = 0;
-					for (var x = 0; x < State.trip.length; x++) {
-						$timeout(function () {
-							State.trip.splice(0, 1);
-						}, (x * 500) + 500);
-					}
+				var timeOut = function () {
+					State.trip.splice(0, 1);
+				};
+				for (var x = 0; x < State.trip.length; x++) {
+					$timeout(timeOut, (x * 200) + 500);
+				}
 			},
 			killAudio: function () {
 				document.getElementById('game-0').currentTime = 0;
@@ -30,7 +30,7 @@ angular.module('cool')
 					themeSong.currentTime = 0;
 					themeSong.pause();
 					State.gameStarted ? document.getElementById('game-0').play() : null;
-				}, 2000)
+				}, 2000);
 			},
 			toNumber: function (num) {
 				return parseInt(num, 10);
@@ -78,7 +78,7 @@ angular.module('cool')
 				api.audio('walking-0');
 				
 				$timeout(function () {
-					if (State.turn.currentPosition == 57) {
+					if (State.turn.currentPosition === 57) {
 						api.audio('win-0');
 						api.killAudio();
 						api.message({header: 'Winner!!', text: player.playerName + ' wins the game.'});
@@ -101,19 +101,14 @@ angular.module('cool')
 					}
 					State.trip = [];
 					
-				}, (State.trip.length * 500) + 500);
+				}, (State.trip.length * 200) + 500);
 				
 			},
 			movePlayer: function (player) {
 				var startingSpace = player.currentPosition;
-				var currentRoll = State.currentRoll;
 				State.trip = [Models.spaces[player.currentPosition]];
 				State.direction = true;
-				function chooseDirection() {
-					api.message({header: player.playerName, text: 'choose direction!'});
-					State.direction = $window.confirm(player.playerName + ' rolled ' + State.currentRoll + '. Press OK to move forward. CANCEL to move backwards');
-					return State.direction;
-				}
+				
 				
 				function move(direction) {
 					direction ? (player.currentPosition = player.currentPosition + 1) :
@@ -322,6 +317,7 @@ angular.module('cool')
 			takeTurn: function (key, player, dice) {
 				State.key = key;
 				State.splitNum = null;
+				State.liveTurn = true;
 				// State.messages = [];
 				State.trip = [];
 				dice ? api.message({header: 'Warning', text: player.playerName + ' is a cheat!'}) : null;
@@ -386,7 +382,7 @@ angular.module('cool')
 				$timeout(function () {
 					var randomCard = Models.cards[Math.floor(Math.random() * Models.cards.length)];
 					State.card = randomCard;
-				}, (State.trip.length * 500) + 1000);
+				}, (State.trip.length * 200) + 1000);
 			},
 			goHome: function (player) {
 				player.currentPosition = 1;
