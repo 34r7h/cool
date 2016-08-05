@@ -16,8 +16,11 @@
                     <span ng-click="secretDice = !secretDice">
                         {{player.playerName}}
                     </span>
-                    <button ng-click="cool.di.state.liveTurn = false; cool.di.api.takeTurn(cool.di.state.players.indexOf(cool.di.state.turn), cool.di.state.turn)"
-                            ng-show="cool.di.state.liveTurn && player.playerName == cool.di.state.turn.playerName">Roll</button>
+                    <button
+                            ng-click="cool.di.state.liveTurn = false; cool.di.api.takeTurn(cool.di.state.players.indexOf(cool.di.state.turn), cool.di.state.turn)"
+                            ng-show="cool.di.state.liveTurn && player.playerName == cool.di.state.turn.playerName">
+                        Roll
+                    </button>
                     <div ng-if="cool.di.state.gameStarted" ng-style="{display:'flex', height:'1em'}">
                         <span
                                 ng-show="cool.di.state.liveTurn"
