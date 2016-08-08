@@ -199,6 +199,7 @@ angular.module('cool')
 				// Chooses players and initiates a new game.
 				State.players = [];
 				var playerRolls = {};
+				State.playerRoll = {};
 				var rollPlayers = {};
 				for (var x = 0; x < players; x++) {
 					var playerName = $window.prompt('What is player ' + (x + 1) + '\'s name?');
@@ -299,32 +300,30 @@ angular.module('cool')
 						text: player.playerName + ' goes again.',
 						header: 'Doubles!!'
 					});
-					State.playerRoll.doubles = false;
-					State.liveTurn = true;
+					api.nextPlayer(key-1);
 				} else {
 					api.message({text: '', header: player.playerName + 's turn is over'});
-					api.nextPlayer(key);
-				}
-				
-				if (player.currentPosition === 57 || State.trip.length < 1) {
-					api.audio('win-0');
-					api.killAudio();
-					api.message({header: 'Winner!!', text: player.playerName + ' wins the game.'});
-					State.gameStarted = false;
+					!cool ? api.nextPlayer(key) : null;
 				}
 				
 				if (State.players.length < 1) {
 					api.message({header: 'Lost!!', text: 'No one wins.'});
 					State.gameStarted = false;
 					api.killAudio();
+				} else if (player.currentPosition === 57 || State.trip.length < 1) {
+					api.audio('win-0');
+					api.killAudio();
+					api.message({header: 'Winner!!', text: player.playerName + ' wins the game.'});
+					State.gameStarted = false;
 				} else {
-					api.nextPlayer(State.players.indexOf(player));
+					!cool && !State.playerRoll.doubles ? api.nextPlayer(State.players.indexOf(player)): null;
 				}
 			},
 			takeTurn: function (key, player, dice) {
 				console.log('takeTurn', key, player, dice);
 				
 				State.key = key;
+				State.playerRoll.doubles = State.playerRoll.doubles ? false: null;
 				State.splitNum = null;
 				State.splitPlayer = null;
 				State.splitMove = null;
@@ -337,11 +336,11 @@ angular.module('cool')
 				var playerRoll = dice ? api.rollDice(dice[0], dice[1]) : api.rollDice();
 				State.playerRoll = playerRoll;
 				if (typeof player.currentPosition !== 'number') {
-					playerRoll.doubles ? player.currentPosition = 1 : api.nextPlayer(key);
+					State.playerRoll.doubles ? player.currentPosition = 1 : api.nextPlayer(key);
 					return;
 				}
 				
-				api.movePlayer(player, playerRoll.total);
+				api.movePlayer(player, State.playerRoll.total);
 				
 				if(!State.splitMove){
 					Models.spaces[player.currentPosition].color === 'cool?' ?
@@ -350,16 +349,15 @@ angular.module('cool')
 						 (
 						 api.audio('trap-0'),
 						 api.message({text: '' + player.playerName + ' sent back to start!', header: 'It\'s a trap!!'}),
-						 $timeout(function(){api.goHome(player)},1000)
+						 api.goHome(player)
 						 ) :
 							null;
-					if (playerRoll.doubles === true) {
+					if (State.playerRoll.doubles === true) {
 						api.message({
 							text: player.playerName + ' goes again.',
 							header: 'Doubles!!'
 						});
-						playerRoll.doubles = false;
-						State.liveTurn = true;
+						api.nextPlayer(key-1);
 					} else {
 						api.message({text: '', header: player.playerName + 's turn is over'});
 						!cool ? api.nextPlayer(key) : null;
@@ -398,7 +396,8 @@ angular.module('cool')
 					State.messages = [];
 				},5000);
 			},
-			card: function () {
+			card: function (player) {
+				State.cardPlayer = player;
 				$timeout(function () {
 					var randomCard = Models.cards[Math.floor(Math.random() * Models.cards.length)];
 					State.card = randomCard;
@@ -406,17 +405,17 @@ angular.module('cool')
 			},
 			goHome: function (player) {
 				player.currentPosition = 1;
-				// api.nextPlayer(State.players.indexOf(player));
+				!State.playerRoll.doubles ? api.nextPlayer(State.players.indexOf(player)): null;
 			},
 			killPlayer: function (player) {
 				api.audio('gun-0');
 				var playerIndex = State.players.indexOf(player);
-				api.nextPlayer(playerIndex);
 				State.players.splice(playerIndex, 1);
+				api.nextPlayer(State.players.indexOf(player));
 			},
 			goStay: function (player) {
 				api.audio('cool-0');
-				// api.nextPlayer(State.players.indexOf(player));
+				!State.playerRoll.doubles ? api.nextPlayer(State.players.indexOf(player)): null;
 			},
 			goPass: function (player) {
 				api.audio('yay-0');
@@ -429,22 +428,22 @@ angular.module('cool')
 				if (player.currentPosition >= 38 && player.currentPosition < 49) {
 					player.currentPosition = 49;
 				}
-				// api.nextPlayer(State.players.indexOf(player));
+				!State.playerRoll.doubles ? api.nextPlayer(State.players.indexOf(player)): null;
 			},
 			goJail: function (player) {
 				api.audio('siren-0');
 				player.currentPosition = 'jail';
-				// api.nextPlayer(State.players.indexOf(player));
+				!State.playerRoll.doubles ? api.nextPlayer(State.players.indexOf(player)): null;
 			},
 			goSchool: function (player) {
 				api.audio('school-0');
 				player.currentPosition = 'school';
-				// api.nextPlayer(State.players.indexOf(player));
+				!State.playerRoll.doubles ? api.nextPlayer(State.players.indexOf(player)): null;
 			},
 			goWork: function (player) {
 				api.audio('work-0');
 				player.currentPosition = 'work';
-				// api.nextPlayer(State.players.indexOf(player));
+				!State.playerRoll.doubles ? api.nextPlayer(State.players.indexOf(player)): null;
 			},
 			game: {
 				start: function (players) {
