@@ -672,7 +672,7 @@ angular.module('cool')
 						'You O\'D',
 						'You\'re out of the game!'
 					],
-					action: 'killPlayer',
+					action: 'odPlayer',
 					image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/US_Capitol_Building_at_night_Jan_2006.jpg/1018px-US_Capitol_Building_at_night_Jan_2006.jpg'
 				}
 			],

@@ -413,6 +413,12 @@ angular.module('cool')
 				State.players.splice(playerIndex, 1);
 				api.nextPlayer(State.players.indexOf(player));
 			},
+			odPlayer: function (player) {
+				api.audio('raven-0');
+				var playerIndex = State.players.indexOf(player);
+				State.players.splice(playerIndex, 1);
+				api.nextPlayer(State.players.indexOf(player));
+			},
 			goStay: function (player) {
 				api.audio('cool-0');
 				!State.playerRoll.doubles ? api.nextPlayer(State.players.indexOf(player)): null;
