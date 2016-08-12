@@ -510,6 +510,12 @@ angular.module('cool')
 				State.players.splice(playerIndex, 1);
 				api.nextPlayer(State.players.indexOf(player));
 			},
+			odPlayer: function (player) {
+				api.audio('raven-0');
+				var playerIndex = State.players.indexOf(player);
+				State.players.splice(playerIndex, 1);
+				api.nextPlayer(State.players.indexOf(player));
+			},
 			goStay: function (player) {
 				api.audio('cool-0');
 				!State.playerRoll.doubles ? api.nextPlayer(State.players.indexOf(player)): null;
@@ -1311,7 +1317,7 @@ angular.module('cool')
 						'You O\'D',
 						'You\'re out of the game!'
 					],
-					action: 'killPlayer',
+					action: 'odPlayer',
 					image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/US_Capitol_Building_at_night_Jan_2006.jpg/1018px-US_Capitol_Building_at_night_Jan_2006.jpg'
 				}
 			],
