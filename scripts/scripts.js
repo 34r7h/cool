@@ -7,17 +7,18 @@
  * Main module of the application.
  */
 'use strict';
-screen.lockOrientation ? screen.lockOrientation('landscape'): null;
+screen.lockOrientation ? screen.lockOrientation('landscape') : null;
 angular.module('cool', [
-    'ngAnimate',
-    'ngResource',
-    'ui.router'
-  ]);
+	'ngAnimate',
+	'ngResource',
+	'ui.router',
+	'ngAdsense'
+]);
 
-angular.module('cool').filter('reverse', function() {
-  return function(items) {
-    return items.slice().reverse();
-  };
+angular.module('cool').filter('reverse', function () {
+	return function (items) {
+		return items.slice().reverse();
+	};
 });
 'use strict';
 
@@ -181,10 +182,12 @@ angular.module('cool')
 						api.killAudio();
 						api.message({header: 'Winner!!', text: player.playerName + ' wins the game.'});
 						State.gameStarted = false;
+						State.show.ads.inter = true;
 					}
 					else if (State.players.length < 1) {
 						api.message({header: 'Lost!!', text: 'No one wins.'});
 						State.gameStarted = false;
+						State.show.ads.inter = true;
 						api.killAudio();
 					}
 					else if (State.players[key + 1]) {
@@ -406,12 +409,15 @@ angular.module('cool')
 				if (State.players.length < 1) {
 					api.message({header: 'Lost!!', text: 'No one wins.'});
 					State.gameStarted = false;
+					State.show.ads.inter = true;
 					api.killAudio();
 				} else if (player.currentPosition === 57 || State.trip.length < 1) {
 					api.audio('win-0');
 					api.killAudio();
 					api.message({header: 'Winner!!', text: player.playerName + ' wins the game.'});
 					State.gameStarted = false;
+					State.show.ads.inter = true;
+					
 				} else {
 					!cool && !State.playerRoll.doubles ? api.nextPlayer(State.players.indexOf(player)): null;
 				}
@@ -466,6 +472,8 @@ angular.module('cool')
 						api.message({header: 'Winner!!', text: player.playerName + ' wins the game.'});
 						
 						State.gameStarted = false;
+						State.show.ads.inter = true;
+						
 					}
 
 					if ((State.turn.currentPosition === 47 || State.turn.currentPosition === 56) && State.trip.length < 1) {
@@ -478,6 +486,8 @@ angular.module('cool')
 					if (State.players.length < 1) {
 						api.message({header: 'Lost!!', text: 'No one wins.'});
 						State.gameStarted = false;
+						State.show.ads.inter = true;
+						
 						api.killAudio();
 					}
 				}
@@ -1520,7 +1530,6 @@ var coolCtrl = function (State, Rules, Api, Models, $window, $sce) {
     var vm = this;
     vm.di = {state: State, rules:Rules, api:Api, models:Models, window:$window, sce: $sce};
     vm.cool = 'very';
-    // console.log('coolCtrl: Is it '+vm.cool+' cool?');
 };
 
 angular.module('cool')
