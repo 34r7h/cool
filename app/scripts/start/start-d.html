@@ -3,17 +3,17 @@
     <ui-view></ui-view>
 </div>
 <div ng-show="cool.di.state.show.ads.inter"
-     ng-style="{position:'fixed', height:'100vh', width:'100vw', display:'flex', justifyContent:'space-around', alignItems:'center', background:'rgba(0,0,0,.8)',zIndex:99999, padding:'10vh'}">
+     ng-style="{position:'fixed', height:'100vh', width:'100vw', display:'flex', justifyContent:'center', alignItems:'center', background:'rgba(0,0,0,.8)',zIndex:99999, padding:'10vh'}">
     <div ng-style="{flex:'1 1 10%', display:'flex', justifyContent:'center', alignItems:'center'}">
         <button ng-style="{background:'rgba(255,255,255,.9)', borderRadius:'10px', padding:'4px'}"
                 ng-click="cool.di.state.show.ads.inter = false">Close
         </button>
     </div>
-    <div ng-style="{width:'400px', height:'100vh', flex:'1 1 80%'}">
+    <div ng-style="{width:'400px', height:'100vh', flex:'1 1 80%', display:'flex', justifyContent:'center', alignItems:'center'}">
         <adsense-directive
                 ad-client="ca-pub-3429898877503693"
                 ad-slot="1018270450"
-                css-style="display:inline-block;width:500px;height:300px;">
+                css-style="display:inline-block;width:300px;height:300px;">
         </adsense-directive>
     </div>
     <div ng-style="{flex:'1 1 10%', display:'flex', justifyContent:'center', alignItems:'center'}">
