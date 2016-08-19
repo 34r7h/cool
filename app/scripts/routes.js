@@ -12,7 +12,6 @@ var coolCtrl = function (State, Rules, Api, Models, $window, $sce) {
     var vm = this;
     vm.di = {state: State, rules:Rules, api:Api, models:Models, window:$window, sce: $sce};
     vm.cool = 'very';
-    // console.log('coolCtrl: Is it '+vm.cool+' cool?');
 };
 
 angular.module('cool')
