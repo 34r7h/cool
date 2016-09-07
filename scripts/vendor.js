@@ -54921,7 +54921,7 @@ window.ionic.version = '1.3.1';
       gesture.on(type, callback);
       return gesture;
     },
-
+ 
     /**
      * @ngdoc method
      * @name ionic.EventController#offGesture
