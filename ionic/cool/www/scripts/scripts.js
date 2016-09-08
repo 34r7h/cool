@@ -21,7 +21,7 @@ angular.module('cool', [
 		if(window.AdMob) {
 			console.log('admob in effect');
 			State.mobile = true;
-			var admob_key = device.platform == "Android" ? "ca-app-pub-3429898877503693/8125637657" : "ca-app-pub-3429898877503693/4896740055";
+			var admob_key = device.platform == "Android" ? "ca-app-pub-5382526155087966/3206386934" : "ca-app-pub-5382526155087966/7915788138";
 			var admob = window.plugins.AdMob;
 			admob.createBannerView(
 				{
