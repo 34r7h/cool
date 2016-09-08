@@ -1,0 +1,43 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "org.isitcool"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "org.isitcool"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "org.isitcool"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "org.isitcool"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "org.isitcool"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "org.isitcool"
+        },
+        "cordova-plugin-admobpro": {
+            "PACKAGE_NAME": "org.isitcool"
+        },
+        "cordova-plugin-admob": {
+            "PACKAGE_NAME": "org.isitcool"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-extension": {
+            "PACKAGE_NAME": "org.isitcool"
+        },
+        "cordova-admobsdk": {
+            "PACKAGE_NAME": "org.isitcool"
+        }
+    }
+}
